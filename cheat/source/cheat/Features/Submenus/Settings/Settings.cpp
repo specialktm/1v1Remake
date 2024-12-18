@@ -19,8 +19,5 @@ namespace cheat
 		{
 			g_ThemeLoader.Reset();
 		}
-		Break();
-		NewSub("Footer", Menus::TextureFooter);
-
 	}
 }
