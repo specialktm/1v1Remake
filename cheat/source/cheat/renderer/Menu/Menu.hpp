@@ -455,6 +455,9 @@ namespace cheat
 
 			bool m_FooterRounded = true;
 			float m_FooterRounding = 4.f;
+
+			ImVec2 m_BreakUnderline { 125.0f, 0.f };
+			//ImVec2 m_BreakUnderline { 165.0f, 0.f };
 		};
 		Item_t Item;
 
@@ -893,13 +896,21 @@ namespace cheat
 					{
 						ImVec2 vTextPos(m_DrawPos + ImVec2(floorf((m_FrameWidth * 0.5f) - (vTextSize.x * 0.5f)), floorf((m_FrameHeight * 0.5f) - (vTextSize.y * IMMENU_TEXT_CENTER_VERTICAL))));
 
+						// 125.088,16.000
 						//m_DrawList->AddRectFilled(m_DrawPos, m_DrawPos + ImVec2(m_FrameWidth, m_FrameHeight), Color.Item);
-
+						//printf("Text: %s Size:  %.3f,%.3f\n",pItem->m_Name, vTextSize.x, vTextSize.y);
 						ImVec2 m_UnderlinePos(m_DrawPos + ImVec2(floorf(m_FrameWidth * 0.5f), floorf((m_FrameHeight * 0.5f) + (vTextSize.y * 0.75f))));
-						m_DrawList->AddLine(m_UnderlinePos - ImVec2(floorf(vTextSize.x * 0.5f) + 10.f, 0.f), m_UnderlinePos + ImVec2(floorf(vTextSize.x * 0.5f) + 10.f, 0.f), Color.Separator, 2.f);
-
-						m_ItemName.Draw(ImGui::GetForegroundDrawList(), Font.Primary, Font.Primary->FontSize, vTextPos);
-
+						if (!pItem->m_Name.empty() && pItem->m_Name != "")
+						{
+							m_ItemName.Draw(ImGui::GetForegroundDrawList(), Font.Primary, Font.Primary->FontSize, vTextPos);
+							m_DrawList->AddLine(m_UnderlinePos - ImVec2(floorf(125.f * 1.f) + 20.f, 0.f), m_UnderlinePos + ImVec2(floorf(125.f * 1.0f) + 20.f, 0.f), Color.Separator, 2.f);
+							//m_DrawList->AddLine(m_UnderlinePos - ImVec2(floorf(vTextSize.x * 1.f) + 20.f, 0.f), m_UnderlinePos + ImVec2(floorf(vTextSize.x * 1.0f) + 20.f, 0.f), Color.Separator, 2.f);
+						}
+						else
+						{
+							m_DrawList->AddLine(vTextPos - ImVec2(floorf(Item.m_BreakUnderline.x * 1.f) + 20.f, 0.f), vTextPos + ImVec2(floorf(Item.m_BreakUnderline.x * 1.0f) + 20.f, 0.f), Color.Separator, 2.f);
+						}
+						
 						m_DrawPos.y += m_FrameHeight;
 						continue;
 					}
