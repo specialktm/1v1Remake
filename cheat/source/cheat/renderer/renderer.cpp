@@ -4,6 +4,13 @@
 namespace cheat
 {
    
+    renderer::~renderer()
+    {
+        delete currentMenu;
+        menusArray.clear();
+        optionsArray.clear();
+    }
+
 
 
     void renderer::OnPresent()
@@ -14,6 +21,8 @@ namespace cheat
         }
         if (m_Open)
         { 
+        
+
             if (Menu.Begin())
             {
                 Menu.SetHeaderText(APP_NAME);
@@ -21,12 +30,14 @@ namespace cheat
                 Menu.SetFooterText(APP_VERSION);
                 Menu.End();
             }
+         
         }
 
     }
 
     void renderer::Style()
     {
+
         ImGuiStyle& mStyle = ImGui::GetStyle();
         mStyle.FramePadding = ImVec2(4, 2);
         mStyle.ItemSpacing = ImVec2(6, 2);
@@ -81,5 +92,7 @@ namespace cheat
         style.Colors[ImGuiCol_TextSelectedBg] = ImVec4(0.92f, 0.18f, 0.29f, 0.43f);
         style.Colors[ImGuiCol_PopupBg] = ImVec4(0.20f, 0.22f, 0.27f, 0.9f);
         style.Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.20f, 0.22f, 0.27f, 0.73f);
+
     }
+
 }

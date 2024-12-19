@@ -1,4 +1,5 @@
 #pragma once
+#include "../../../common/common.h"
 
 class C_ImMMenuTextMultiColorClip
 {

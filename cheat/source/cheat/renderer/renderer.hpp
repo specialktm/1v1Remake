@@ -7,6 +7,7 @@
 
 namespace cheat
 {
+
 	namespace Submenus
 	{
 		void Home();
@@ -15,6 +16,7 @@ namespace cheat
 	class renderer 
 	{
 	public:
+		~renderer();
 		void OnPresent();
 		void Style();
 	public:
@@ -28,7 +30,6 @@ namespace cheat
         std::vector<int> optionsArray;
 		int menuLevel;
         int currentOption;
-
         private:
 	};
 	inline std::unique_ptr<renderer> g_Renderer;

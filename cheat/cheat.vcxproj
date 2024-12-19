@@ -249,6 +249,7 @@
     <ClCompile Include="source\cheat\main.cpp" />
     <ClCompile Include="source\cheat\renderer\ImageLoader\ImageLoader.cpp" />
     <ClCompile Include="source\cheat\renderer\Menu\DrawMenu.cpp" />
+    <ClCompile Include="source\cheat\renderer\Menu\Fonts\font_awesome_data.cpp" />
     <ClCompile Include="source\cheat\renderer\Menu\Submenu\Submenu.cpp" />
     <ClCompile Include="source\cheat\renderer\renderer.cpp" />
     <ClCompile Include="source\cheat\renderer\ThemeLoader\ThemeLoader.cpp" />
@@ -276,6 +277,7 @@
     <ClInclude Include="source\cheat\hooking\methods\detour.h" />
     <ClInclude Include="source\cheat\main.h" />
     <ClInclude Include="source\cheat\renderer\ImageLoader\ImageLoader.h" />
+    <ClInclude Include="source\cheat\renderer\Menu\Fonts\font_awesome.h" />
     <ClInclude Include="source\cheat\renderer\Menu\Fonts\Header.hpp" />
     <ClInclude Include="source\cheat\renderer\Menu\Fonts\Icons.hpp" />
     <ClInclude Include="source\cheat\renderer\Menu\Fonts\Primary.hpp" />

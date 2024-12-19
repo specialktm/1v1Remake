@@ -37,8 +37,8 @@ namespace cheat
 				io.ConfigFlags = ImGuiConfigFlags_NoMouseCursorChange;
 				ImGui_ImplWin32_Init(m_window);
 				ImGui_ImplDX11_Init(m_Device.Get(), m_Context.Get());
-				g_Renderer->Menu.Initialize();
 				g_Renderer->Style();
+				g_Renderer->Menu.Initialize();
 				PresentHooked = true;
 		
 			}

@@ -19,6 +19,7 @@
 #include "Items.hpp"
 #include "../ImageLoader/ImageLoader.h"
 #include "Submenu/Submenu.h"
+#include "Fonts/font_awesome_data.cpp"
 #undef min
 
 #define IMMENU_ICON_LEFTARROW			"<"
@@ -37,6 +38,7 @@ namespace Submenus
 	void Move(void* Submenu);
 	void Back();
 }
+
 
 namespace cheat
 {
@@ -532,10 +534,11 @@ namespace cheat
 			ImFont* Icons = nullptr;
 			ImFont* Primary = nullptr;
 			ImFont* Header = nullptr;
+			ImFont* FontAwesome = nullptr;
 
 			bool AllLoaded()
 			{
-				return (Icons && Primary && Header);
+				return (Icons && Primary && Header && FontAwesome);
 			}
 
 			__inline ImVec2 CalcTextSize(ImFont* p_Font, const char* p_Text)
@@ -662,13 +665,18 @@ namespace cheat
 		bool Initialize()
 		{
 			ImGuiIO* m_IO = &ImGui::GetIO();
-
 			// Fonts
 			Font.Icons = m_IO->Fonts->AddFontFromMemoryCompressedTTF(ImGuiMMenu::Font::Icons_Data, ImGuiMMenu::Font::Icons_SizeData, 16.f);
 			Font.Primary = m_IO->Fonts->AddFontFromMemoryCompressedTTF(ImGuiMMenu::Font::Primary_Data, ImGuiMMenu::Font::Primary_SizeData, 16.f);
 			Font.Header = m_IO->Fonts->AddFontFromMemoryCompressedTTF(ImGuiMMenu::Font::Header_Data, ImGuiMMenu::Font::Header_SizeData, 64.f);
-		//	Font.Header = m_IO->Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\Arial\\ariblk.ttf",  32.f);
-
+			static const ImWchar IcoRanges[]{ 0xf000,0xf3ff,0 };
+			ImFontConfig IcoConfig;
+			IcoConfig.MergeMode = true;
+			IcoConfig.PixelSnapH = true;
+			IcoConfig.OversampleH = 3;
+			IcoConfig.OversampleV = 3;
+			Font.FontAwesome = m_IO->Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 16.5f, &IcoConfig, IcoRanges);
+			m_IO->Fonts->Build();
 			if (!Font.AllLoaded()) {
 				return false;
 			}
@@ -822,6 +830,7 @@ namespace cheat
 			int last_frame_count_footer = 0;
 			if (Item.GetCount())
 			{
+
 				// Reset index & selectable when selectable is above count
 				// Probably would need add hash item lookup to reset selectable position...
 				int m_SelectableCount = Item.GetSelectableCount();
@@ -992,7 +1001,6 @@ namespace cheat
 						ItemNameScroll.Update(m_CurrentTime, m_ItemNameHorizontalMax - vTextSize.x, 0.f, IMMENU_ITEM_NAME_SCROLL_SPEED, IMMENU_ITEM_NAME_SCROLL_WAIT_TIME);
 						m_ItemNameClip.m_Offset.x += ItemNameScroll.m_Value;
 					}
-
 
 					ImGui::GetForegroundDrawList()->AddText(Font.Primary, Font.Primary->FontSize, vTextPos, m_Selected ? Color.Selected_Text : Color.Primary_Text, &Item.Get(i)->m_Name[0]);
 					//ImGui::GetForegroundDrawList()->AddText(Font.Primary, Font.Primary->FontSize, vTextPos, m_Selected ? Color.Selected_Text : Color.Primary_Text, &sString.substr(0, sNewlinePos)[0], nullptr, 0.f, pClip);
@@ -1282,6 +1290,7 @@ namespace cheat
 					ImGui::SetNextWindowSize(m_InputFieldBB.Max - m_InputFieldBB.Min);
 
 					ImGui::PushFont(Font.Primary);
+					
 					ImGui::PushStyleColor(ImGuiCol_TextSelectedBg, Color.Primary);
 					ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4());
 					ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 0.f);
@@ -1296,6 +1305,7 @@ namespace cheat
 					ImGui::PopStyleVar(1);
 					ImGui::PopStyleColor(2);
 					ImGui::PopFont();
+			
 				}
 			}
 

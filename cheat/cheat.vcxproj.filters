@@ -102,6 +102,9 @@
     <ClCompile Include="source\cheat\Features\Submenus\Settings\Settings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\cheat\renderer\Menu\Fonts\font_awesome_data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\pch\pch.h">
@@ -216,6 +219,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\cheat\renderer\Menu\Submenu\Submenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\cheat\renderer\Menu\Fonts\font_awesome.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

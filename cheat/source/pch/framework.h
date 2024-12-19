@@ -58,3 +58,5 @@
 
 // Util
 #include "../util/util.h"
+// FA
+#include "../cheat/renderer/Menu/Fonts/font_awesome.h"
