@@ -7,11 +7,12 @@ namespace cheat
 	void Submenus::Menus::TextureHeader()
 	{
 		Title("Header");
-		if (Button("Reset Texture"))
+		Button("Reset Texture",[&]
 		{
 			g_Renderer->Menu.Header.m_Header.clear();
 			g_Renderer->Menu.Header.m_HeaderFrame = 0;
-		}
+		});
+		
 
 		Break("Rounding");
 		Bool("Rounded", "Round the header", &g_Renderer->Menu.Header.m_Rounded);
@@ -26,12 +27,11 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file() && path.has_filename())
 			{
-				if (g_Renderer->Menu.Item.AddText(std::format("Load: {}", path.filename().string()).c_str()))
-				{
+				Button(std::format("Load: {}", path.filename().string()).c_str(), [&] {
 					queue::add([path] {
 						g_ThemeLoader.LoadHeader(path);
 					});
-				}
+				});
 			}
 		}
 
@@ -40,23 +40,23 @@ namespace cheat
 	void Submenus::Menus::TextureSubtitle()
 	{
 		Title("Subtitle");
-		if (Button("Reset Texture"))
+		Button("Reset Texture", [&] 
 		{
 			g_Renderer->Menu.Item.m_SubtitleImage.clear();
 			g_Renderer->Menu.Item.m_SubtitleFrame = 0;
-		}
+		});
 		Break("Textures");
 		for (const auto& ent : g_ThemeLoader.GetFiles(ImageType::Subtitle))
 		{
 			const auto path = ent.path();
 			if (ent.is_regular_file())
 			{
-				if (g_Renderer->Menu.Item.AddText(std::format("Load: {}", path.filename().string()).c_str()))
+				Button(std::format("Load: {}", path.filename().string()).c_str(), [&]
 				{
 					queue::add([path] {
 						g_ThemeLoader.LoadSubtitle(path);
 					});
-				}
+				});
 			}
 		}
 
@@ -65,23 +65,24 @@ namespace cheat
 	void Submenus::Menus::TextureBackground()
 	{
 		Title("Background");
-		if (Button("Reset Texture"))
+		 Button("Reset Texture", [&]
 		{
 			g_Renderer->Menu.Item.m_BackgroundImage.clear();
 			g_Renderer->Menu.Item.m_BackgroundFrame = 0;
-		}
+		});
+
 		Break("Textures");
 		for (const auto& ent : g_ThemeLoader.GetFiles(ImageType::Background))
 		{
 			const auto path = ent.path();
 			if (ent.is_regular_file())
 			{
-				if (g_Renderer->Menu.Item.AddText(std::format("Load: {}", path.filename().string()).c_str()))
+				Button(std::format("Load: {}", path.filename().string()).c_str(), [&]
 				{
 					queue::add([path] {
 						g_ThemeLoader.LoadBackground(path);
 					});
-				}
+				});
 			}
 		}
 
@@ -90,11 +91,11 @@ namespace cheat
 	void Submenus::Menus::TextureScroller()
 	{
 		Title("Scroller");
-		if (Button("Reset Texture"))
+		Button("Reset Texture", [&]
 		{
 			g_Renderer->Menu.Item.m_Image.clear();
 			g_Renderer->Menu.Item.m_ScrollerFrame = 0;
-		}
+		});
 		Break("Rounding");
 		Bool("Rounded", "Round the scroller", &g_Renderer->Menu.Item.m_Rounded);
 		if (g_Renderer->Menu.Item.m_Rounded)
@@ -108,12 +109,12 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file())
 			{
-				if (g_Renderer->Menu.Item.AddText(std::format("Load: {}", path.filename().string()).c_str()))
+				Button(std::format("Load: {}", path.filename().string()).c_str(),[&]
 				{
 					queue::add([path] {
 						g_ThemeLoader.LoadScroller(path);
 					});
-				}
+				});
 			}
 		}
 
@@ -122,11 +123,10 @@ namespace cheat
 	void Submenus::Menus::TextureFooter()
 	{
 		Title("Footer");
-		if (Button("Reset Texture"))
-		{
+		Button("Reset Texture", [&] {
 			g_Renderer->Menu.Item.m_FooterImage.clear();
 			g_Renderer->Menu.Item.m_FooterFrame = 0;
-		}
+		});
 		Break("Rounding");
 		Bool("Rounded", "Round the footer", &g_Renderer->Menu.Item.m_FooterRounded);
 		if (g_Renderer->Menu.Item.m_FooterRounded)
@@ -140,12 +140,12 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file() && path.has_filename())
 			{
-				if (g_Renderer->Menu.Item.AddText(std::format("Load: {}", path.filename().string()).c_str()))
+				Button(std::format("Load: {}", path.filename().string()).c_str(), [&]
 				{
 					queue::add([path] {
 						g_ThemeLoader.LoadFooter(path);
 					});
-				}
+				});
 			}
 		}
 

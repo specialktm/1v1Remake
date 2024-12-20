@@ -68,9 +68,12 @@ namespace cheat::Submenus
         g_Renderer->Menu.SetTitleText(title);
     }
 
-    bool Button(const char* name)
+    bool Button(const char* name, std::function<void()> callback)
     {
-        return g_Renderer->Menu.Item.AddText(name);
+        if (g_Renderer->Menu.Item.AddText(name))
+        {
+            callback();
+        }
     }
 
     void Break(const char* name)
