@@ -26,7 +26,7 @@ namespace cheat
 		return { image, {static_cast<int>(std::round(width)), static_cast<int>(std::round(height))} };
 	}
 
-	ID3D11ShaderResourceView* ImageLoader::CreateResourceView(ID3D11Device* device, unsigned char* img_data, const vec2 img_size)
+	ID3D11ShaderResourceView* ImageLoader::CreateResourceView(ID3D11Device* device, unsigned char* img_data, const intVec2 img_size)
 	{
 		if (!img_data) return nullptr;
 		D3D11_TEXTURE2D_DESC desc = {};
@@ -86,7 +86,7 @@ namespace cheat
 
 	ID3D11ShaderResourceView* ImageLoader::CreateTexture(ID3D11Device* device, const fs::path& file_path)
 	{
-		vec2 v2{};
+		intVec2 v2{};
 		unsigned char* image_data = stbi_load(file_path.string().c_str(), &v2.x, &v2.y, nullptr, 4);
 		if (image_data == nullptr)
 		{

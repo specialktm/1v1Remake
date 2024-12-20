@@ -54,7 +54,7 @@ namespace cheat
 		Unity::il2cppClass* ThirdPersonCameraClass = IL2CPP::Class::Find("vThirdPersonCamera");
 		offsets::AddRecoil = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(ThirdPersonCameraClass, "AddRecoil");
 
-		g_logger->send(levels::developer, "Offsets:: {:#X} | {:#X} | {:#X}", offsets::GameAssembly, offsets::UnityPlayer, offsets::AddRecoil - offsets::GameAssembly);
+		g_logger->send(levels::developer, "Offsets: G: [{:#X}] | U: [{:#X}]", offsets::GameAssembly, offsets::UnityPlayer);
 
 
 		fiber_manager::add_fiber("PlayerListCache", &InitPlayerList);

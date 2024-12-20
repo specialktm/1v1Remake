@@ -6,8 +6,8 @@
 #include "../util/Il2cpp_Resolver/Il2cpp_Resolver.hpp"
 
 /*
-TODO: Fix FA
-TODO: Add More Features (e.g Box ESP, Aimbot, Godmode ,etc)
+TODO: Fix FA (FontAwesome)
+TODO: Add More Features (e.g Box ESP, Aimbot, Godmode, etc)
 */
 
 namespace cheat
@@ -38,9 +38,9 @@ namespace cheat
 			std::this_thread::sleep_for(400ms);
 		}
 		fiber_manager::remove_all_fibers();
-		g_Hooking.reset();
-		g_Renderer.reset();
-		g_logger.reset();
+		g_Hooking.reset(nullptr);
+		g_Renderer.reset(nullptr);
+		g_logger.reset(nullptr);
 
 		CloseHandle(g_MainThread);
 		FreeLibraryAndExitThread(g_Module,0);

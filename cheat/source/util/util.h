@@ -3,13 +3,12 @@
 #include "../pch/pch.h"
 #include "Vector.hpp"
 #include <Includes.hpp>
-//#include <chrono>
 
 
 namespace cheat::timer {
 	using namespace std::chrono;
 	using namespace std::chrono_literals;
-	class simpleTimer
+	class simpleTimer // Mister9982/99Anvar99 (Github) Aera
 	{
 	public:
 		explicit simpleTimer(milliseconds delay) :

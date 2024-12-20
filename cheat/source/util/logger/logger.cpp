@@ -20,10 +20,7 @@ namespace cheat
         freopen_s(&m_file, "CONOUT$", "w", stdout);
         freopen_s(&m_file, "CONOUT$", "w", stderr);
         freopen_s(&m_file, "CONIN$", "r", stdin);
-        std::cout.clear();
-        std::clog.clear();
-        std::cerr.clear();
-        std::cin.clear();
+
 
         h_console_out = GetStdHandle(STD_OUTPUT_HANDLE);
         if (h_console_out == INVALID_HANDLE_VALUE)
@@ -49,11 +46,6 @@ namespace cheat
         SetStdHandle(STD_ERROR_HANDLE, h_console_out);
         SetStdHandle(STD_INPUT_HANDLE, GetStdHandle(STD_INPUT_HANDLE));
 
-        std::wcout.clear();
-        std::wclog.clear();
-        std::wcerr.clear();
-        std::wcin.clear();
-
         SetConsoleTitleA(title);
         SetConsoleCP(CP_UTF8);
         SetConsoleOutputCP(CP_UTF8);
@@ -71,11 +63,10 @@ namespace cheat
     {   
         send(levels::info, "Goodbye, You may now close this window.");
 
-        if (fclose(m_file) != 0)
-            MessageBox(NULL, L"Failed to close the file!", NULL, MB_ICONEXCLAMATION);
-
-        if (!FreeConsole())
-            MessageBox(NULL, L"Failed to free the console window!", NULL, MB_ICONEXCLAMATION);
+        if (m_file)
+        {
+            fclose(m_file);
+        }
         FreeConsole();
     }
 
@@ -84,12 +75,22 @@ namespace cheat
     void logger::old_send(levels level, const std::string& msg)
     {
         if (level >= m_log_level)
-            std::cout << level_to_string(level) << " " << msg << "\33[m" << '\n';
+        {
+            char buffer[64];
+            GetTimestamp(buffer, sizeof(buffer));
+            std::string newMsg{ level_to_string(level) + msg + "\33[m" };
+            printf("[%s] %s\n", buffer, newMsg.c_str());
+            if (m_file)
+            {
+                fprintf(m_file, "[%s] %s\n", buffer, msg.c_str());
+                fflush(m_file);
+            }  
+        }       
     }
     // Flush the queue.
     void logger::flush()
     {
-        std::cout.flush();
+        fflush(m_file);
     }
     // Setting The Log Level.
     void logger::set_level(levels level)

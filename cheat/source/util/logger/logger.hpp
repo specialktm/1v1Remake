@@ -29,7 +29,7 @@ namespace cheat
 
     class logger {
     public:
-        logger()
+        logger() : m_file(nullptr)
         {
             this->initialize(APP_NAME);
         }
@@ -43,7 +43,6 @@ namespace cheat
         
         void set_level(levels level);
         std::string level_to_string(levels level);
-     
 
         template <typename... args>
         void send(levels level, const std::string& format, args... msg)
@@ -52,17 +51,24 @@ namespace cheat
             old_send(level, formatted);
         }
        
-    
+    private:
+        void GetTimestamp(char* buffer, size_t size) const
+        {
+            SYSTEMTIME st;
+            GetLocalTime(&st);
+            snprintf(buffer, size, "%02d:%02d:%02d", st.wHour, st.wMinute, st.wSecond);
+
+        }
     private:
         void flush();
         void initialize(const char* title);
         void uninitialize();
-        
+    
         levels m_log_level = levels::info;
-        FILE* m_file = nullptr;
+        FILE* m_file;
         HANDLE h_console_out = nullptr;
         DWORD m_console_mode = 0;
     };
 
-    inline std::shared_ptr<logger> g_logger;
+    inline std::unique_ptr<logger> g_logger;
 }
