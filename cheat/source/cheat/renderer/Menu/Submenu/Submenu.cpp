@@ -3,8 +3,15 @@
 namespace cheat::Submenus
 {
 	void (*FunctionPointers[])() = {
-		Home,Menus::TextureHeader,Menus::TextureSubtitle,Menus::TextureBackground,Menus::TextureScroller,
-        Menus::TextureFooter,Menus::TextureThemes,Menus::MenuSettings
+		Home,
+        Menus::TextureHeader,
+        Menus::TextureSubtitle,
+        Menus::TextureBackground,
+        Menus::TextureScroller,
+        Menus::TextureFooter,
+        Menus::TextureThemes,
+        Menus::MenuSettings,
+        Menus::MenuESP
 	};
 	int NumberOfSubmenus = sizeof(Submenus::FunctionPointers) / sizeof(Submenus::FunctionPointers[0]);
 

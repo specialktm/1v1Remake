@@ -40,13 +40,16 @@ namespace cheat
 				g_Renderer->Style();
 				g_Renderer->Menu.Initialize();
 				PresentHooked = true;
-		
 			}
 			else
 			{
 				return ogPresent(pSwapChain, SyncInterval, Flags);
 			}
 		}
+		m_Context->RSGetViewports(&g_Renderer->VPS, &g_Renderer->Viewport);
+		g_Renderer->ScreenSize = { g_Renderer->Viewport.Width, g_Renderer->Viewport.Height };
+		g_Renderer->ScreenCenter = { g_Renderer->Viewport.Width / 2.0f, g_Renderer->Viewport.Height / 2.0f };
+
 		ImGui_ImplDX11_NewFrame();
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();

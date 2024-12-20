@@ -42,7 +42,6 @@ namespace Submenus
 
 namespace cheat
 {
-	
 
 	class C_ImMMenu
 	{
@@ -250,7 +249,7 @@ namespace cheat
 				if (IsDummy(eImMMenuItemType_Section)) {
 					return false;
 				}
-
+				
 				auto pItem = new C_ImMMenuItem(eImMMenuItemType_Section, p_Name);
 
 				return (m_Interacted == AddNewItem(pItem));
@@ -761,10 +760,10 @@ namespace cheat
 
 			}
 
-			// Title
 
 
 				
+			// Title
 			if (m_TitleText.GetCount())
 			{
 				static timer::simpleTimer tick(0ms);
@@ -783,8 +782,8 @@ namespace cheat
 					}
 				}
 
-				float fTitleHeight = ImFloor(Font.Primary->FontSize * 2.f);
 
+				float fTitleHeight = ImFloor(Font.Primary->FontSize * 2.f);
 				if (Item.m_SubtitleImage.empty())
 				{
 					m_DrawList->AddRectFilled(

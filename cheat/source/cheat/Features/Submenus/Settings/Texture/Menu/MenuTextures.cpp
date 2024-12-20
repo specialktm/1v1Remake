@@ -13,7 +13,7 @@ namespace cheat
 			g_Renderer->Menu.Header.m_HeaderFrame = 0;
 		}
 
-		Break("Rouding");
+		Break("Rounding");
 		Bool("Rounded", "Round the header", &g_Renderer->Menu.Header.m_Rounded);
 		if (g_Renderer->Menu.Header.m_Rounded)
 		{

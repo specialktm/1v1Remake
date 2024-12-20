@@ -25,6 +25,8 @@ namespace cheat::Submenus
 		void TextureBackground();
 		void TextureScroller();
 		void TextureFooter();
+		void TextureFooter();
+		void MenuESP();
 		// Theme
 		void TextureThemes();
 		//Settings

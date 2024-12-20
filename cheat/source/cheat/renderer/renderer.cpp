@@ -3,15 +3,14 @@
 
 namespace cheat
 {
-   
+
+
     renderer::~renderer()
     {
         delete currentMenu;
         menusArray.clear();
         optionsArray.clear();
     }
-
-
 
     void renderer::OnPresent()
     {
@@ -21,8 +20,6 @@ namespace cheat
         }
         if (m_Open)
         { 
-        
-
             if (Menu.Begin())
             {
                 Menu.SetHeaderText(APP_NAME);
@@ -32,7 +29,7 @@ namespace cheat
             }
          
         }
-
+        ESP();
     }
 
     void renderer::Style()

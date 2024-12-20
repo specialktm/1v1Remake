@@ -39,6 +39,7 @@ public:
 
 	C_ImMMenuItem(eImMMenuItemType p_Type, const char* p_Name)
 	{
+
 		m_Type = p_Type;
 		m_Name = p_Name;
 	}
