@@ -18,7 +18,7 @@ namespace cheat
 
     enum class levels
     {
-        developer,
+        developer = 0,
         debug,
         info,
         success,

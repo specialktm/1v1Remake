@@ -105,7 +105,7 @@ namespace cheat
 						{
 							if (features::SkeletonEsp)
 							{
-								Menu.m_DrawList->AddLine(ImVec2{ bone1Screen.x ,bone1Screen.y }, ImVec2{ bone2Screen.x ,bone2Screen.y }, IM_COL32_WHITE, 1.5f);
+								imgui::GetForegroundDrawList()->AddLine(ImVec2{bone1Screen.x ,bone1Screen.y}, ImVec2{bone2Screen.x ,bone2Screen.y}, IM_COL32_WHITE, 1.5f);
 							}
 						}
 					}

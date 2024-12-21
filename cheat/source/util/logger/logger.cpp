@@ -78,7 +78,7 @@ namespace cheat
         {
             char buffer[64];
             GetTimestamp(buffer, sizeof(buffer));
-            std::string newMsg{ level_to_string(level) + msg + "\33[m" };
+            std::string newMsg{ level_to_string(level) + " " + msg + "\33[m"};
             printf("[%s] %s\n", buffer, newMsg.c_str());
             if (m_file)
             {
