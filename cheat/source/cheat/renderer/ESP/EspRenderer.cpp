@@ -2,7 +2,7 @@
 #include "../../Features/features.h"
 namespace cheat
 {
-	std::vector<std::pair<int, int>> bone_pair{
+	std::vector<std::pair<int, int>> BonePair{
 		// Right Leg
 		{21,6},
 		{6,4},
@@ -87,7 +87,7 @@ namespace cheat
 
 					auto playerPosition = PlayerList[i]->GetTransform()->GetPosition();
 
-					for (std::pair<int, int> bone_index : bone_pair)
+					for (std::pair<int, int> bone_index : BonePair)
 					{
 						auto bone1 = playerCurrentAnimator->CallMethodSafe<Unity::CTransform*>("GetBoneTransformInternal", bone_index.first);
 						auto bone2 = playerCurrentAnimator->CallMethodSafe<Unity::CTransform*>("GetBoneTransformInternal", bone_index.second);
@@ -107,6 +107,27 @@ namespace cheat
 							{
 								imgui::GetForegroundDrawList()->AddLine(ImVec2{bone1Screen.x ,bone1Screen.y}, ImVec2{bone2Screen.x ,bone2Screen.y}, IM_COL32_WHITE, 1.5f);
 							}
+						}
+					}
+					if (features::BoxEsp)
+					{
+						Unity::Vector3 root_pos = playerPosition;
+
+						Unity::Vector3 HeadPosition{ root_pos.x, root_pos.y + 1.703f, root_pos.z };
+
+						Unity::Vector3 HeadAimPosition{ root_pos.x, root_pos.y + 1.1f, root_pos.z };
+
+						Vector2 PlayerHeadPosition;
+						Vector2 PlayerFeetPosition;
+
+						if (util::WorldToScreen(HeadPosition, PlayerHeadPosition) && util::WorldToScreen(root_pos, PlayerFeetPosition))
+						{
+							const float height = PlayerFeetPosition.y - PlayerHeadPosition.y;
+							const float width = height * 0.2f;
+							const auto left = static_cast<float>(PlayerHeadPosition.x - width);
+							const auto right = static_cast<float>(PlayerHeadPosition.x + width);
+
+							ImGui::GetBackgroundDrawList()->AddRect(ImVec2{ left, PlayerHeadPosition.y }, ImVec2{ right, PlayerFeetPosition.y }, IM_COL32_WHITE);
 						}
 					}
 				}

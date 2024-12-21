@@ -5,5 +5,6 @@
 namespace cheat::features
 {
 	inline bool SkeletonEsp;
+	inline bool BoxEsp;
 }
 
