@@ -26,6 +26,17 @@ namespace cheat
 				g_logger->send(levels::debug, "Directory already exists: {}", path.string());
 			}
 		}
+
+		if (fs::exists(SavedThemePath))
+		{
+			std::ifstream file{ SavedThemePath.string() };
+			if (file.is_open())
+			{
+				nlohmann::json JsonData = nlohmann::json::parse(file);
+				LoadTheme(JsonData["SavedTheme"]);
+				file.close();
+			}
+		}
 	}
 
 
@@ -134,7 +145,7 @@ namespace cheat
 			
 				g_logger->send(levels::error, "Subfolder not found or not a directory: {}", subfolderPath.string());
 			}
-
+			LoadedTheme = folder;
 		}
 	}
 
@@ -215,6 +226,18 @@ namespace cheat
 		});
 		return tmp_vec;
 	}
+
+	void ThemeLoader::SaveTheme()
+	{
+		nlohmann::json JsonData;
+		JsonData["SavedTheme"] = LoadedTheme.string();
+		std::ofstream file{ SavedThemePath.string() };
+		if (file.is_open()) {
+			file << JsonData.dump(4);
+			file.close();
+		}
+	}
+
 	void ThemeLoader::Reset()
 	{
 		g_Renderer->Menu.Item.m_FooterImage.clear();

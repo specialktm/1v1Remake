@@ -668,14 +668,23 @@ namespace cheat
 			Font.Icons = m_IO->Fonts->AddFontFromMemoryCompressedTTF(ImGuiMMenu::Font::Icons_Data, ImGuiMMenu::Font::Icons_SizeData, 16.f);
 			Font.Primary = m_IO->Fonts->AddFontFromMemoryCompressedTTF(ImGuiMMenu::Font::Primary_Data, ImGuiMMenu::Font::Primary_SizeData, 16.f);
 			Font.Header = m_IO->Fonts->AddFontFromMemoryCompressedTTF(ImGuiMMenu::Font::Header_Data, ImGuiMMenu::Font::Header_SizeData, 64.f);
-			static const ImWchar IcoRanges[]{ 0xf000,0xf3ff,0 };
+			
 			ImFontConfig IcoConfig;
 			IcoConfig.MergeMode = true;
 			IcoConfig.PixelSnapH = true;
 			IcoConfig.OversampleH = 3;
 			IcoConfig.OversampleV = 3;
-			Font.FontAwesome = m_IO->Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 16.5f, &IcoConfig, IcoRanges);
-			m_IO->Fonts->Build();
+			static const ImWchar IcoRanges[]{ 0xf000,0xf3ff,0 };
+
+			Font.FontAwesome = m_IO->Fonts->AddFontFromMemoryCompressedTTF
+			(
+				font_awesome_data, 
+				font_awesome_size, 
+				19.f, 
+				&IcoConfig, 
+				IcoRanges
+			);
+			
 			if (!Font.AllLoaded()) {
 				return false;
 			}
@@ -1001,7 +1010,15 @@ namespace cheat
 						m_ItemNameClip.m_Offset.x += ItemNameScroll.m_Value;
 					}
 
-					ImGui::GetForegroundDrawList()->AddText(Font.Primary, Font.Primary->FontSize, vTextPos, m_Selected ? Color.Selected_Text : Color.Primary_Text, &Item.Get(i)->m_Name[0]);
+					ImGui::GetForegroundDrawList()->AddText(
+						Font.Primary,
+						Font.Primary->FontSize,
+						vTextPos, 
+						m_Selected ? Color.Selected_Text : Color.Primary_Text, 
+						&Item.Get(i)->m_Name[0]);
+					
+					
+					
 					//ImGui::GetForegroundDrawList()->AddText(Font.Primary, Font.Primary->FontSize, vTextPos, m_Selected ? Color.Selected_Text : Color.Primary_Text, &sString.substr(0, sNewlinePos)[0], nullptr, 0.f, pClip);
 					//m_ItemName.Draw(ImGui::GetForegroundDrawList(), Font.Primary, Font.Primary->FontSize, vTextPos, &m_ItemNameClip);
 

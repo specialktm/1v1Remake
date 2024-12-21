@@ -15,6 +15,12 @@ namespace cheat
 		NewSub("Scroller", Menus::TextureScroller);
 		NewSub("Footer", Menus::TextureFooter);
 		Break("Reset");
+		Button("Save Textures", [&]
+		{
+			queue::add([&] {
+				g_ThemeLoader.SaveTheme();
+			});
+		});	
 		Button("Reset Textures", [&]
 		{
 			g_ThemeLoader.Reset(); 

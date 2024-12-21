@@ -5,6 +5,7 @@
 #include "../renderer.hpp"
 #include "../ImageLoader/ImageLoader.h"
 
+#include <json.hpp>
 
 namespace cheat 
 {
@@ -33,6 +34,7 @@ namespace cheat
 		void CreateFolders();
 
 		void LoadTheme(const fs::path& folder);
+		void SaveTheme();
 		void LoadHeader(const fs::path& file);
 		void LoadSubtitle(const fs::path& file);
 		void LoadBackground(const fs::path& file);
@@ -51,6 +53,8 @@ namespace cheat
 		fs::path ScrollerPath = "C:\\ImaGuy\\Scroller\\";
 		fs::path FooterPath = "C:\\ImaGuy\\Footer\\";
 		fs::path ThemePath = "C:\\ImaGuy\\Themes\\";
+		fs::path SavedThemePath = "C:\\ImaGuy\\theme.json";
+		fs::path LoadedTheme = "";
 
 		bool IsExtensionValid(const fs::path& filePath) {
 			std::string ext = filePath.extension().string();
