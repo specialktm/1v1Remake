@@ -11,11 +11,11 @@ namespace cheat
 {
 
 	struct ThemeFormat {
-		fs::path HeaderPath;
-		fs::path SubtitlePath;
-		fs::path BackgroundPath;
-		fs::path ScrollerPath;
-		fs::path FooterPath;
+		fs::path Header;
+		fs::path Subtitle;
+		fs::path Background;
+		fs::path Scroller;
+		fs::path Footer;
 	};
 
 	enum class ImageType
@@ -34,7 +34,9 @@ namespace cheat
 		void CreateFolders();
 
 		void LoadTheme(const fs::path& folder);
+		void LoadThemeFromFile(const fs::path& file);
 		void SaveTheme();
+		void SaveThemeFile();
 		void LoadHeader(const fs::path& file);
 		void LoadSubtitle(const fs::path& file);
 		void LoadBackground(const fs::path& file);
@@ -55,6 +57,7 @@ namespace cheat
 		fs::path ThemePath = "C:\\ImaGuy\\Themes\\";
 		fs::path SavedThemePath = "C:\\ImaGuy\\theme.json";
 		fs::path LoadedTheme = "";
+		ThemeFormat ThemeData{};
 
 		bool IsExtensionValid(const fs::path& filePath) {
 			std::string ext = filePath.extension().string();

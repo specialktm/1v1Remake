@@ -29,13 +29,7 @@ namespace cheat
 
 		if (fs::exists(SavedThemePath))
 		{
-			std::ifstream file{ SavedThemePath.string() };
-			if (file.is_open())
-			{
-				nlohmann::json JsonData = nlohmann::json::parse(file);
-				LoadTheme(JsonData["SavedTheme"]);
-				file.close();
-			}
+			LoadThemeFromFile(SavedThemePath);
 		}
 	}
 
@@ -53,7 +47,7 @@ namespace cheat
 		{
 			g_Renderer->Menu.Header.m_Header.try_emplace(0, 0, g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file));
 		}
-
+		ThemeData.Header = file;
 	}
 
 	void ThemeLoader::LoadSubtitle(const fs::path& file)
@@ -69,6 +63,7 @@ namespace cheat
 		{
 			g_Renderer->Menu.Item.m_SubtitleImage.try_emplace(0, 0, g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file));
 		}
+		ThemeData.Subtitle= file;
 	}
 
 	void ThemeLoader::LoadBackground(const fs::path& file)
@@ -84,7 +79,7 @@ namespace cheat
 			g_Renderer->Menu.Item.m_BackgroundImage.try_emplace(0, 0, g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file));
 
 		}
-
+		ThemeData.Background = file;
 	}
 
 	void ThemeLoader::LoadScroller(const fs::path& file)
@@ -100,7 +95,7 @@ namespace cheat
 			g_Renderer->Menu.Item.m_Image.try_emplace(0, 0, g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file));
 
 		}
-
+		ThemeData.Scroller = file;
 	}
 	void ThemeLoader::LoadFooter(const fs::path& file)
 	{
@@ -115,7 +110,7 @@ namespace cheat
 		{
 			g_Renderer->Menu.Item.m_FooterImage.try_emplace(0, 0, g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file));
 		}
-
+		ThemeData.Footer = file;
 	}
 
 	void ThemeLoader::LoadTheme(const fs::path& folder) 
@@ -137,6 +132,7 @@ namespace cheat
 			
 						g_logger->send(levels::debug, "Loading {} from file: {}", subfolderName, entry.path().string());
 						(this->*loadFunction)(entry.path());
+						
 						break;
 					}
 				}
@@ -146,6 +142,7 @@ namespace cheat
 				g_logger->send(levels::error, "Subfolder not found or not a directory: {}", subfolderPath.string());
 			}
 			LoadedTheme = folder;
+			
 		}
 	}
 
@@ -176,15 +173,11 @@ namespace cheat
 			default:
 				return tmp_vec;
 			}
-
 			for (const auto& entry : target_path)
 			{
 				tmp_vec.push_back(entry);
 			}
 
-			std::sort(tmp_vec.begin(), tmp_vec.end(), [](const fs::directory_entry& a, const fs::directory_entry& b) {
-				return a.path().filename() < b.path().filename();
-			});
 		}
 		catch (const fs::filesystem_error& e)
 		{
@@ -237,6 +230,44 @@ namespace cheat
 			file.close();
 		}
 	}
+
+	void ThemeLoader::SaveThemeFile()
+	{
+		nlohmann::json JsonData;
+		
+		JsonData["Header"] = ThemeData.Header.string();
+		JsonData["Subtitle"] = ThemeData.Subtitle.string();
+		JsonData["Background"] = ThemeData.Background.string();
+		JsonData["Scroller"] = ThemeData.Scroller.string();
+		JsonData["Footer"] = ThemeData.Footer.string();
+
+		std::ofstream file{ SavedThemePath.string() };
+		if (file.is_open()) {
+			file << JsonData.dump(4);
+			file.close();
+		}
+	}
+
+	void ThemeLoader::LoadThemeFromFile(const fs::path& file)
+	{
+		std::ifstream File{ file.string() };
+		nlohmann::json JsonData = nlohmann::json::parse(File);
+		File.close();
+
+		if (JsonData.contains("SavedTheme") && !JsonData["SavedTheme"].empty())
+		{
+			LoadTheme(JsonData["SavedTheme"]);
+		}
+		else
+		{
+			if (JsonData.contains("Header")) LoadHeader(JsonData["Header"]);
+			if (JsonData.contains("Subtitle")) LoadSubtitle(JsonData["Subtitle"]);
+			if (JsonData.contains("Background")) LoadBackground(JsonData["Background"]);
+			if (JsonData.contains("Scroller")) LoadScroller(JsonData["Scroller"]);
+			if (JsonData.contains("Footer")) LoadFooter(JsonData["Footer"]);
+		}
+	}
+
 
 	void ThemeLoader::Reset()
 	{

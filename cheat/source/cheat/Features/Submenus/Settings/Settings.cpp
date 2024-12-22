@@ -15,12 +15,18 @@ namespace cheat
 		NewSub("Scroller", Menus::TextureScroller);
 		NewSub("Footer", Menus::TextureFooter);
 		Break("Reset");
-		Button("Save Textures", [&]
+		Button("Save Theme", [&]
 		{
 			queue::add([&] {
 				g_ThemeLoader.SaveTheme();
 			});
 		});	
+		Button("Save Custom Textures", [&]
+		{
+			queue::add([&] {
+				g_ThemeLoader.SaveThemeFile();
+			});
+		});
 		Button("Reset Textures", [&]
 		{
 			g_ThemeLoader.Reset(); 
