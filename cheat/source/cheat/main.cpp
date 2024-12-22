@@ -8,13 +8,17 @@
 /*	TODO:
 	    [T] Fix FA (FontAwesome),
 	    [T] Add More Features (e.g Aimbot, Godmode, etc)
+
 	Changelog: Commit 14
-		[+] Image Cache,
+		[+] Image Cache
+
 	Changelog: Commit 13
 		[+] Full Custom Theme Support
+	
 	Changelog: Commit 12
 		[+] Theme Loading (with json),
 		[+] Theme Saving (with json)
+	
 	Features:
 		[1] Skeleton ESP,
 		[2] Box ESP,
