@@ -5,7 +5,9 @@
 #include "renderer/ThemeLoader/ThemeLoader.h"
 #include "../util/Il2cpp_Resolver/Il2cpp_Resolver.hpp"
 
-/*	TODO:
+#ifdef Developer
+/*	
+	TODO:
 	    [T] Fix FA (FontAwesome),
 	    [T] Add More Features (e.g Aimbot, Godmode, etc)
 
@@ -27,7 +29,7 @@
 		[5] Custom Themes
 		[6] No Recoil (can't toggle maybe future)
 */
-
+#endif
 namespace cheat
 {
 
