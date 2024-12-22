@@ -135,7 +135,7 @@ namespace cheat
 		}
 
 		GifCache_[key] = tmp_arr;
-		g_logger->send(levels::debug, "GIF cached: {}", key);
+		g_logger->send(levels::debug, "GIF cached: {} {} Frame(s)", key, tmp_arr.size());
 
 		return tmp_arr;
 	}
