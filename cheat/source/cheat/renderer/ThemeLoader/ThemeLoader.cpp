@@ -14,7 +14,7 @@ namespace cheat
 				try
 				{
 					fs::create_directories(path);
-					g_logger->send(levels::debug, "Created directory: {}", path.string());
+					g_logger->send(levels::success, "Created directory: {}", path.string());
 				}
 				catch (const std::exception& e)
 				{
@@ -123,26 +123,26 @@ namespace cheat
 				{"Footer", &ThemeLoader::LoadFooter}
 		};
 
-		for (const auto& [subfolderName, loadFunction] : loadFunctions) {
+		for (const auto& [subfolderName, loadFunction] : loadFunctions) 
+		{
 			fs::path subfolderPath = folder / subfolderName;
 
-			if (fs::exists(subfolderPath) && fs::is_directory(subfolderPath)) {
+			if (fs::exists(subfolderPath) && fs::is_directory(subfolderPath)) 
+			{
 				for (const auto& entry : fs::directory_iterator(subfolderPath)) {
+					
 					if (entry.is_regular_file() && IsExtensionValid(entry.path())) {
-			
-						g_logger->send(levels::debug, "Loading {} from file: {}", subfolderName, entry.path().string());
 						(this->*loadFunction)(entry.path());
-						
 						break;
 					}
 				}
 			}
-			else {
-			
+			else 
+			{
 				g_logger->send(levels::error, "Subfolder not found or not a directory: {}", subfolderPath.string());
 			}
+
 			LoadedTheme = folder;
-			
 		}
 	}
 

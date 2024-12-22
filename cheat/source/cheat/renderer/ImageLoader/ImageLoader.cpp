@@ -84,29 +84,87 @@ namespace cheat
 		return frames;
 	}
 
-	ID3D11ShaderResourceView* ImageLoader::CreateTexture(ID3D11Device* device, const fs::path& file_path)
-	{
+	ID3D11ShaderResourceView* ImageLoader::CreateTexture(ID3D11Device* device, const fs::path& file_path) {
+		const std::string key = file_path.string();
+
+		auto it = TextureCache_.find(key);
+		if (it != TextureCache_.end()) {
+			g_logger->send(levels::debug, "Texture cache found for: {}", key);
+			return it->second;
+		}
+
 		intVec2 v2{};
-		unsigned char* image_data = stbi_load(file_path.string().c_str(), &v2.x, &v2.y, nullptr, 4);
-		if (image_data == nullptr)
-		{
+		std::unique_ptr<unsigned char[], decltype(&stbi_image_free)> image_data(
+			stbi_load(file_path.string().c_str(), &v2.x, &v2.y, nullptr, 4),
+			stbi_image_free
+		);
+
+		if (!image_data) {
+			g_logger->send(levels::error, "Failed to load image: {}", file_path.string());
 			return nullptr;
 		}
-		return CreateResourceView(device, image_data, v2);
+
+		g_logger->send(levels::debug, "Successfully loaded image: {} ({}x{})", file_path.string(), v2.x, v2.y);
+
+		ID3D11ShaderResourceView* resource_view = CreateResourceView(device, image_data.get(), v2);
+		if (resource_view) {
+			TextureCache_[key] = resource_view;
+			g_logger->send(levels::debug, "Texture cached: {}", key);
+		}
+
+		return resource_view;
 	}
 
-	std::map<int, FrameData> ImageLoader::CreateGifTexture(ID3D11Device* device, const fs::path& path)
-	{
+
+
+	std::map<int, FrameData> ImageLoader::CreateGifTexture(ID3D11Device* device, const fs::path& path) {
+		const std::string key = path.string();
+
+		auto it = GifCache_.find(key);
+		if (it != GifCache_.end()) {
+			g_logger->send(levels::debug, "GIF cache found for: {}", key);
+			return it->second;
+		}
+
 		const auto gif_data = LoadGif(path);
 		std::map<int, FrameData> tmp_arr;
-		for (const auto& [fst, snd] : gif_data)
-		{
-			const auto [data, v2] = LoadImageFromMemory(snd);
-			tmp_arr.try_emplace(fst, snd.Delay, CreateResourceView(device, data, v2));
+		for (const auto& [frame_index, image_data] : gif_data) {
+			const auto [data, dimensions] = LoadImageFromMemory(image_data);
+			auto resource_view = CreateResourceView(device, data, dimensions);
+			tmp_arr.emplace(frame_index, FrameData{ image_data.Delay, resource_view });
 		}
-#ifdef Developer
-		g_logger->send(levels::debug,"Frame Count: {}", tmp_arr.size());
-#endif
+
+		GifCache_[key] = tmp_arr;
+		g_logger->send(levels::debug, "GIF cached: {}", key);
+
 		return tmp_arr;
+	}
+
+	void ImageLoader::ClearGifCache() {
+		for (auto& [key, frames] : GifCache_) {
+			for (auto& [frame_index, frame] : frames) {
+				if (frame.m_Texture) {
+					frame.m_Texture->Release();
+				}
+			}
+		}
+		GifCache_.clear();
+		g_logger->send(levels::debug, "GIF cache cleared.");
+	}
+
+	void ImageLoader::ClearCache() {
+		for (auto& [key, resource_view] : TextureCache_) {
+			if (resource_view) {
+				resource_view->Release();
+			}
+		}
+		TextureCache_.clear();
+		g_logger->send(levels::debug, "Texture cache cleared.");
+	}
+
+	ImageLoader::~ImageLoader()
+	{
+		ClearCache();
+		ClearGifCache();
 	}
 }

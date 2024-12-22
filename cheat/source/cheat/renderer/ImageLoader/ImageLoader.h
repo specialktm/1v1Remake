@@ -32,14 +32,20 @@ namespace cheat
 	{
 	public:
 		ImageLoader() = default;
-		~ImageLoader() = default;
+		~ImageLoader();
 		ImageData WritePngToMemory(int x, int y, int comp, const void* data, int stride_bytes, const int delay);
 		Image LoadImageFromMemory(const ImageData& data);
 		ID3D11ShaderResourceView* CreateResourceView(ID3D11Device* device, unsigned char* img_data, const intVec2 img_size);
 		std::map<int, ImageData> LoadGif(const fs::path& path);
 		ID3D11ShaderResourceView* CreateTexture(ID3D11Device* device, const fs::path& file_path);
 		std::map<int, FrameData> CreateGifTexture(ID3D11Device* device, const fs::path& path);
+		void ClearGifCache();
+		void ClearCache();
+
 	private:
+		std::unordered_map<std::string, std::map<int, FrameData>> GifCache_;
+		std::unordered_map<std::string, ID3D11ShaderResourceView*> TextureCache_;
+
 	};
 	inline ImageLoader g_ImageLoader;
 }
