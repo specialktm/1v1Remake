@@ -84,7 +84,8 @@ namespace cheat
 		return frames;
 	}
 
-	ID3D11ShaderResourceView* ImageLoader::CreateTexture(ID3D11Device* device, const fs::path& file_path) {
+	ID3D11ShaderResourceView* ImageLoader::CreateTexture(ID3D11Device* device, const fs::path& file_path) 
+	{
 		const std::string key = file_path.string();
 
 		auto it = TextureCache_.find(key);
@@ -117,7 +118,8 @@ namespace cheat
 
 
 
-	std::map<int, FrameData> ImageLoader::CreateGifTexture(ID3D11Device* device, const fs::path& path) {
+	std::map<int, FrameData> ImageLoader::CreateGifTexture(ID3D11Device* device, const fs::path& path) 
+	{
 		const std::string key = path.string();
 
 		auto it = GifCache_.find(key);
@@ -140,7 +142,9 @@ namespace cheat
 		return tmp_arr;
 	}
 
-	void ImageLoader::ClearGifCache() {
+	void ImageLoader::ClearCache() 
+	{
+		// Clear Gifs
 		for (auto& [key, frames] : GifCache_) {
 			for (auto& [frame_index, frame] : frames) {
 				if (frame.m_Texture) {
@@ -150,9 +154,8 @@ namespace cheat
 		}
 		GifCache_.clear();
 		g_logger->send(levels::debug, "GIF cache cleared.");
-	}
 
-	void ImageLoader::ClearCache() {
+		// Clear Textures
 		for (auto& [key, resource_view] : TextureCache_) {
 			if (resource_view) {
 				resource_view->Release();
@@ -160,11 +163,11 @@ namespace cheat
 		}
 		TextureCache_.clear();
 		g_logger->send(levels::debug, "Texture cache cleared.");
+
 	}
 
 	ImageLoader::~ImageLoader()
 	{
 		ClearCache();
-		ClearGifCache();
 	}
 }

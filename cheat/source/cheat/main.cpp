@@ -7,6 +7,15 @@
 
 #ifdef Developer
 /*	
+
+
+	Author:
+		[A] VoDKa
+
+	Credit:
+		[C] Mister9982 (Aera Image Loading),
+		[C] Sneaky Evil (Menu)
+
 	TODO:
 	    [T] Fix FA (FontAwesome),
 	    [T] Add More Features (e.g Aimbot, Godmode, etc)
@@ -30,6 +39,7 @@
 		[6] No Recoil (can't toggle maybe future)
 */
 #endif
+
 namespace cheat
 {
 
