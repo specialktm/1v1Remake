@@ -22,22 +22,6 @@
 		[I] Caching now uses file name (e.x Texture.jpg) instead of file path (e.x C:\Textures\Texture.jpg) -
 		fixes recaching the same image.
 
-	Changelog: Commit 20
-		[+] Advanced ESP with Fingers,
-		[+] HumanBodyBones Enum,
-		[+] std::pair<int,int> to std::pair<HumanBodyBones,HumanBodyBones> instead.
-
-
-	Changelog: Commit 14
-		[+] Image Cache
-
-	Changelog: Commit 13
-		[+] Full Custom Theme Support
-	
-	Changelog: Commit 12
-		[+] Theme Loading (with json),
-		[+] Theme Saving (with json)
-	
 	Features:
 		[1] Skeleton ESP,
 		[2] Box ESP,

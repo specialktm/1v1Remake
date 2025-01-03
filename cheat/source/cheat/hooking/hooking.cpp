@@ -72,6 +72,8 @@ namespace cheat
 		kiero::bind(8, (void**)&hooks::ogPresent, hooks::Present);
 		// Detour
 		detour("AddRecoil", (LPVOID)offsets::AddRecoil, &hooks::ogAddRecoil, hooks::AddRecoil);
+
+		g_logger->send(levels::success, "Hooking Complete");
 	}
 
 	void hooking::UnHook()
