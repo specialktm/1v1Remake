@@ -18,6 +18,10 @@
 	    [T] Fix FA (FontAwesome),
 	    [T] Add More Features (e.g Aimbot, Godmode, etc)
 
+	Changelog: Commit 22
+		[I] Caching now uses file name (e.x Texture.jpg) instead of file path (e.x C:\Textures\Texture.jpg) -
+		fixes recaching the same image.
+
 	Changelog: Commit 20
 		[+] Advanced ESP with Fingers,
 		[+] HumanBodyBones Enum,

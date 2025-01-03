@@ -86,7 +86,7 @@ namespace cheat
 
 	ID3D11ShaderResourceView* ImageLoader::CreateTexture(ID3D11Device* device, const fs::path& file_path) 
 	{
-		const std::string key = file_path.string();
+		const std::string key = file_path.filename().string();
 
 		auto it = TextureCache_.find(key);
 		if (it != TextureCache_.end()) {
@@ -120,7 +120,7 @@ namespace cheat
 
 	std::map<int, FrameData> ImageLoader::CreateGifTexture(ID3D11Device* device, const fs::path& path) 
 	{
-		const std::string key = path.string();
+		const std::string key = path.filename().string();
 
 		auto it = GifCache_.find(key);
 		if (it != GifCache_.end()) {

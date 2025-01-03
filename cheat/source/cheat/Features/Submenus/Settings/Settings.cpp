@@ -7,7 +7,6 @@ namespace cheat
 	{
 		Title("Settings");
 		NewSub("Theme", Menus::TextureThemes);
-		//Float("Theme", "LOL", &g_Renderer->Menu.Item.m_BreakUnderline.x,0.f,200.f,1.f);
 		Break("Custom Textures");
 		NewSub("Header", Menus::TextureHeader);
 		NewSub("Subtitle", Menus::TextureSubtitle);
