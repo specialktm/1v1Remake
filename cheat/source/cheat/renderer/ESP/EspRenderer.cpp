@@ -1,58 +1,83 @@
 #include "../renderer.hpp"
 #include "../../Features/features.h"
+#include "../../util/enums.h"
 namespace cheat
 {
-	std::vector<std::pair<int, int>> BonePair{
-		// Right Leg
-		{21,6},
-		{6,4},
-		{4,2},
-		{2,0},
-		// Left Leg
-		{20, 5},
-		{5, 3},
-		{3, 1},
-		{1, 0},
-		// Torso
-		{0, 7},
-		{7, 8},
-		{8, 9},
-		{9, 10},
-		// Neck and Head
-		{10, 11}, // 11 is head bone
-		// Right Arm
-		{9, 13},
-		{13, 15},
-		{15, 17},
-		{17, 19},
-		// Left Arm
-		{9,12},
-		{12,14},
-		{14,16},
-		{16,18},
 
-		// Left Fingers 
-		{18,25},
-		{25,26},
-		{26,27},
-		///////
-		{18,35},
-		{35,36},
-		{36,37},
-		{18,28},
-		{28,29},
-		{29,30},
-		///////
-		{18,37},
-		{37,38},
-		{38,39},
-		//{18,29},
-		// Right Fingers 
-		{19,40},
-		{40,41},
-		{41,42},
-		{19,43},
-		{43,44},
+	std::vector<std::pair<enums::HumanBodyBones, enums::HumanBodyBones>> BonePair
+	{
+		// Right Leg
+		{enums::HumanBodyBones::RightToes,enums::HumanBodyBones::RightFoot},
+		{enums::HumanBodyBones::RightFoot,enums::HumanBodyBones::RightLowerLeg},
+		{enums::HumanBodyBones::RightLowerLeg,enums::HumanBodyBones::RightUpperLeg},
+		{enums::HumanBodyBones::RightUpperLeg,enums::HumanBodyBones::Hips},
+		// Left Leg
+		{enums::HumanBodyBones::LeftToes,enums::HumanBodyBones::LeftFoot},
+		{enums::HumanBodyBones::LeftFoot,enums::HumanBodyBones::LeftLowerLeg},
+		{enums::HumanBodyBones::LeftLowerLeg,enums::HumanBodyBones::LeftUpperLeg},
+		{enums::HumanBodyBones::LeftUpperLeg,enums::HumanBodyBones::Hips},
+		// Torso
+		{enums::HumanBodyBones::Hips, enums::HumanBodyBones::Spine},
+		{enums::HumanBodyBones::Spine, enums::HumanBodyBones::Chest},
+		{enums::HumanBodyBones::Chest, enums::HumanBodyBones::UpperChest},
+		{enums::HumanBodyBones::UpperChest, enums::HumanBodyBones::Neck},
+		// Neck and Head and Eyes
+		{enums::HumanBodyBones::Neck, enums::HumanBodyBones::Head},
+		{enums::HumanBodyBones::Head, enums::HumanBodyBones::Jaw},
+		{enums::HumanBodyBones::Head, enums::HumanBodyBones::LeftEye},
+		{enums::HumanBodyBones::Head, enums::HumanBodyBones::RightEye},
+		// Right Arm
+		{enums::HumanBodyBones::UpperChest, enums::HumanBodyBones::RightShoulder},
+		{enums::HumanBodyBones::RightShoulder, enums::HumanBodyBones::RightUpperArm},
+		{enums::HumanBodyBones::RightUpperArm, enums::HumanBodyBones::RightLowerArm},
+		{enums::HumanBodyBones::RightLowerArm, enums::HumanBodyBones::RightHand},
+		// Left Arm
+		{enums::HumanBodyBones::UpperChest, enums::HumanBodyBones::LeftShoulder},
+		{enums::HumanBodyBones::LeftShoulder, enums::HumanBodyBones::LeftUpperArm},
+		{enums::HumanBodyBones::LeftUpperArm, enums::HumanBodyBones::LeftLowerArm},
+		{enums::HumanBodyBones::LeftLowerArm, enums::HumanBodyBones::LeftHand},
+
+		// Left Fingers
+		{enums::HumanBodyBones::LeftHand, enums::HumanBodyBones::LeftThumbProximal},
+		{enums::HumanBodyBones::LeftThumbProximal, enums::HumanBodyBones::LeftThumbIntermediate},
+		{enums::HumanBodyBones::LeftThumbIntermediate, enums::HumanBodyBones::LeftThumbDistal},
+
+		{enums::HumanBodyBones::LeftHand, enums::HumanBodyBones::LeftIndexProximal},
+		{enums::HumanBodyBones::LeftIndexProximal, enums::HumanBodyBones::LeftIndexIntermediate},
+		{enums::HumanBodyBones::LeftIndexIntermediate, enums::HumanBodyBones::LeftIndexDistal},
+
+		{enums::HumanBodyBones::LeftHand, enums::HumanBodyBones::LeftMiddleProximal},
+		{enums::HumanBodyBones::LeftMiddleProximal, enums::HumanBodyBones::LeftMiddleIntermediate},
+		{enums::HumanBodyBones::LeftMiddleIntermediate, enums::HumanBodyBones::LeftMiddleDistal},
+
+		{enums::HumanBodyBones::LeftHand, enums::HumanBodyBones::LeftRingProximal},
+		{enums::HumanBodyBones::LeftRingProximal, enums::HumanBodyBones::LeftRingIntermediate},
+		{enums::HumanBodyBones::LeftRingIntermediate, enums::HumanBodyBones::LeftRingDistal},
+
+		{enums::HumanBodyBones::LeftHand, enums::HumanBodyBones::LeftLittleProximal},
+		{enums::HumanBodyBones::LeftLittleProximal, enums::HumanBodyBones::LeftLittleIntermediate},
+		{enums::HumanBodyBones::LeftLittleIntermediate, enums::HumanBodyBones::LeftLittleDistal},
+
+		// Right Fingers
+		{enums::HumanBodyBones::RightHand, enums::HumanBodyBones::RightThumbProximal },
+		{enums::HumanBodyBones::RightThumbProximal, enums::HumanBodyBones::RightThumbIntermediate},
+		{enums::HumanBodyBones::RightThumbIntermediate, enums::HumanBodyBones::RightThumbDistal},
+		
+		{enums::HumanBodyBones::RightHand, enums::HumanBodyBones::RightIndexProximal},
+		{enums::HumanBodyBones::RightIndexProximal, enums::HumanBodyBones::RightIndexIntermediate},
+		{enums::HumanBodyBones::RightIndexIntermediate, enums::HumanBodyBones::RightIndexDistal},
+		
+		{enums::HumanBodyBones::RightHand, enums::HumanBodyBones::RightMiddleProximal},
+		{enums::HumanBodyBones::RightMiddleProximal, enums::HumanBodyBones::RightMiddleIntermediate},
+		{enums::HumanBodyBones::RightMiddleIntermediate, enums::HumanBodyBones::RightMiddleDistal},
+		
+		{enums::HumanBodyBones::RightHand, enums::HumanBodyBones::RightRingProximal},
+		{enums::HumanBodyBones::RightRingProximal, enums::HumanBodyBones::RightRingIntermediate},
+		{enums::HumanBodyBones::RightRingIntermediate, enums::HumanBodyBones::RightRingDistal},
+		
+		{enums::HumanBodyBones::RightHand, enums::HumanBodyBones::RightLittleProximal},
+		{enums::HumanBodyBones::RightLittleProximal, enums::HumanBodyBones::RightLittleIntermediate},
+		{enums::HumanBodyBones::RightLittleIntermediate, enums::HumanBodyBones::RightLittleDistal}
 
 	};
 
@@ -87,7 +112,7 @@ namespace cheat
 
 					auto playerPosition = PlayerList[i]->GetTransform()->GetPosition();
 
-					for (std::pair<int, int> bone_index : BonePair)
+					for (std::pair<enums::HumanBodyBones, enums::HumanBodyBones> bone_index : BonePair)
 					{
 						auto bone1 = playerCurrentAnimator->CallMethodSafe<Unity::CTransform*>("GetBoneTransformInternal", bone_index.first);
 						auto bone2 = playerCurrentAnimator->CallMethodSafe<Unity::CTransform*>("GetBoneTransformInternal", bone_index.second);

@@ -18,6 +18,12 @@
 	    [T] Fix FA (FontAwesome),
 	    [T] Add More Features (e.g Aimbot, Godmode, etc)
 
+	Changelog: Commit 15
+		[+] Advanced ESP with Fingers,
+		[+] HumanBodyBones Enum,
+		[+] std::pair<int,int> to std::pair<HumanBodyBones,HumanBodyBones> instead.
+
+
 	Changelog: Commit 14
 		[+] Image Cache
 

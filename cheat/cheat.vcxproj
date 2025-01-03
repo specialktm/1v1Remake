@@ -334,6 +334,7 @@
     <ClInclude Include="source\kiero\minhook\src\trampoline.h" />
     <ClInclude Include="source\pch\framework.h" />
     <ClInclude Include="source\pch\pch.h" />
+    <ClInclude Include="source\util\enums.h" />
     <ClInclude Include="source\util\Il2cpp_Resolver\Cache.hpp" />
     <ClInclude Include="source\util\Il2cpp_Resolver\Data.hpp" />
     <ClInclude Include="source\util\Il2cpp_Resolver\Defines.hpp" />

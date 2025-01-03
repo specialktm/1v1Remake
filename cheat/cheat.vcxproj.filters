@@ -389,6 +389,9 @@
     <ClInclude Include="source\cheat\Features\features.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\util\enums.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="source\kiero\minhook\dll_resources\MinHook.def">
