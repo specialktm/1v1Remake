@@ -7,8 +7,6 @@
 
 #ifdef Developer
 /*	
-
-
 	Author:
 		[A] VoDKa
 

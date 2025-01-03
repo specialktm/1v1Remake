@@ -3,8 +3,6 @@
 
 namespace cheat
 {
-
-
     renderer::~renderer()
     {
         delete currentMenu;
