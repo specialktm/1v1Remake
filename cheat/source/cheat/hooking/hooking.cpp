@@ -6,7 +6,7 @@
 
 namespace cheat
 {
-	std::string hooking::SystemStringC(System_String_o* str) {
+	std::string util::SystemStringC(System_String_o* str) {
 		if (!str || str->fields._stringLength <= 0) return "<empty>";
 
 		const uint16_t* utf16_chars = &str->fields._firstChar;

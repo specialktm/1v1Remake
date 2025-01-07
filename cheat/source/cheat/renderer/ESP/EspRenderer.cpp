@@ -111,10 +111,15 @@ namespace cheat
 					bool playerIsTeam = playerCurrentContoller->CallMethodSafe<bool>("get_IsTeammate");
 					if (playerIsTeam)
 						continue;			
-
-					OLDDJHPFIAJ_o* PlayerInfo = playerCurrentContoller->CallMethodSafe<OLDDJHPFIAJ_o*>("get_PlayerInfo");
-					if (PlayerInfo == nullptr)
-						continue;
+					
+					bool playerIsBot = playerCurrentContoller->CallMethodSafe<bool>("get_IsBot");
+					OLDDJHPFIAJ_o* PlayerInfo = nullptr;
+					if (!playerIsBot)
+					{
+						PlayerInfo = playerCurrentContoller->CallMethodSafe<OLDDJHPFIAJ_o*>("get_PlayerInfo");
+						if (PlayerInfo == nullptr)
+							continue;
+					}
 
 		
 
@@ -139,14 +144,6 @@ namespace cheat
 							if (features::SkeletonEsp)
 							{
 								imgui::GetForegroundDrawList()->AddLine(ImVec2{bone1Screen.x ,bone1Screen.y}, ImVec2{bone2Screen.x ,bone2Screen.y}, IM_COL32_WHITE, 1.5f);
-								if (auto header = playerCurrentAnimator->CallMethodSafe<Unity::CTransform*>("GetBoneTransformInternal", enums::HumanBodyBones::Head))
-								{
-									Vector2 HeaderPos;
-									if (util::WorldToScreen(header->GetPosition(), HeaderPos))
-									{
-										imgui::GetForegroundDrawList()->AddCircleFilled(ImVec2{ HeaderPos.x ,HeaderPos.y}, 10.f, IM_COL32_WHITE, 1.5f);
-									}
-								}
 							}
 						}
 					}
@@ -168,12 +165,14 @@ namespace cheat
 							const auto left = static_cast<float>(PlayerHeadPosition.x - width);
 							const auto right = static_cast<float>(PlayerHeadPosition.x + width);
 
-							ImGui::GetBackgroundDrawList()->AddText(Menu.Font.FontAwesome, Menu.Font.FontAwesome->FontSize, ImVec2{ left ,PlayerHeadPosition.y + 6.f}, IM_COL32_WHITE, g_Hooking->SystemStringC(PlayerInfo->fields.BPKBHCOJNPA).c_str());
+							if (PlayerInfo != nullptr)
+							{
+								ImGui::GetBackgroundDrawList()->AddText(Menu.Font.FontAwesome, Menu.Font.FontAwesome->FontSize, ImVec2{ left ,PlayerHeadPosition.y + 6.f}, IM_COL32_WHITE, util::SystemStringC(PlayerInfo->fields.BPKBHCOJNPA).c_str());
+							}
 							ImGui::GetBackgroundDrawList()->AddRect(ImVec2{ left, PlayerHeadPosition.y }, ImVec2{ right, PlayerFeetPosition.y }, IM_COL32_WHITE);
 						}
 					}
 					
-
 				}	
 				IL2CPP::Thread::Detach(m_pThisThread);
 			}

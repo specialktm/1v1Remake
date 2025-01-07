@@ -42,6 +42,11 @@ namespace cheat::hooks
 
 
 
+namespace cheat::util
+{
+	extern std::string SystemStringC(System_String_o* str);
+}
+
 namespace cheat
 {
 	inline std::vector<Unity::CGameObject*> PlayerList(NULL);
@@ -51,7 +56,7 @@ namespace cheat
 		hooking();
 		~hooking();
 	public:
-		std::string SystemStringC(System_String_o* str);
+		
 	private:
 		void Hook();
 		void UnHook();
