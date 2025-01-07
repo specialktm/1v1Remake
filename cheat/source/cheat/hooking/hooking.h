@@ -3,6 +3,8 @@
 #include "../../util/Il2cpp_Resolver/il2cpp_resolver.hpp"
 #include <il2cpp.h>
 
+
+
 namespace cheat::D3D11
 {
 	inline HWND m_window = NULL;
@@ -45,12 +47,11 @@ namespace cheat
 	inline std::vector<Unity::CGameObject*> PlayerList(NULL);
 	class hooking
 	{
-
 	public:
 		hooking();
 		~hooking();
 	public:
-		
+		std::string SystemStringC(System_String_o* str);
 	private:
 		void Hook();
 		void UnHook();

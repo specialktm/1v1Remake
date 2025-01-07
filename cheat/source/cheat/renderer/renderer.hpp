@@ -24,7 +24,7 @@ namespace cheat
 		bool m_Open = true;
 		C_ImMMenu Menu;
 		// Submenus
-        void* currentMenu = Submenus::Home;;
+        void* currentMenu = Submenus::Home;
         std::vector<void*> menusArray;
         std::vector<int> optionsArray;
 		int menuLevel;

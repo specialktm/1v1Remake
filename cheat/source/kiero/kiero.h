@@ -32,6 +32,10 @@ typedef uint32_t uint150_t;
 
 namespace kiero
 {
+
+
+
+
 	struct Status
 	{
 		enum Enum

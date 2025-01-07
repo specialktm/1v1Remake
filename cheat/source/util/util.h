@@ -5,6 +5,7 @@
 #include <Includes.hpp>
 
 
+
 namespace cheat::timer {
 	using namespace std::chrono;
 	using namespace std::chrono_literals;
@@ -47,7 +48,7 @@ namespace cheat::timer {
 
 namespace cheat::util
 {
-
+	
 	uint8_t char_to_byte(char c);
 	std::optional<std::uint8_t> char_to_hex(const char c);
 
@@ -70,7 +71,6 @@ namespace cheat::util
 	{
 		return std::vformat(message, std::make_format_args(args...));
 	}
-
 
 	bool WorldToScreen(Unity::Vector3 world, Vector2& screen);
 

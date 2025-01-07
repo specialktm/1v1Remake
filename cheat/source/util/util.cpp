@@ -4,6 +4,9 @@
 
 namespace cheat::util
 {
+   
+
+
     uint8_t char_to_byte(char c)
     {
         constexpr uint8_t offset_0 = '0';

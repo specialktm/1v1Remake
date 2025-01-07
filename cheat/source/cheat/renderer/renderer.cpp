@@ -5,7 +5,7 @@ namespace cheat
 {
     renderer::~renderer()
     {
-        delete currentMenu;
+        ::free(currentMenu);
         menusArray.clear();
         optionsArray.clear();
     }

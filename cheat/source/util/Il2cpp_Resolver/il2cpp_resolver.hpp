@@ -24,4 +24,5 @@ namespace IL2CPP
 
 		bool Initialize();
 	}
+
 }

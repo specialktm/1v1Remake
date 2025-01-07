@@ -6,6 +6,21 @@
 
 namespace cheat
 {
+	std::string hooking::SystemStringC(System_String_o* str) {
+		if (!str || str->fields._stringLength <= 0) return "<empty>";
+
+		const uint16_t* utf16_chars = &str->fields._firstChar;
+		int utf8_size = WideCharToMultiByte(CP_UTF8, 0, (LPCWCH)utf16_chars, str->fields._stringLength, nullptr, 0, nullptr, nullptr);
+
+		if (utf8_size <= 0) return "<conversion error>";
+
+		std::string utf8_string(utf8_size, 0);
+		WideCharToMultiByte(CP_UTF8, 0, (LPCWCH)utf16_chars, str->fields._stringLength, &utf8_string[0], utf8_size, nullptr, nullptr);
+
+		return utf8_string;
+	}
+
+
 	void InitPlayerList()
 	{
 		while (true)
@@ -80,7 +95,9 @@ namespace cheat
 	{
 		IL2CPP::Callback::Uninitialize();
 		g_Detour.unhook();
-
+		kiero::shutdown();
 	}
+
+
 
 }

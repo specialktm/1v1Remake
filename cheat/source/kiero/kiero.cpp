@@ -668,7 +668,7 @@ void kiero::shutdown()
 	if (g_renderType != RenderType::None)
 	{
 #if KIERO_USE_MINHOOK
-		MH_DisableHook(MH_ALL_HOOKS);
+		//MH_DisableHook(MH_ALL_HOOKS);
 #endif
 
 		::free(g_methodsTable);

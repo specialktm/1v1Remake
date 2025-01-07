@@ -1,11 +1,11 @@
 #include "../renderer.hpp"
 #include "../../Features/features.h"
 #include "../../util/enums.h"
+
 namespace cheat
 {
-
 	std::vector<std::pair<enums::HumanBodyBones, enums::HumanBodyBones>> BonePair
-	{
+	{	
 		// Right Leg
 		{enums::HumanBodyBones::RightToes,enums::HumanBodyBones::RightFoot},
 		{enums::HumanBodyBones::RightFoot,enums::HumanBodyBones::RightLowerLeg},
@@ -23,9 +23,6 @@ namespace cheat
 		{enums::HumanBodyBones::UpperChest, enums::HumanBodyBones::Neck},
 		// Neck and Head and Eyes
 		{enums::HumanBodyBones::Neck, enums::HumanBodyBones::Head},
-		{enums::HumanBodyBones::Head, enums::HumanBodyBones::Jaw},
-		{enums::HumanBodyBones::Head, enums::HumanBodyBones::LeftEye},
-		{enums::HumanBodyBones::Head, enums::HumanBodyBones::RightEye},
 		// Right Arm
 		{enums::HumanBodyBones::UpperChest, enums::HumanBodyBones::RightShoulder},
 		{enums::HumanBodyBones::RightShoulder, enums::HumanBodyBones::RightUpperArm},
@@ -81,6 +78,10 @@ namespace cheat
 
 	};
 
+
+
+	Unity::CGameObject* LastPlayer;
+	Unity::CGameObject* Player;
 	void renderer::ESP()
 	{
 			if (PlayerList.size() > 0)
@@ -91,6 +92,7 @@ namespace cheat
 					if (!PlayerList[i])
 						continue;
 
+					Player = PlayerList[i];
 					Unity::CComponent* playerCurrentContoller = PlayerList[i]->GetComponent("PlayerController");
 					Unity::CComponent* playerCurrentAnimator = PlayerList[i]->GetComponent("Animator");
 
@@ -100,7 +102,7 @@ namespace cheat
 						continue;
 
 					bool playerIsDowned = playerCurrentContoller->CallMethodSafe<bool>("get_IsDowned");
-
+					
 
 					bool playerIsDead = playerCurrentContoller->CallMethodSafe<bool>("get_IsDead");
 					if (playerIsDead)
@@ -108,7 +110,13 @@ namespace cheat
 
 					bool playerIsTeam = playerCurrentContoller->CallMethodSafe<bool>("get_IsTeammate");
 					if (playerIsTeam)
+						continue;			
+
+					OLDDJHPFIAJ_o* PlayerInfo = playerCurrentContoller->CallMethodSafe<OLDDJHPFIAJ_o*>("get_PlayerInfo");
+					if (PlayerInfo == nullptr)
 						continue;
+
+		
 
 					auto playerPosition = PlayerList[i]->GetTransform()->GetPosition();
 
@@ -131,6 +139,14 @@ namespace cheat
 							if (features::SkeletonEsp)
 							{
 								imgui::GetForegroundDrawList()->AddLine(ImVec2{bone1Screen.x ,bone1Screen.y}, ImVec2{bone2Screen.x ,bone2Screen.y}, IM_COL32_WHITE, 1.5f);
+								if (auto header = playerCurrentAnimator->CallMethodSafe<Unity::CTransform*>("GetBoneTransformInternal", enums::HumanBodyBones::Head))
+								{
+									Vector2 HeaderPos;
+									if (util::WorldToScreen(header->GetPosition(), HeaderPos))
+									{
+										imgui::GetForegroundDrawList()->AddCircleFilled(ImVec2{ HeaderPos.x ,HeaderPos.y}, 10.f, IM_COL32_WHITE, 1.5f);
+									}
+								}
 							}
 						}
 					}
@@ -152,10 +168,13 @@ namespace cheat
 							const auto left = static_cast<float>(PlayerHeadPosition.x - width);
 							const auto right = static_cast<float>(PlayerHeadPosition.x + width);
 
+							ImGui::GetBackgroundDrawList()->AddText(Menu.Font.FontAwesome, Menu.Font.FontAwesome->FontSize, ImVec2{ left ,PlayerHeadPosition.y + 6.f}, IM_COL32_WHITE, g_Hooking->SystemStringC(PlayerInfo->fields.BPKBHCOJNPA).c_str());
 							ImGui::GetBackgroundDrawList()->AddRect(ImVec2{ left, PlayerHeadPosition.y }, ImVec2{ right, PlayerFeetPosition.y }, IM_COL32_WHITE);
 						}
 					}
-				}
+					
+
+				}	
 				IL2CPP::Thread::Detach(m_pThisThread);
 			}
 		}

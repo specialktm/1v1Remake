@@ -60,6 +60,7 @@ namespace cheat
 			std::this_thread::sleep_for(400ms);
 		}
 		fiber_manager::remove_all_fibers();
+		queue::free();
 		g_Hooking.reset(nullptr);
 		g_Renderer.reset(nullptr);
 		g_logger.reset(nullptr);
