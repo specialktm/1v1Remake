@@ -111,15 +111,11 @@ namespace cheat
 					bool playerIsTeam = playerCurrentContoller->CallMethodSafe<bool>("get_IsTeammate");
 					if (playerIsTeam)
 						continue;			
-					
 					bool playerIsBot = playerCurrentContoller->CallMethodSafe<bool>("get_IsBot");
-					OLDDJHPFIAJ_o* PlayerInfo = nullptr;
-					if (!playerIsBot)
-					{
-						PlayerInfo = playerCurrentContoller->CallMethodSafe<OLDDJHPFIAJ_o*>("get_PlayerInfo");
-						if (PlayerInfo == nullptr)
-							continue;
-					}
+					
+					OLDDJHPFIAJ_o* PlayerInfo = playerCurrentContoller->CallMethodSafe<OLDDJHPFIAJ_o*>("get_PlayerInfo");
+					if (PlayerInfo == nullptr)
+						continue;
 
 		
 
@@ -165,12 +161,65 @@ namespace cheat
 							const auto left = static_cast<float>(PlayerHeadPosition.x - width);
 							const auto right = static_cast<float>(PlayerHeadPosition.x + width);
 
-							if (PlayerInfo != nullptr)
-							{
-								ImGui::GetBackgroundDrawList()->AddText(Menu.Font.FontAwesome, Menu.Font.FontAwesome->FontSize, ImVec2{ left ,PlayerHeadPosition.y + 6.f}, IM_COL32_WHITE, util::SystemStringC(PlayerInfo->fields.BPKBHCOJNPA).c_str());
-							}
 							ImGui::GetBackgroundDrawList()->AddRect(ImVec2{ left, PlayerHeadPosition.y }, ImVec2{ right, PlayerFeetPosition.y }, IM_COL32_WHITE);
 						}
+					}
+					if (PlayerInfo != nullptr)
+					{
+						Unity::Vector3 root_pos = playerPosition;
+
+						Unity::Vector3 HeadPosition{ root_pos.x, root_pos.y + 1.703f, root_pos.z };
+
+						Unity::Vector3 HeadAimPosition{ root_pos.x, root_pos.y + 1.1f, root_pos.z };
+
+						Vector2 PlayerHeadPosition;
+						Vector2 PlayerFeetPosition;
+
+						if (util::WorldToScreen(HeadPosition, PlayerHeadPosition) && util::WorldToScreen(root_pos, PlayerFeetPosition))
+						{
+							const float height = PlayerFeetPosition.y - PlayerHeadPosition.y;
+							const float width = height * 0.2f;
+							const auto left = static_cast<float>(PlayerHeadPosition.x - width);
+							const auto right = static_cast<float>(PlayerHeadPosition.x + width);
+
+							std::string PlayerName = util::SystemStringC(PlayerInfo->fields.BPKBHCOJNPA);
+							std::string PlayerUUID = util::SystemStringC(PlayerInfo->fields.PNPHIPNNECK);
+							std::string PlayerSkin = util::SystemStringC(PlayerInfo->fields.EGOAPNGAAPC);
+							this->Text(
+								true, // Foreground
+								Menu.Font.Primary, // Font
+								ImVec2{ left, PlayerHeadPosition.y - 80.f }, // Position
+								20.f, // Text size
+								IM_COL32_WHITE, // Color 
+								false, // Centered
+								true, // Outlined
+								playerIsBot ? "Name: %s (BOT)" : "Name: %s"
+								,PlayerName.c_str() 
+							);
+							
+							this->Text(
+								true, // Foreground
+								Menu.Font.Primary, // Font
+								ImVec2{ left, PlayerHeadPosition.y - 50.f }, // Position
+								20.f, // Text size
+								IM_COL32_WHITE, // Color 
+								false, // Centered
+								true, // Outlined
+								"UUID: %s", PlayerUUID.c_str()
+							);	
+
+							this->Text(
+								true, // Foreground
+								Menu.Font.Primary, // Font
+								ImVec2{ left, PlayerHeadPosition.y - 20.f }, // Position
+								20.f, // Text size
+								IM_COL32_WHITE, // Color 
+								false, // Centered
+								true, // Outlined
+								"Skin: %s", PlayerSkin.c_str()
+							);
+						}
+			
 					}
 					
 				}	

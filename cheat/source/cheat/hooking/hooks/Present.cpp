@@ -20,9 +20,9 @@ namespace cheat
 		using namespace D3D11;
 		if (!PresentHooked)
 		{
-			if (SUCCEEDED(pSwapChain->GetDevice(__uuidof(ID3D11Device), (void**)&m_Device)))
+			if (SUCCEEDED(pSwapChain->GetDevice(__uuidof(ID3D11Device), (void**)m_Device.GetAddressOf())))
 			{
-				m_Device->GetImmediateContext(&m_Context);
+				m_Device->GetImmediateContext(m_Context.GetAddressOf());
 				DXGI_SWAP_CHAIN_DESC sd;
 				pSwapChain->GetDesc(&sd);
 				m_window = sd.OutputWindow;
@@ -35,9 +35,9 @@ namespace cheat
 				ImGui::CreateContext();
 				ImGuiIO& io = ImGui::GetIO();
 				io.ConfigFlags = ImGuiConfigFlags_NoMouseCursorChange;
-				ImGui_ImplWin32_Init(m_window);
 				ImGui_ImplDX11_Init(m_Device.Get(), m_Context.Get());
-				g_Renderer->Style();
+				ImGui_ImplWin32_Init(m_window);
+				imgui_style::initStyle();
 				g_Renderer->Menu.Initialize();
 				PresentHooked = true;
 			}
