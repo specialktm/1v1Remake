@@ -2,8 +2,8 @@
 
 namespace cheat::Submenus
 {
-	void (*FunctionPointers[])() = {
-		Home,
+    void (*FunctionPointers[])() = {
+        Home,
         Menus::TextureHeader,
         Menus::TextureSubtitle,
         Menus::TextureBackground,
@@ -11,7 +11,9 @@ namespace cheat::Submenus
         Menus::TextureFooter,
         Menus::TextureThemes,
         Menus::MenuSettings,
-        Menus::MenuESP
+        Menus::MenuESP,
+        Menus::Players,
+        Menus::SelectedPlayer
 	};
 	int NumberOfSubmenus = sizeof(Submenus::FunctionPointers) / sizeof(Submenus::FunctionPointers[0]);
 
@@ -68,9 +70,9 @@ namespace cheat::Submenus
         g_Renderer->Menu.SetTitleText(title);
     }
 
-    bool Button(const char* name, std::function<void()> callback)
+    bool Button(const char* name, std::function<void()> callback, const char* desc)
     {
-        if (g_Renderer->Menu.Item.AddText(name))
+        if (g_Renderer->Menu.Item.AddText(name,desc))
         {
             callback();
         }

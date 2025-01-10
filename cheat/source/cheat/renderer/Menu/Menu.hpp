@@ -224,13 +224,14 @@ namespace cheat
 				AddNewItem(pItem);
 			}
 
-			bool AddText(const char* p_Name)
+			bool AddText(const char* p_Name, const char* desc = "")
 			{
 				if (IsDummy(eImMMenuItemType_Text)) {
 					return false;
 				}
 
 				auto pItem = new C_ImMMenuItem(eImMMenuItemType_Text, p_Name);
+				pItem->m_Description = desc;
 				return (m_Interacted == AddNewItem(pItem));
 			}
 
@@ -1010,12 +1011,18 @@ namespace cheat
 						m_ItemNameClip.m_Offset.x += ItemNameScroll.m_Value;
 					}
 
+					std::string displayedText = &Item.Get(i)->m_Name[0];
+					if (vTextSize.x > m_FrameWidth - 20.f) {
+						
+						displayedText = displayedText.substr(0, displayedText.length() - 20) + "...";
+					}
+
 					ImGui::GetForegroundDrawList()->AddText(
 						Font.Primary,
 						Font.Primary->FontSize,
 						vTextPos, 
 						m_Selected ? Color.Selected_Text : Color.Primary_Text, 
-						&Item.Get(i)->m_Name[0]);
+						displayedText.c_str());
 					
 					
 					
@@ -1274,14 +1281,31 @@ namespace cheat
 
 					m_DrawPos.y += 5.f;
 
-					ImVec2 vTextSize = m_ItemDescription.CalcTextSize(Font.Primary);
+					//ImVec2 vTextSize = m_ItemDescription.CalcTextSize(Font.Primary);
+					ImVec2 vTextSize = Font.Primary->CalcTextSizeA(Font.Primary->FontSize, m_FrameWidth - 15.f, m_FrameWidth - 15.f, m_ItemDescription.m_Strings[0].c_str());
 					float fDescriptionHeight = floorf(vTextSize.y * 0.85f) + 10.f;
+					
 
-					m_DrawList->AddRectFilled(m_DrawPos, m_DrawPos + ImVec2(m_FrameWidth, fDescriptionHeight), Color.Description);
-					m_DrawList->AddLine(m_DrawPos, m_DrawPos + ImVec2(m_FrameWidth, 0.f), Color.Primary, 3.f);
+					//float width = m_FrameWidth + (vTextSize.x > m_FrameWidth ? pItem->m_Description.length() : 0.f);
+
+					m_DrawList->AddRectFilled
+					(
+						m_DrawPos, 
+						m_DrawPos + ImVec2(m_FrameWidth, fDescriptionHeight),
+						Color.Description, 
+						Item.m_FooterRounded ? Item.m_FooterRounding : 0,
+						Item.m_FooterRounded ? ImDrawFlags_RoundCornersBottom : 0
+					);
+
+					m_DrawList->AddLine(
+						m_DrawPos,
+						m_DrawPos + ImVec2(m_FrameWidth, 0.f),
+						Color.Footer_Text, 
+						3.f);
 
 					ImVec2 vTextPos(m_DrawPos + ImVec2(10.f, 8.f));
-					m_ItemDescription.Draw(m_DrawList, Font.Primary, floorf(Font.Primary->FontSize * 0.85f), vTextPos);
+					//m_ItemDescription.Draw(m_DrawList, Font.Primary, floorf(Font.Primary->FontSize * 0.85f), vTextPos);
+					m_DrawList->AddText(Font.Primary, floorf(Font.Primary->FontSize * 0.95f), vTextPos, IM_COL32_WHITE, m_ItemDescription.m_Strings[0].c_str(), nullptr, m_FrameWidth - 15.f);
 
 					m_DrawPos.y += fDescriptionHeight;
 				}

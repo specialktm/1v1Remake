@@ -244,6 +244,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\cheat\Features\Submenus\ESP\ESP.cpp" />
+    <ClCompile Include="source\cheat\Features\Submenus\SelectedPlayer\SelectedPlayer.cpp" />
     <ClCompile Include="source\cheat\Features\Submenus\Settings\Settings.cpp" />
     <ClCompile Include="source\cheat\Features\Submenus\Settings\Texture\Menu\MenuTextures.cpp" />
     <ClCompile Include="source\cheat\Features\Submenus\Settings\Texture\Theme\Theme.cpp" />
@@ -256,6 +257,7 @@
     <ClCompile Include="source\cheat\renderer\Menu\DrawMenu.cpp" />
     <ClCompile Include="source\cheat\renderer\Menu\Fonts\font_awesome_data.cpp" />
     <ClCompile Include="source\cheat\renderer\Menu\Submenu\Submenu.cpp" />
+    <ClCompile Include="source\cheat\renderer\Menu\Submenu\Types\Player.cpp" />
     <ClCompile Include="source\cheat\renderer\renderer.cpp" />
     <ClCompile Include="source\cheat\renderer\ThemeLoader\ThemeLoader.cpp" />
     <ClCompile Include="source\entry\entry.cpp" />
@@ -308,6 +310,7 @@
     <ClInclude Include="source\cheat\renderer\Menu\Menu.hpp" />
     <ClInclude Include="source\cheat\renderer\Menu\Items.hpp" />
     <ClInclude Include="source\cheat\renderer\Menu\Submenu\Submenu.h" />
+    <ClInclude Include="source\cheat\renderer\Menu\Submenu\Types\Player.h" />
     <ClInclude Include="source\cheat\renderer\Menu\TextMultiColor.hpp" />
     <ClInclude Include="source\cheat\renderer\renderer.hpp" />
     <ClInclude Include="source\cheat\renderer\ThemeLoader\ThemeLoader.h" />

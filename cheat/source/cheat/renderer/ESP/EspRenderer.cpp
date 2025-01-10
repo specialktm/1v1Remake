@@ -92,6 +92,7 @@ namespace cheat
 					if (!PlayerList[i])
 						continue;
 
+
 					Player = PlayerList[i];
 					Unity::CComponent* playerCurrentContoller = PlayerList[i]->GetComponent("PlayerController");
 					Unity::CComponent* playerCurrentAnimator = PlayerList[i]->GetComponent("Animator");
@@ -118,6 +119,23 @@ namespace cheat
 						continue;
 
 		
+					if (!playerIsBot)
+					{
+						if (i >= static_cast<int>(playerMenu.size()))
+						{
+							playerMenu.resize(i + 1);
+						}
+
+						if (playerMenu[i].name.empty())
+						{
+							t_playersubmenu temp;
+							temp.name = util::SystemStringC(PlayerInfo->fields.BPKBHCOJNPA);
+							temp.uuid = util::SystemStringC(PlayerInfo->fields.PNPHIPNNECK);
+							temp.skin = util::SystemStringC(PlayerInfo->fields.EGOAPNGAAPC);
+							playerMenu[i] = temp;
+						}
+					}
+
 
 					auto playerPosition = PlayerList[i]->GetTransform()->GetPosition();
 
@@ -164,64 +182,7 @@ namespace cheat
 							ImGui::GetBackgroundDrawList()->AddRect(ImVec2{ left, PlayerHeadPosition.y }, ImVec2{ right, PlayerFeetPosition.y }, IM_COL32_WHITE);
 						}
 					}
-					if (PlayerInfo != nullptr)
-					{
-						Unity::Vector3 root_pos = playerPosition;
-
-						Unity::Vector3 HeadPosition{ root_pos.x, root_pos.y + 1.703f, root_pos.z };
-
-						Unity::Vector3 HeadAimPosition{ root_pos.x, root_pos.y + 1.1f, root_pos.z };
-
-						Vector2 PlayerHeadPosition;
-						Vector2 PlayerFeetPosition;
-
-						if (util::WorldToScreen(HeadPosition, PlayerHeadPosition) && util::WorldToScreen(root_pos, PlayerFeetPosition))
-						{
-							const float height = PlayerFeetPosition.y - PlayerHeadPosition.y;
-							const float width = height * 0.2f;
-							const auto left = static_cast<float>(PlayerHeadPosition.x - width);
-							const auto right = static_cast<float>(PlayerHeadPosition.x + width);
-
-							std::string PlayerName = util::SystemStringC(PlayerInfo->fields.BPKBHCOJNPA);
-							std::string PlayerUUID = util::SystemStringC(PlayerInfo->fields.PNPHIPNNECK);
-							std::string PlayerSkin = util::SystemStringC(PlayerInfo->fields.EGOAPNGAAPC);
-							this->Text(
-								true, // Foreground
-								Menu.Font.Primary, // Font
-								ImVec2{ left, PlayerHeadPosition.y - 80.f }, // Position
-								20.f, // Text size
-								IM_COL32_WHITE, // Color 
-								false, // Centered
-								true, // Outlined
-								playerIsBot ? "Name: %s (BOT)" : "Name: %s"
-								,PlayerName.c_str() 
-							);
-							
-							this->Text(
-								true, // Foreground
-								Menu.Font.Primary, // Font
-								ImVec2{ left, PlayerHeadPosition.y - 50.f }, // Position
-								20.f, // Text size
-								IM_COL32_WHITE, // Color 
-								false, // Centered
-								true, // Outlined
-								"UUID: %s", PlayerUUID.c_str()
-							);	
-
-							this->Text(
-								true, // Foreground
-								Menu.Font.Primary, // Font
-								ImVec2{ left, PlayerHeadPosition.y - 20.f }, // Position
-								20.f, // Text size
-								IM_COL32_WHITE, // Color 
-								false, // Centered
-								true, // Outlined
-								"Skin: %s", PlayerSkin.c_str()
-							);
-						}
-			
-					}
-					
+	
 				}	
 				IL2CPP::Thread::Detach(m_pThisThread);
 			}

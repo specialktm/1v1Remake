@@ -168,6 +168,12 @@
     <ClCompile Include="source\cheat\Features\Submenus\ESP\ESP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\cheat\renderer\Menu\Submenu\Types\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\cheat\Features\Submenus\SelectedPlayer\SelectedPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\pch\pch.h">
@@ -390,6 +396,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\util\enums.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\cheat\renderer\Menu\Submenu\Types\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
