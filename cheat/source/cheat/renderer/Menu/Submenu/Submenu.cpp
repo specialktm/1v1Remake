@@ -92,4 +92,9 @@ namespace cheat::Submenus
     {
         return g_Renderer->Menu.Item.AddFloat(name, m_Description, p_Value, m_Min, m_Max,m_Power, "%.3f", m_Clamp);
     }
+
+    bool Number(const char* m_Name, const char* m_Description, int* p_Value, int m_Min, int m_Max, int m_Power, bool m_Clamp)
+    {
+        return g_Renderer->Menu.Item.AddInteger(m_Name, m_Description, p_Value, m_Min, m_Max, m_Power, m_Clamp);
+    }
 }
