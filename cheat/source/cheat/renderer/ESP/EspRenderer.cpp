@@ -140,7 +140,7 @@ namespace cheat
 					auto playerPosition = PlayerList[i]->GetTransform()->GetPosition();
 
 					for (std::pair<enums::HumanBodyBones, enums::HumanBodyBones> bone_index : BonePair)
-					{
+					{ 
 						auto bone1 = playerCurrentAnimator->CallMethodSafe<Unity::CTransform*>("GetBoneTransformInternal", bone_index.first);
 						auto bone2 = playerCurrentAnimator->CallMethodSafe<Unity::CTransform*>("GetBoneTransformInternal", bone_index.second);
 
