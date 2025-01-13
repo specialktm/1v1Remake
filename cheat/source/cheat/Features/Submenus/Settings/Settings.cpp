@@ -16,19 +16,15 @@ namespace cheat
 		Break("Reset");
 		Button("Save Theme", [&]
 		{
-			queue::add([&] {
-				g_ThemeLoader.SaveTheme();
-			});
-		});	
+			g_ThemeLoader.SaveTheme();
+		});
 		Button("Save Custom Textures", [&]
 		{
-			queue::add([&] {
-				g_ThemeLoader.SaveThemeFile();
-			});
+			g_ThemeLoader.SaveThemeFile();
 		});
 		Button("Reset Textures", [&]
 		{
-			g_ThemeLoader.Reset(); 
+			g_ThemeLoader.Reset();
 		});
 	}
 }
