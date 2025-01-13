@@ -99,4 +99,9 @@ namespace cheat::Submenus
     {
         return g_Renderer->Menu.Item.AddInteger(m_Name, m_Description, p_Value, m_Min, m_Max, m_Power, m_Clamp);
     }
+
+    void PlaySound(fs::path& file)
+    {
+        g_SoundLoader.PlaySound(file);
+    }
 }

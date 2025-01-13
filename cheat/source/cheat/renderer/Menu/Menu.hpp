@@ -38,12 +38,13 @@ namespace Submenus
 {
 	void Move(void* Submenu);
 	void Back();
+	void PlaySound(fs::path& file);
 }
 
-fs::path l("C:\\ImaGuy\\Sounds\\pew.ogg");
 namespace cheat
 {
 
+	inline fs::path audios{ "C:\\ImaGuy\\Sounds\\pew.ogg" };
 	class C_ImMMenu
 	{
 	public:
@@ -571,15 +572,15 @@ namespace cheat
 		struct Input_t
 		{
 			char m_SelectUpDown = 0; // -1 = Up | 1 = Down
-			__inline void SelectUp() { m_SelectUpDown -= 1; }
-			__inline void SelectDown() { m_SelectUpDown += 1; }
+			__inline void SelectUp() { Submenus::PlaySound(audios); m_SelectUpDown -= 1; }
+			__inline void SelectDown() { Submenus::PlaySound(audios);  m_SelectUpDown += 1; }
 
 			char m_SelectLeftRight = 0; // -1 = Left | 1 = Right
-			__inline void SelectLeft() { m_SelectLeftRight -= 1; }
-			__inline void SelectRight() { m_SelectLeftRight += 1; }
+			__inline void SelectLeft() { Submenus::PlaySound(audios);  m_SelectLeftRight -= 1; }
+			__inline void SelectRight() { Submenus::PlaySound(audios);  m_SelectLeftRight += 1; }
 
 			bool m_SelectInteraction = false;
-			__inline void SelectInteraction() { m_SelectInteraction = true; }
+			__inline void SelectInteraction() { Submenus::PlaySound(audios);  m_SelectInteraction = true; }
 
 			bool m_EnableNative = true; // You can disable this if you wanna handle it different way...
 			double m_NavigationRepeatDelta = 0.25;
@@ -620,6 +621,8 @@ namespace cheat
 					{
 						m_NagivationEmulatedPressCount[i] = 1;
 						m_NavigationLastPress[i] = 0.0;
+						
+
 						continue;
 					}
 
@@ -1410,7 +1413,6 @@ namespace cheat
 
 				if (Input.m_SelectInteraction)
 				{
-					g_SoundLoader.PlaySound();
 					if (Item.IsSelectedValid())
 					{
 						Item.m_Interacted = Item.m_Selected;
