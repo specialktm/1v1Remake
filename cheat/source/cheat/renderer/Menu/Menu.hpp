@@ -21,7 +21,6 @@
 #include "Submenu/Submenu.h"
 #include "Fonts/font_awesome_data.cpp"
 #undef min
-#include "Sound/SoundLoader.h"
 
 #define IMMENU_ICON_LEFTARROW			"<"
 #define IMMENU_ICON_RIGHTARROW			">"
@@ -40,7 +39,6 @@ namespace Submenus
 	void Back();
 }
 
-fs::path l("C:\\ImaGuy\\Sounds\\pew.ogg");
 namespace cheat
 {
 
@@ -1410,7 +1408,6 @@ namespace cheat
 
 				if (Input.m_SelectInteraction)
 				{
-					g_SoundLoader.PlaySound();
 					if (Item.IsSelectedValid())
 					{
 						Item.m_Interacted = Item.m_Selected;

@@ -1,11 +1,54 @@
 #include "ThemeLoader.h"
 #include "../../../common/common.h"
+
+#include <shlobj.h>
+#include <objbase.h>
+#pragma comment(lib,"Shell32")
+#pragma comment(lib,"Ole32")
+
+
 namespace cheat
 {
 
+	fs::path ThemeLoader::GetDocumentsPath()
+	{
+		wchar_t* p;
+		if (S_OK != SHGetKnownFolderPath(FOLDERID_Documents, 0, NULL, &p)) return "";
+		std::filesystem::path result = p;
+		CoTaskMemFree(p);
+
+		return p;
+	}
+
+
+	bool CreateThemeFolders(fs::path& ThemePath)
+	{
+		fs::path HeaderPath{ ThemePath / "Header" };
+		fs::path SubtitlePath{ ThemePath / "Subtitle" };
+		fs::path BackgroundPath{ ThemePath / "Background" };
+		fs::path ScrollerPath{ ThemePath / "Scroller" };
+		fs::path FooterPath{ ThemePath / "Footer" };
+
+		std::vector<fs::path> paths = { HeaderPath, SubtitlePath, BackgroundPath, ScrollerPath, FooterPath, ThemePath };
+		for (const auto& folder : paths)
+		{
+			if (!fs::exists(folder))
+			{
+				if (!fs::create_directories(folder))
+				{
+					g_logger->send(levels::error, "Failed to create folder: {}", folder.string());
+				}
+			}
+		}
+
+		g_logger->send(levels::debug, "Made All Folders");
+		return true;
+	}
+
+
 	void ThemeLoader::CreateFolders()
 	{
-		std::vector<fs::path> paths = { HeaderPath, SubtitlePath, BackgroundPath, ScrollerPath, FooterPath, ThemePath };
+		std::vector<fs::path> paths = { HeaderPath_, SubtitlePath_, BackgroundPath_, ScrollerPath_, FooterPath_, ThemePath_ };
 
 		for (const auto& path : paths)
 		{
@@ -27,15 +70,16 @@ namespace cheat
 			}
 		}
 
-		if (fs::exists(SavedThemePath))
+		if (fs::exists(SavedThemePath_))
 		{
-			LoadThemeFromFile(SavedThemePath);
+			LoadThemeFromFile(SavedThemePath_);
 		}
 	}
 
 
 	void ThemeLoader::LoadHeader(const fs::path& file)
 	{
+		ThemeData_.Header.clear();
 		g_Renderer->Menu.Header.m_Header.clear();
 		g_Renderer->Menu.Header.m_HeaderFrame = 0;
 
@@ -47,11 +91,12 @@ namespace cheat
 		{
 			g_Renderer->Menu.Header.m_Header.try_emplace(0, 0, g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file));
 		}
-		ThemeData.Header = file;
+		ThemeData_.Header = file;
 	}
 
 	void ThemeLoader::LoadSubtitle(const fs::path& file)
 	{
+		ThemeData_.Subtitle.clear();
 		g_Renderer->Menu.Item.m_SubtitleImage.clear();
 		g_Renderer->Menu.Item.m_SubtitleFrame = 0;
 
@@ -63,11 +108,12 @@ namespace cheat
 		{
 			g_Renderer->Menu.Item.m_SubtitleImage.try_emplace(0, 0, g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file));
 		}
-		ThemeData.Subtitle= file;
+		ThemeData_.Subtitle= file;
 	}
 
 	void ThemeLoader::LoadBackground(const fs::path& file)
 	{
+		ThemeData_.Background.clear();
 		g_Renderer->Menu.Item.m_BackgroundImage.clear();
 		g_Renderer->Menu.Item.m_BackgroundFrame = 0;
 		if (file.extension() == ".gif")
@@ -79,11 +125,12 @@ namespace cheat
 			g_Renderer->Menu.Item.m_BackgroundImage.try_emplace(0, 0, g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file));
 
 		}
-		ThemeData.Background = file;
+		ThemeData_.Background = file;
 	}
 
 	void ThemeLoader::LoadScroller(const fs::path& file)
 	{
+		ThemeData_.Scroller.clear();
 		g_Renderer->Menu.Item.m_Image.clear();
 		g_Renderer->Menu.Item.m_ScrollerFrame = 0;
 		if (file.extension() == ".gif")
@@ -95,10 +142,12 @@ namespace cheat
 			g_Renderer->Menu.Item.m_Image.try_emplace(0, 0, g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file));
 
 		}
-		ThemeData.Scroller = file;
+		ThemeData_.Scroller = file;
 	}
 	void ThemeLoader::LoadFooter(const fs::path& file)
 	{
+		ThemeData_.Footer.clear();
+
 		g_Renderer->Menu.Item.m_FooterImage.clear();
 		g_Renderer->Menu.Item.m_FooterFrame = 0;
 
@@ -110,11 +159,12 @@ namespace cheat
 		{
 			g_Renderer->Menu.Item.m_FooterImage.try_emplace(0, 0, g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file));
 		}
-		ThemeData.Footer = file;
+		ThemeData_.Footer = file;
 	}
 
 	void ThemeLoader::LoadTheme(const fs::path& folder) 
 	{
+		Reset();
 		std::unordered_map<std::string, void (ThemeLoader::*)(const fs::path&)> loadFunctions = {
 				{"Header", &ThemeLoader::LoadHeader},
 				{"Subtitle", &ThemeLoader::LoadSubtitle},
@@ -142,7 +192,7 @@ namespace cheat
 				g_logger->send(levels::error, "Subfolder not found or not a directory: {}", subfolderPath.string());
 			}
 
-			LoadedTheme = folder;
+			LoadedTheme_ = folder;
 		}
 	}
 
@@ -156,19 +206,19 @@ namespace cheat
 			switch (type)
 			{
 			case ImageType::Header:
-				target_path = fs::directory_iterator(HeaderPath);
+				target_path = fs::directory_iterator(HeaderPath_);
 				break;
 			case ImageType::Subtitle:
-				target_path = fs::directory_iterator(SubtitlePath);
+				target_path = fs::directory_iterator(SubtitlePath_);
 				break;
 			case ImageType::Background:
-				target_path = fs::directory_iterator(BackgroundPath);
+				target_path = fs::directory_iterator(BackgroundPath_);
 				break;
 			case ImageType::Scroller:
-				target_path = fs::directory_iterator(ScrollerPath);
+				target_path = fs::directory_iterator(ScrollerPath_);
 				break;
 			case ImageType::Footer:
-				target_path = fs::directory_iterator(FooterPath);
+				target_path = fs::directory_iterator(FooterPath_);
 				break;
 			default:
 				return tmp_vec;
@@ -196,7 +246,7 @@ namespace cheat
 	std::vector<fs::directory_entry> ThemeLoader::GetThemes()
 	{
 		std::vector<fs::directory_entry> tmp_vec;
-		fs::directory_iterator target_path = fs::directory_iterator(ThemePath);
+		fs::directory_iterator target_path = fs::directory_iterator(ThemePath_);
 
 		try
 		{
@@ -223,8 +273,8 @@ namespace cheat
 	void ThemeLoader::SaveTheme()
 	{
 		nlohmann::json JsonData;
-		JsonData["SavedTheme"] = LoadedTheme.string();
-		std::ofstream file{ SavedThemePath.string() };
+		JsonData["SavedTheme"] = LoadedTheme_.string();
+		std::ofstream file{ SavedThemePath_.string() };
 		if (file.is_open()) {
 			file << JsonData.dump(4);
 			file.close();
@@ -235,13 +285,13 @@ namespace cheat
 	{
 		nlohmann::json JsonData;
 		
-		JsonData["Header"] = ThemeData.Header.string();
-		JsonData["Subtitle"] = ThemeData.Subtitle.string();
-		JsonData["Background"] = ThemeData.Background.string();
-		JsonData["Scroller"] = ThemeData.Scroller.string();
-		JsonData["Footer"] = ThemeData.Footer.string();
+		JsonData["Header"] = ThemeData_.Header.string();
+		JsonData["Subtitle"] = ThemeData_.Subtitle.string();
+		JsonData["Background"] = ThemeData_.Background.string();
+		JsonData["Scroller"] = ThemeData_.Scroller.string();
+		JsonData["Footer"] = ThemeData_.Footer.string();
 
-		std::ofstream file{ SavedThemePath.string() };
+		std::ofstream file{ SavedThemePath_.string() };
 		if (file.is_open()) {
 			file << JsonData.dump(4);
 			file.close();
@@ -267,7 +317,62 @@ namespace cheat
 			if (JsonData.contains("Footer")) LoadFooter(JsonData["Footer"]);
 		}
 	}
+	
+	bool ThemeLoader::SaveThemeToFolder(std::string_view ThemeName)
+	{
 
+		fs::path ThemePath{ ThemePath_ / ThemeName };
+		fs::path HeaderPath{ ThemePath / "Header" /"Header" +=ThemeData_.Header.extension()};
+		fs::path SubtitlePath{ ThemePath / "Subtitle" / "Subtitle" += ThemeData_.Subtitle.extension() };
+		fs::path BackgroundPath{ ThemePath / "Background" / "Background" += ThemeData_.Background.extension() };
+		fs::path ScrollerPath{ ThemePath / "Scroller" / "Scroller" += ThemeData_.Scroller.extension() };
+		fs::path FooterPath{ ThemePath / "Footer" / "Footer" += ThemeData_.Footer.extension() };
+		LoadedTheme_ = ThemePath;
+			
+			
+			
+		if (!fs::exists(ThemePath))
+		{
+			if (!fs::create_directories(ThemePath))
+			{
+				g_logger->send(levels::error, "Failed to create theme directory: {}", ThemePath.string());
+				return false;
+			}
+
+			if (!CreateThemeFolders(ThemePath))
+			{
+				g_logger->send(levels::error, "Failed to create theme subfolders: {}", ThemePath.string());
+				return false;
+			}
+		}
+
+		if (ThemeData_ != ThemeFormat{})
+		{
+
+			auto copy_with_overwrite = [](const fs::path& src, const fs::path& dest) {
+				try {
+					if (fs::exists(src))
+						fs::copy_file(src, dest, fs::copy_options::none);
+					return true;
+				}
+				catch (const std::exception& e) {
+					g_logger->send(levels::error, "Failed to copy file: {} -> {} | Error: {}", src.string(), dest.string(), e.what());
+					return false;
+				}
+			};
+			
+
+			if (!copy_with_overwrite(ThemeData_.Header, HeaderPath)) return false;
+			if (!copy_with_overwrite(ThemeData_.Subtitle, SubtitlePath)) return false;
+			if (!copy_with_overwrite(ThemeData_.Background, BackgroundPath)) return false;
+			if (!copy_with_overwrite(ThemeData_.Scroller, ScrollerPath)) return false;
+			if (!copy_with_overwrite(ThemeData_.Footer, FooterPath)) return false;
+		}
+
+		SaveTheme();
+		g_logger->send(levels::success, "Successfully saved theme: {} at {}", ThemeName, ThemePath.string());
+		return true;
+	}
 
 	void ThemeLoader::Reset()
 	{
@@ -281,5 +386,11 @@ namespace cheat
 		g_Renderer->Menu.Item.m_SubtitleFrame = 0;
 		g_Renderer->Menu.Header.m_Header.clear();
 		g_Renderer->Menu.Header.m_HeaderFrame = 0;
+
+		ThemeFormat TempFormat;
+		LoadedTheme_.clear();
+		ThemeData_ = TempFormat;
 	}
+
+	
 }

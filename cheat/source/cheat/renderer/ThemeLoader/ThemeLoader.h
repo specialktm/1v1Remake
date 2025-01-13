@@ -16,8 +16,23 @@ namespace cheat
 		fs::path Background;
 		fs::path Scroller;
 		fs::path Footer;
-	};
+		
+		bool operator==(const ThemeFormat& Data) const {
+			return Header == Data.Header &&
+				Subtitle == Data.Subtitle &&
+				Background == Data.Background &&
+				Scroller == Data.Scroller &&
+				Footer == Data.Footer;
+		}
 
+		bool operator!=(const ThemeFormat& Data) const {
+			return Header != Data.Header ||
+				Subtitle != Data.Subtitle ||
+				Background != Data.Background ||
+				Scroller != Data.Scroller ||
+				Footer != Data.Footer;
+		}
+	};
 	enum class ImageType
 	{
 		Header = 1,
@@ -36,6 +51,7 @@ namespace cheat
 		void LoadTheme(const fs::path& folder);
 		void LoadThemeFromFile(const fs::path& file);
 		void SaveTheme();
+		bool SaveThemeToFolder(std::string_view ThemeName);
 		void SaveThemeFile();
 		void LoadHeader(const fs::path& file);
 		void LoadSubtitle(const fs::path& file);
@@ -49,16 +65,18 @@ namespace cheat
 
 	private:
 	
-		fs::path HeaderPath = "C:\\ImaGuy\\Header\\";
-		fs::path SubtitlePath = "C:\\ImaGuy\\Subtitle\\";
-		fs::path BackgroundPath = "C:\\ImaGuy\\Background\\";
-		fs::path ScrollerPath = "C:\\ImaGuy\\Scroller\\";
-		fs::path FooterPath = "C:\\ImaGuy\\Footer\\";
-		fs::path ThemePath = "C:\\ImaGuy\\Themes\\";
-		fs::path SavedThemePath = "C:\\ImaGuy\\theme.json";
-		fs::path LoadedTheme = "";
-		ThemeFormat ThemeData{};
+		fs::path DocumentsFolder{ GetDocumentsPath() / "CortezMenu"};
+		fs::path HeaderPath_{ DocumentsFolder / "Textures" / "Header" };
+		fs::path SubtitlePath_{ DocumentsFolder / "Textures" / "Subtitle" };
+		fs::path BackgroundPath_{ DocumentsFolder / "Textures" / "Background" };
+		fs::path ScrollerPath_{ DocumentsFolder / "Textures" / "Scroller" };
+		fs::path FooterPath_{ DocumentsFolder / "Textures" / "Footer" };
+		fs::path ThemePath_{ DocumentsFolder / "Themes" };
+		fs::path SavedThemePath_{ DocumentsFolder / "theme.json" };
+		fs::path LoadedTheme_ = "";
+		ThemeFormat ThemeData_{};
 
+		fs::path GetDocumentsPath();
 		bool IsExtensionValid(const fs::path& filePath) {
 			std::string ext = filePath.extension().string();
 			for (const auto& validExt : ValidExtensions) {
