@@ -114,7 +114,7 @@ namespace cheat
 						continue;			
 					bool playerIsBot = playerCurrentContoller->CallMethodSafe<bool>("get_IsBot");
 					
-					OLDDJHPFIAJ_o* PlayerInfo = playerCurrentContoller->CallMethodSafe<OLDDJHPFIAJ_o*>("get_PlayerInfo");
+					t_PlayerInfo* PlayerInfo = playerCurrentContoller->CallMethodSafe<t_PlayerInfo*>("get_PlayerInfo");
 					if (PlayerInfo == nullptr)
 						continue;
 
@@ -129,9 +129,9 @@ namespace cheat
 						if (playerMenu[i].name.empty())
 						{
 							t_playersubmenu temp;
-							temp.name = util::SystemStringC(PlayerInfo->fields.BPKBHCOJNPA);
-							temp.uuid = util::SystemStringC(PlayerInfo->fields.PNPHIPNNECK);
-							temp.skin = util::SystemStringC(PlayerInfo->fields.EGOAPNGAAPC);
+							temp.name = util::SystemStringC(PlayerInfo->fields.Username);
+							temp.uuid = util::SystemStringC(PlayerInfo->fields.UUID);
+							temp.skin = util::SystemStringC(PlayerInfo->fields.PlayerSkin);
 							playerMenu[i] = temp;
 						}
 					}

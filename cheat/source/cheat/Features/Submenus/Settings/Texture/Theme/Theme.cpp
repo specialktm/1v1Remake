@@ -8,13 +8,9 @@ namespace cheat
 		Title("Themes");
 		for (const auto& folder : g_ThemeLoader.GetThemes())
 		{
-			if (g_Renderer->Menu.Item.AddText(std::format("Load: {}", folder.path().stem().string()).c_str()))
-			{
-				queue::add([folder] {
-					g_ThemeLoader.LoadTheme(folder.path());
-				});
-			}
+			Button(std::format("Load: {}", folder.path().stem().string()).c_str(), [folder] {
+				g_ThemeLoader.LoadTheme(folder.path());
+			});
 		}
-
 	}
 }
