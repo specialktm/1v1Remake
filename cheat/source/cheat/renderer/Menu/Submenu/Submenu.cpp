@@ -102,6 +102,6 @@ namespace cheat::Submenus
 
     void PlaySound(fs::path& file)
     {
-        queue::add([&file] {g_SoundLoader.PlaySound(file); });
+        g_SoundLoader.PlaySound(file);
     }
 }
