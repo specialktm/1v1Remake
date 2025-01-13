@@ -7,12 +7,12 @@ namespace cheat
 	void Submenus::Menus::TextureHeader()
 	{
 		Title("Header");
-		Button("Reset Texture", [&]
+		Button("Reset Texture",[&]
 		{
 			g_Renderer->Menu.Header.m_Header.clear();
 			g_Renderer->Menu.Header.m_HeaderFrame = 0;
 		});
-
+		
 
 		Break("Rounding");
 		Bool("Rounded", "Round the header", &g_Renderer->Menu.Header.m_Rounded);
@@ -27,9 +27,10 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file() && path.has_filename())
 			{
-				Button(std::format("Load: {}", path.filename().string()).c_str(), [path] 
-				{
-					g_ThemeLoader.LoadHeader(path);
+				Button(std::format("Load: {}", path.filename().string()).c_str(), [&] {
+					queue::add([path] {
+						g_ThemeLoader.LoadHeader(path);
+					});
 				});
 			}
 		}
@@ -39,7 +40,7 @@ namespace cheat
 	void Submenus::Menus::TextureSubtitle()
 	{
 		Title("Subtitle");
-		Button("Reset Texture", [&]
+		Button("Reset Texture", [&] 
 		{
 			g_Renderer->Menu.Item.m_SubtitleImage.clear();
 			g_Renderer->Menu.Item.m_SubtitleFrame = 0;
@@ -50,9 +51,11 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file())
 			{
-				Button(std::format("Load: {}", path.filename().string()).c_str(), [path]
+				Button(std::format("Load: {}", path.filename().string()).c_str(), [&]
 				{
-					g_ThemeLoader.LoadSubtitle(path);
+					queue::add([path] {
+						g_ThemeLoader.LoadSubtitle(path);
+					});
 				});
 			}
 		}
@@ -62,7 +65,7 @@ namespace cheat
 	void Submenus::Menus::TextureBackground()
 	{
 		Title("Background");
-		Button("Reset Texture", [&]
+		 Button("Reset Texture", [&]
 		{
 			g_Renderer->Menu.Item.m_BackgroundImage.clear();
 			g_Renderer->Menu.Item.m_BackgroundFrame = 0;
@@ -74,9 +77,11 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file())
 			{
-				Button(std::format("Load: {}", path.filename().string()).c_str(), [path]
+				Button(std::format("Load: {}", path.filename().string()).c_str(), [&]
 				{
-					g_ThemeLoader.LoadBackground(path);
+					queue::add([path] {
+						g_ThemeLoader.LoadBackground(path);
+					});
 				});
 			}
 		}
@@ -104,9 +109,11 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file())
 			{
-				Button(std::format("Load: {}", path.filename().string()).c_str(), [path]
+				Button(std::format("Load: {}", path.filename().string()).c_str(),[&]
 				{
-					g_ThemeLoader.LoadScroller(path);
+					queue::add([path] {
+						g_ThemeLoader.LoadScroller(path);
+					});
 				});
 			}
 		}
@@ -133,11 +140,12 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file() && path.has_filename())
 			{
-				Button(std::format("Load: {}", path.filename().string()).c_str(), [path]
+				Button(std::format("Load: {}", path.filename().string()).c_str(), [&]
 				{
-					g_ThemeLoader.LoadFooter(path);
+					queue::add([path] {
+						g_ThemeLoader.LoadFooter(path);
+					});
 				});
-
 			}
 		}
 

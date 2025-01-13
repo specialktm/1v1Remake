@@ -74,9 +74,7 @@ namespace cheat::Submenus
     {
         if (g_Renderer->Menu.Item.AddText(name,desc))
         {
-            queue::add([callback] {
-                callback();
-            });
+            callback();
         }
     }
 

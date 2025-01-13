@@ -99,8 +99,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer|x64'">
-    <IncludePath>$(SolutionDir)vendor\AL;$(SolutionDir)vendor\audio;$(SolutionDir)vendor\stbi;$(SolutionDir)vendor\imgui;$(SolutionDir)vendor\minhook;$(SolutionDir)vendor\DirectX\Include;$(SolutionDir)vendor\Dump;$(IncludePath);$(SolutionDir)vendor\Json</IncludePath>
-    <LibraryPath>$(SolutionDir)vendor\DirectX\Library;$(SolutionDir)vendor\minhook;$(SolutionDir)vendor\audio\;$(SolutionDir)vendor\AL\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)vendor\stbi;$(SolutionDir)vendor\imgui;$(SolutionDir)vendor\minhook;$(SolutionDir)vendor\DirectX\Include;$(SolutionDir)vendor\Dump;$(IncludePath);$(SolutionDir)vendor\Json</IncludePath>
+    <LibraryPath>$(SolutionDir)vendor\DirectX\Library;$(SolutionDir)vendor\minhook;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Bin\$(Configuration)\$(Platform)</OutDir>
     <IntDir>$(SolutionDir)Bin\$(Configuration)\$(Platform)\Intermediate</IntDir>
     <ExternalIncludePath>(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
@@ -108,15 +108,15 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Bin\$(Configuration)\$(Platform)</OutDir>
     <IntDir>$(SolutionDir)Bin\$(Configuration)\$(Platform)\Intermediate</IntDir>
-    <IncludePath>$(SolutionDir)vendor\AL;$(SolutionDir)vendor\audio;$(SolutionDir)vendor\stbi;$(SolutionDir)vendor\imgui;$(SolutionDir)vendor\minhook;$(SolutionDir)vendor\DirectX\Include;$(SolutionDir)vendor\L2CPP_Resolver\;$(IncludePath);$(SolutionDir)vendor\Json</IncludePath>
-    <LibraryPath>$(SolutionDir)vendor\DirectX\Library;$(SolutionDir)vendor\minhook;$(SolutionDir)vendor\audio\;$(SolutionDir)vendor\AL\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)vendor\stbi;$(SolutionDir)vendor\imgui;$(SolutionDir)vendor\minhook;$(SolutionDir)vendor\DirectX\Include;$(SolutionDir)vendor\L2CPP_Resolver\;$(IncludePath);$(SolutionDir)vendor\Json</IncludePath>
+    <LibraryPath>$(SolutionDir)vendor\DirectX\Library;$(SolutionDir)vendor\minhook;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Bin\$(Configuration)\$(Platform)</OutDir>
     <IntDir>$(SolutionDir)Bin\$(Configuration)\$(Platform)\Intermediate</IntDir>
     <EmbedManifest>false</EmbedManifest>
-    <IncludePath>$(SolutionDir)vendor\AL;$(SolutionDir)vendor\audio;$(SolutionDir)vendor\stbi;$(SolutionDir)vendor\imgui;$(SolutionDir)vendor\minhook;$(SolutionDir)vendor\DirectX\Include;$(SolutionDir)vendor\Dump;$(IncludePath);$(SolutionDir)vendor\Json</IncludePath>
-    <LibraryPath>$(SolutionDir)vendor\DirectX\Library;$(SolutionDir)vendor\minhook;$(SolutionDir)vendor\audio\;$(SolutionDir)vendor\AL\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)vendor\stbi;$(SolutionDir)vendor\imgui;$(SolutionDir)vendor\minhook;$(SolutionDir)vendor\DirectX\Include;$(SolutionDir)vendor\Dump;$(IncludePath);$(SolutionDir)vendor\Json</IncludePath>
+    <LibraryPath>$(SolutionDir)vendor\DirectX\Library;$(SolutionDir)vendor\minhook;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -177,7 +177,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;libMinHook.x64.lib;audio.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;libMinHook.x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -203,7 +203,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <ProgramDatabaseFile />
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;libMinHook.x64.lib;audio.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;libMinHook.x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ForceFileOutput>
       </ForceFileOutput>
     </Link>
@@ -233,7 +233,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;libMinHook.x64.lib;audio.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;libMinHook.x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateMapFile>true</GenerateMapFile>
       <MapExports>true</MapExports>
       <AssemblyDebug>
@@ -256,7 +256,6 @@
     <ClCompile Include="source\cheat\renderer\ImageLoader\ImageLoader.cpp" />
     <ClCompile Include="source\cheat\renderer\Menu\DrawMenu.cpp" />
     <ClCompile Include="source\cheat\renderer\Menu\Fonts\font_awesome_data.cpp" />
-    <ClCompile Include="source\cheat\renderer\Menu\Sound\SoundLoader.cpp" />
     <ClCompile Include="source\cheat\renderer\Menu\Submenu\Submenu.cpp" />
     <ClCompile Include="source\cheat\renderer\Menu\Submenu\Types\Player.cpp" />
     <ClCompile Include="source\cheat\renderer\renderer.cpp" />
@@ -310,7 +309,6 @@
     <ClInclude Include="source\cheat\renderer\Menu\Fonts\Primary.hpp" />
     <ClInclude Include="source\cheat\renderer\Menu\Menu.hpp" />
     <ClInclude Include="source\cheat\renderer\Menu\Items.hpp" />
-    <ClInclude Include="source\cheat\renderer\Menu\Sound\SoundLoader.h" />
     <ClInclude Include="source\cheat\renderer\Menu\Submenu\Submenu.h" />
     <ClInclude Include="source\cheat\renderer\Menu\Submenu\Types\Player.h" />
     <ClInclude Include="source\cheat\renderer\Menu\TextMultiColor.hpp" />
