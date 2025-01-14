@@ -57,7 +57,7 @@ namespace cheat::Submenus
         }
     }
 
-    void NewSub(const char* name, void* submenu)
+    void Submenu(const char* name, void* submenu)
     {
         if (g_Renderer->Menu.Item.AddSection(name))
         {
@@ -98,5 +98,9 @@ namespace cheat::Submenus
     bool Number(const char* m_Name, const char* m_Description, int* p_Value, int m_Min, int m_Max, int m_Power, bool m_Clamp)
     {
         return g_Renderer->Menu.Item.AddInteger(m_Name, m_Description, p_Value, m_Min, m_Max, m_Power, m_Clamp);
+    }
+    bool Input(const char* m_Name, const char* m_Description, std::string m_PopupText, char* m_Buffer, size_t m_BufferSize, ImGuiInputTextFlags m_Flags, bool m_HideBuffer)
+    {
+        return g_Renderer->Menu.Item.AddTextInput(m_Name, m_Description, m_PopupText, m_Buffer, m_BufferSize, m_Flags, m_HideBuffer);
     }
 }

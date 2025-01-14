@@ -306,7 +306,11 @@ namespace cheat
 
 		if (JsonData.contains("SavedTheme") && !JsonData["SavedTheme"].empty())
 		{
-			LoadTheme(JsonData["SavedTheme"]);
+			if (fs::exists(JsonData["SavedTheme"]))
+			{
+				LoadTheme(JsonData["SavedTheme"]);
+			}
+			return;
 		}
 		else
 		{
@@ -320,58 +324,61 @@ namespace cheat
 	
 	bool ThemeLoader::SaveThemeToFolder(std::string_view ThemeName)
 	{
+		 if (!std::empty(ThemeName))
+		 {
 
-		fs::path ThemePath{ ThemePath_ / ThemeName };
-		fs::path HeaderPath{ ThemePath / "Header" /"Header" +=ThemeData_.Header.extension()};
-		fs::path SubtitlePath{ ThemePath / "Subtitle" / "Subtitle" += ThemeData_.Subtitle.extension() };
-		fs::path BackgroundPath{ ThemePath / "Background" / "Background" += ThemeData_.Background.extension() };
-		fs::path ScrollerPath{ ThemePath / "Scroller" / "Scroller" += ThemeData_.Scroller.extension() };
-		fs::path FooterPath{ ThemePath / "Footer" / "Footer" += ThemeData_.Footer.extension() };
-		LoadedTheme_ = ThemePath;
-			
-			
-			
-		if (!fs::exists(ThemePath))
-		{
-			if (!fs::create_directories(ThemePath))
-			{
-				g_logger->send(levels::error, "Failed to create theme directory: {}", ThemePath.string());
-				return false;
-			}
+			 fs::path ThemePath{ ThemePath_ / ThemeName };
+			 fs::path HeaderPath{ ThemePath / "Header" / "Header" += ThemeData_.Header.extension() };
+			 fs::path SubtitlePath{ ThemePath / "Subtitle" / "Subtitle" += ThemeData_.Subtitle.extension() };
+			 fs::path BackgroundPath{ ThemePath / "Background" / "Background" += ThemeData_.Background.extension() };
+			 fs::path ScrollerPath{ ThemePath / "Scroller" / "Scroller" += ThemeData_.Scroller.extension() };
+			 fs::path FooterPath{ ThemePath / "Footer" / "Footer" += ThemeData_.Footer.extension() };
+			 LoadedTheme_ = ThemePath;
 
-			if (!CreateThemeFolders(ThemePath))
-			{
-				g_logger->send(levels::error, "Failed to create theme subfolders: {}", ThemePath.string());
-				return false;
-			}
-		}
 
-		if (ThemeData_ != ThemeFormat{})
-		{
 
-			auto copy_with_overwrite = [](const fs::path& src, const fs::path& dest) {
-				try {
-					if (fs::exists(src))
-						fs::copy_file(src, dest, fs::copy_options::none);
-					return true;
-				}
-				catch (const std::exception& e) {
-					g_logger->send(levels::error, "Failed to copy file: {} -> {} | Error: {}", src.string(), dest.string(), e.what());
-					return false;
-				}
-			};
-			
+			 if (!fs::exists(ThemePath))
+			 {
+				 if (!fs::create_directories(ThemePath))
+				 {
+					 g_logger->send(levels::error, "Failed to create theme directory: {}", ThemePath.string());
+					 return false;
+				 }
 
-			if (!copy_with_overwrite(ThemeData_.Header, HeaderPath)) return false;
-			if (!copy_with_overwrite(ThemeData_.Subtitle, SubtitlePath)) return false;
-			if (!copy_with_overwrite(ThemeData_.Background, BackgroundPath)) return false;
-			if (!copy_with_overwrite(ThemeData_.Scroller, ScrollerPath)) return false;
-			if (!copy_with_overwrite(ThemeData_.Footer, FooterPath)) return false;
-		}
+				 if (!CreateThemeFolders(ThemePath))
+				 {
+					 g_logger->send(levels::error, "Failed to create theme subfolders: {}", ThemePath.string());
+					 return false;
+				 }
+			 }
 
-		SaveTheme();
-		g_logger->send(levels::success, "Successfully saved theme: {} at {}", ThemeName, ThemePath.string());
-		return true;
+			 if (ThemeData_ != ThemeFormat{})
+			 {
+
+				 auto copy_with_overwrite = [](const fs::path& src, const fs::path& dest) {
+					 try {
+						 if (fs::exists(src))
+							 fs::copy_file(src, dest, fs::copy_options::overwrite_existing);
+						 return true;
+					 }
+					 catch (const std::exception& e) {
+						 g_logger->send(levels::error, "Failed to copy file: {} -> {} | Error: {}", src.string(), dest.string(), e.what());
+						 return false;
+					 }
+				 };
+
+
+				 if (!copy_with_overwrite(ThemeData_.Header, HeaderPath)) return false;
+				 if (!copy_with_overwrite(ThemeData_.Subtitle, SubtitlePath)) return false;
+				 if (!copy_with_overwrite(ThemeData_.Background, BackgroundPath)) return false;
+				 if (!copy_with_overwrite(ThemeData_.Scroller, ScrollerPath)) return false;
+				 if (!copy_with_overwrite(ThemeData_.Footer, FooterPath)) return false;
+			 }
+
+			 SaveTheme();
+			 g_logger->send(levels::success, "Successfully saved theme: {} at {}", ThemeName, ThemePath.string());
+			 return true;
+		 }
 	}
 
 	void ThemeLoader::Reset()

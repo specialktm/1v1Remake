@@ -7,10 +7,13 @@ namespace cheat
 	void Submenus::Home()
 	{
 		Title("Home");
-		NewSub("Players", Menus::Players);
-		NewSub("ESP", Menus::MenuESP);
-		NewSub("Settings", Menus::MenuSettings);
-		g_Renderer->Menu.Item.AddTextInput("Theme Name", "Theme Save Name", "Enter Name", buffer, sizeof(buffer));
+		Submenu("Players", Menus::Players);
+		Submenu("ESP", Menus::MenuESP);
+		Submenu("Settings", Menus::MenuSettings);
+		Input("Theme Name", "Theme Save Name", "Enter Name", buffer, sizeof(buffer));
 		Button("Save Folder Theme", [] {g_ThemeLoader.SaveThemeToFolder(buffer); });
+		Button("Lorem", [] {}, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+	//	Float("Lorem", "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", &g_Renderer->Menu.m_lolll,0.f,10.f);
+
 	}
 }

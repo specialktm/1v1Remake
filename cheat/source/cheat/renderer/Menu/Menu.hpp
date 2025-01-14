@@ -41,6 +41,8 @@ namespace Submenus
 
 namespace cheat
 {
+	inline float m_DescriptionTextPadding{ 6.f };
+	inline float m_DescriptionPadding{ 6.f };
 
 	class C_ImMMenu
 	{
@@ -55,6 +57,7 @@ namespace cheat
 		ImVec2 m_DrawPos;
 		float m_CurrentCoord;
 		float m_CurrentCoord2;
+		float m_DescriptionHeight;
 
 		//==========================================================================
 		// Header
@@ -459,6 +462,8 @@ namespace cheat
 
 			ImVec2 m_BreakUnderline { 125.0f, 0.f };
 			//ImVec2 m_BreakUnderline { 165.0f, 0.f };
+
+	
 		};
 		Item_t Item;
 
@@ -692,6 +697,7 @@ namespace cheat
 			// Sizes
 			m_Pos = ImVec2(0.05f, 0.05f);
 			m_FrameWidth = 420.f;
+		
 
 			Header.m_Height = 100.f;
 
@@ -1278,35 +1284,49 @@ namespace cheat
 				{
 					C_ImMMenuTextMultiColor m_ItemDescription = pItem->GetDescription();
 
-					m_DrawPos.y += 5.f;
+					m_DrawPos.y += m_DescriptionPadding;
 
 					//ImVec2 vTextSize = m_ItemDescription.CalcTextSize(Font.Primary);
-					ImVec2 vTextSize = Font.Primary->CalcTextSizeA(Font.Primary->FontSize, m_FrameWidth - 15.f, m_FrameWidth - 15.f, m_ItemDescription.m_Strings[0].c_str());
+					ImVec2 vTextSize = Font.Primary->CalcTextSizeA(Font.Primary->FontSize, m_FrameWidth - 20.f, m_FrameWidth - 20.f, m_ItemDescription.m_Strings[0].c_str());
 					float fDescriptionHeight = floorf(vTextSize.y * 0.85f) + 10.f;
+					float targetHeight = floorf(vTextSize.y * 0.85f) + 10.f;
+
+					m_DescriptionHeight = lerp(m_DescriptionHeight, targetHeight, 0.2f);
 					
-
-					//float width = m_FrameWidth + (vTextSize.x > m_FrameWidth ? pItem->m_Description.length() : 0.f);
-
 					m_DrawList->AddRectFilled
 					(
 						m_DrawPos, 
-						m_DrawPos + ImVec2(m_FrameWidth, fDescriptionHeight),
+						m_DrawPos + ImVec2(m_FrameWidth, m_DescriptionHeight),
 						Color.Description, 
-						Item.m_FooterRounded ? Item.m_FooterRounding : 0,
-						Item.m_FooterRounded ? ImDrawFlags_RoundCornersBottom : 0
+						Item.m_FooterRounded ? Item.m_FooterRounding + 1 : 0,
+						Item.m_FooterRounded ? ImDrawFlags_RoundCornersAll : 0
 					);
 
+					m_DrawList->AddRect
+					(
+						m_DrawPos,
+						m_DrawPos + ImVec2(m_FrameWidth, m_DescriptionHeight),
+						Color.Footer_Text,
+						Item.m_FooterRounded ? Item.m_FooterRounding : 0,
+						Item.m_FooterRounded ? ImDrawFlags_RoundCornersAll : 0,
+						1.f
+					);
+				/*
+				
 					m_DrawList->AddLine(
 						m_DrawPos,
 						m_DrawPos + ImVec2(m_FrameWidth, 0.f),
 						Color.Footer_Text, 
 						3.f);
-
-					ImVec2 vTextPos(m_DrawPos + ImVec2(10.f, 8.f));
+				*/
+			
+					ImVec2 vTextPos(m_DrawPos + ImVec2(10.f, m_DescriptionTextPadding));
 					//m_ItemDescription.Draw(m_DrawList, Font.Primary, floorf(Font.Primary->FontSize * 0.85f), vTextPos);
 					m_DrawList->AddText(Font.Primary, floorf(Font.Primary->FontSize * 0.95f), vTextPos, IM_COL32_WHITE, m_ItemDescription.m_Strings[0].c_str(), nullptr, m_FrameWidth - 15.f);
+			
 
-					m_DrawPos.y += fDescriptionHeight;
+					m_DrawPos.y += m_DescriptionHeight;
+				
 				}
 
 				// InputText Popup

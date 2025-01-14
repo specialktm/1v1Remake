@@ -6,13 +6,18 @@ namespace cheat
 	void Submenus::Menus::MenuSettings()
 	{
 		Title("Settings");
-		NewSub("Theme", Menus::TextureThemes);
+		Submenu("Theme", Menus::TextureThemes);
 		Break("Custom Textures");
-		NewSub("Header", Menus::TextureHeader);
-		NewSub("Subtitle", Menus::TextureSubtitle);
-		NewSub("Background", Menus::TextureBackground);
-		NewSub("Scroller", Menus::TextureScroller);
-		NewSub("Footer", Menus::TextureFooter);
+		Submenu("Header", Menus::TextureHeader);
+		Submenu("Subtitle", Menus::TextureSubtitle);
+		Submenu("Background", Menus::TextureBackground);
+		Submenu("Scroller", Menus::TextureScroller);
+		Submenu("Footer", Menus::TextureFooter);
+
+		Break("Description");
+		Float("Description Text Padding","Padding for the description text.",&m_DescriptionTextPadding,1.f, 10.f, 1.f);
+		Float("Description Padding","Padding for the description.",&m_DescriptionPadding,1.f, 10.f, 1.f);
+
 		Break("Reset");
 		Button("Save Theme", [&]
 		{
