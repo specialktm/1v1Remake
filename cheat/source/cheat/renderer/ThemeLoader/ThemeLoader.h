@@ -51,7 +51,7 @@ namespace cheat
 		void LoadTheme(const fs::path& folder);
 		void LoadThemeFromFile(const fs::path& file);
 		void SaveTheme();
-		bool SaveThemeToFolder(std::string_view ThemeName);
+		bool SaveThemeToFolder(const std::string_view& ThemeName);
 		void SaveThemeFile();
 		void LoadHeader(const fs::path& file);
 		void LoadSubtitle(const fs::path& file);
@@ -64,7 +64,6 @@ namespace cheat
 		std::vector<fs::directory_entry> GetThemes();
 
 	private:
-	
 		fs::path DocumentsFolder{ GetDocumentsPath() / "CortezMenu"};
 		fs::path HeaderPath_{ DocumentsFolder / "Textures" / "Header" };
 		fs::path SubtitlePath_{ DocumentsFolder / "Textures" / "Subtitle" };

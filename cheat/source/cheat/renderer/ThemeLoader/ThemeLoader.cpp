@@ -12,12 +12,12 @@ namespace cheat
 
 	fs::path ThemeLoader::GetDocumentsPath()
 	{
-		wchar_t* p;
-		if (S_OK != SHGetKnownFolderPath(FOLDERID_Documents, 0, NULL, &p)) return "";
-		std::filesystem::path result = p;
-		CoTaskMemFree(p);
+		wchar_t* path;
+		if (S_OK != SHGetKnownFolderPath(FOLDERID_Documents, 0, NULL, &path)) return "";
+		std::filesystem::path result = path;
+		CoTaskMemFree(path);
 
-		return p;
+		return path;
 	}
 
 
@@ -322,7 +322,7 @@ namespace cheat
 		}
 	}
 	
-	bool ThemeLoader::SaveThemeToFolder(std::string_view ThemeName)
+	bool ThemeLoader::SaveThemeToFolder(const std::string_view& ThemeName)
 	{
 		 if (!std::empty(ThemeName))
 		 {

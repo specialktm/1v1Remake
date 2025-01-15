@@ -41,8 +41,10 @@ namespace Submenus
 
 namespace cheat
 {
-	inline float m_DescriptionTextPadding{ 6.f };
+	// float m_DescriptionTextPadding{ 6.f };
 	inline float m_DescriptionPadding{ 6.f };
+	inline	float m_DescriptionTextPadding{ 5.f };
+
 
 	class C_ImMMenu
 	{

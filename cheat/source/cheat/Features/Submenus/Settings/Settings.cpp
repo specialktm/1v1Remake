@@ -15,8 +15,8 @@ namespace cheat
 		Submenu("Footer", Menus::TextureFooter);
 
 		Break("Description");
-		Float("Description Text Padding","Padding for the description text.",&m_DescriptionTextPadding,1.f, 10.f, 1.f);
-		Float("Description Padding","Padding for the description.",&m_DescriptionPadding,1.f, 10.f, 1.f);
+		Float("Description Text Padding","Padding for the description text.",&m_DescriptionTextPadding,1.f, 10.f, 0.1f);
+		Float("Description Padding","Padding for the description.",&m_DescriptionPadding,1.f, 20.f, 1.f);
 
 		Break("Reset");
 		Button("Save Theme", [&]

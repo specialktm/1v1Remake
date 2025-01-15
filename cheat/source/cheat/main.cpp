@@ -12,7 +12,7 @@
 
 	Credit:
 		[C] Mister9982 (Aera Image Loading),
-		[C] Sneaky Evil (Menu)
+		[C] Sneaky Evil (Menu, IL2CPP Resolver)
 
 	TODO:
 	    [T] Fix FA (FontAwesome),
