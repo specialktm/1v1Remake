@@ -13,7 +13,8 @@ namespace cheat::Submenus
         Menus::MenuSettings,
         Menus::MenuESP,
         Menus::Players,
-        Menus::SelectedPlayer
+        Menus::SelectedPlayer,
+    //    Menus::Icons
 	};
 	int NumberOfSubmenus = sizeof(Submenus::FunctionPointers) / sizeof(Submenus::FunctionPointers[0]);
 
@@ -57,13 +58,13 @@ namespace cheat::Submenus
         }
     }
 
-    void Submenu(const char* name, void* submenu)
+    void Submenu(const char* name, void* submenu, const char* icon)
     {
-        if (g_Renderer->Menu.Item.AddSection(name))
+        if (g_Renderer->Menu.Item.AddSection(name, icon))
         {
             Move(submenu);
         }
-    }
+    } 
 
     void Title(const char* title)
     {

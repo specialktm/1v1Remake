@@ -87,4 +87,6 @@ namespace cheat::util
 		};
 		return combine(std::forward<Args>(args)...);
 	}
+
+	void MouseMove(float tarx, float tary, float X, float Y, int smooth);
 }

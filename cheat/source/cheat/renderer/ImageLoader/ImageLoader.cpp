@@ -166,35 +166,20 @@ namespace cheat
 
 	}
 
-	template <typename ReturnType>
-	ReturnType ImageLoader::GetCache(Cache CacheType)
-	{
-		switch (CacheType)
-		{
-		case cheat::Cache::GIF:
-			return reinterpret_cast<ReturnType&>(GifCache_);
-		case cheat::Cache::IMG:
-			return reinterpret_cast<ReturnType&>(TextureCache_);
-		default:
-			throw std::invalid_argument("Invalid CacheType provided.");
-		}
-	}
 
 	bool ImageLoader::IsCached(const std::string_view& key)
 	{
 		if (key.ends_with(".gif"))
 		{
-			const auto& gifCache = GetCache<std::unordered_map<std::string, std::map<int, FrameData>>>(Cache::GIF);
-			if (gifCache.contains(std::string(key)))
+			if (GifCache_.contains(std::string(key)))
 				return true;
 		}
-
-		const auto& imgCache = GetCache<std::unordered_map<std::string, ID3D11ShaderResourceView*>>(Cache::IMG);
-		if (imgCache.contains(std::string(key)))
+		if (TextureCache_.contains(std::string(key)))
 			return true;
 
 		return false;
 	}
+
 	ImageLoader::~ImageLoader()
 	{
 		ClearCache();

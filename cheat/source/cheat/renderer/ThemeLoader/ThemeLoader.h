@@ -62,6 +62,7 @@ namespace cheat
 
 		std::vector<fs::directory_entry> GetFiles(ImageType type);
 		std::vector<fs::directory_entry> GetThemes();
+		fs::path GetPath(ImageType type);
 
 	private:
 		fs::path DocumentsFolder{ GetDocumentsPath() / "CortezMenu"};

@@ -12,7 +12,7 @@ namespace cheat::Submenus
 	void Tick();
 	void Move(void* Submenu);
 	void Back();
-	void Submenu(const char* name, void* Submenu);
+	void Submenu(const char* name, void* Submenu, const char* icon = ICON_FA_CHEVRON_RIGHT);
 	void Title(const char* title);  
 	void Button(const char* name,std::function<void()> callback, const char* desc = "");
 	void IconButton(const char* icon, const char* name, std::function<void()> callback, const char* desc = "");
@@ -40,6 +40,7 @@ namespace cheat::Submenus
 		// Selected Player
 		void SelectedPlayer();
 		void Players();
+		//void Icons();
 	}
 
 }

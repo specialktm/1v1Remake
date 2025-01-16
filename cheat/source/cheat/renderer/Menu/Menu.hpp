@@ -261,13 +261,14 @@ namespace cheat
 				AddNewItem(pItem);
 			}
 
-			bool AddSection(const char* p_Name)
+			bool AddSection(const char* p_Name, const char* icon)
 			{
 				if (IsDummy(eImMMenuItemType_Section)) {
 					return false;
 				}
 				
 				auto pItem = new C_ImMMenuItem(eImMMenuItemType_Section, p_Name);
+				pItem->m_Icon = icon;
 
 				return (m_Interacted == AddNewItem(pItem));
 			}
@@ -1058,10 +1059,10 @@ namespace cheat
 						break;
 					case eImMMenuItemType_Section:
 					{
-						ImVec2 vIconSize = Font.CalcTextSize(Font.FontAwesome, ICON_FA_SHARE);
+						ImVec2 vIconSize = Font.CalcTextSize(Font.FontAwesome, pItem->m_Icon.c_str());
 						ImVec2 vIconPos(m_DrawPos + ImVec2(m_FrameWidth - 10.f - vIconSize.x, floorf((m_FrameHeight * 0.5f) - (vIconSize.y * 0.5f))));
 
-						ImGui::GetForegroundDrawList()->AddText(Font.FontAwesome, Font.FontAwesome->FontSize, vIconPos, m_Selected ? Color.Selected_Text : Color.Primary_Text, ICON_FA_SHARE);
+						ImGui::GetForegroundDrawList()->AddText(Font.FontAwesome, Font.FontAwesome->FontSize, vIconPos, m_Selected ? Color.Selected_Text : Color.Primary_Text, pItem->m_Icon.c_str());
 					}
 					break;	
 					case eImMMenuItemType_Icon:
@@ -1075,27 +1076,11 @@ namespace cheat
 
 					case eImMMenuItemType_Checkbox:
 					{
-						float m_BoxSize = floorf(m_FrameHeight * 0.25f);
-						ImVec2 m_BoxPos(m_DrawPos + ImVec2(m_FrameWidth - 10.f - m_BoxSize, floorf(m_FrameHeight * 0.5f)));
+						const char* iconChar = reinterpret_cast<C_ImMMenuItemCheckbox*>(pItem)->IsChecked() ? ICON_FA_TOGGLE_ON : ICON_FA_TOGGLE_OFF;
+						ImVec2 vIconSize = Font.CalcTextSize(Font.FontAwesome, iconChar);
+						ImVec2 vIconPos(m_DrawPos + ImVec2(m_FrameWidth - 10.f - vIconSize.x, floorf((m_FrameHeight * 0.5f) - (vIconSize.y * 0.5f))));
 
-						ImGui::GetForegroundDrawList()->AddRect(
-							m_BoxPos - ImVec2(m_BoxSize, m_BoxSize),
-							m_BoxPos + ImVec2(m_BoxSize, m_BoxSize),
-							m_Selected ? Color.Selected_Text : IM_COL32_WHITE,
-							2.f,
-							ImDrawFlags_RoundCornersAll,
-							2.f);
-
-						if (reinterpret_cast<C_ImMMenuItemCheckbox*>(pItem)->IsChecked())
-						{
-							m_BoxSize -= 2.f;
-							ImGui::GetForegroundDrawList()->AddRectFilled(
-								m_BoxPos - ImVec2(m_BoxSize, m_BoxSize),
-								m_BoxPos + ImVec2(m_BoxSize, m_BoxSize),
-								m_Selected ? Color.Selected_Text : IM_COL32_WHITE,
-								1.f,
-								ImDrawFlags_RoundCornersAll);
-						}
+						ImGui::GetForegroundDrawList()->AddText(Font.FontAwesome, 19.5f, vIconPos, m_Selected ? Color.Selected_Text : Color.Primary_Text, iconChar);
 					}
 					break;
 					case eImMMenuItemType_Combo:

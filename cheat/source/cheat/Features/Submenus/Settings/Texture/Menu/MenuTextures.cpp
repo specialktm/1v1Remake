@@ -7,7 +7,7 @@ namespace cheat
 	void Submenus::Menus::TextureHeader()
 	{
 		Title("Header");
-		IconButton(ICON_FA_RECYCLE,"Reset Texture", [&]
+		IconButton(ICON_FA_SYNC, "Reset Texture", [&]
 		{
 			g_Renderer->Menu.Header.m_Header.clear();
 			g_Renderer->Menu.Header.m_HeaderFrame = 0;
@@ -39,7 +39,7 @@ namespace cheat
 	void Submenus::Menus::TextureSubtitle()
 	{
 		Title("Subtitle");
-		IconButton(ICON_FA_RECYCLE,"Reset Texture", [&]
+		IconButton(ICON_FA_SYNC, "Reset Texture", [&]
 		{
 			g_Renderer->Menu.Item.m_SubtitleImage.clear();
 			g_Renderer->Menu.Item.m_SubtitleFrame = 0;
@@ -62,7 +62,7 @@ namespace cheat
 	void Submenus::Menus::TextureBackground()
 	{
 		Title("Background");
-		IconButton(ICON_FA_RECYCLE,"Reset Texture", [&]
+		IconButton(ICON_FA_SYNC, "Reset Texture", [&]
 		{
 			g_Renderer->Menu.Item.m_BackgroundImage.clear();
 			g_Renderer->Menu.Item.m_BackgroundFrame = 0;
@@ -86,7 +86,7 @@ namespace cheat
 	void Submenus::Menus::TextureScroller()
 	{
 		Title("Scroller");
-		IconButton(ICON_FA_RECYCLE,"Reset Texture", [&]
+		IconButton(ICON_FA_SYNC, "Reset Texture", [&]
 		{
 			g_Renderer->Menu.Item.m_Image.clear();
 			g_Renderer->Menu.Item.m_ScrollerFrame = 0;
@@ -116,7 +116,7 @@ namespace cheat
 	void Submenus::Menus::TextureFooter()
 	{
 		Title("Footer");
-		IconButton(ICON_FA_RECYCLE,"Reset Texture", [&] {
+		IconButton(ICON_FA_SYNC, "Reset Texture", [&] {
 			g_Renderer->Menu.Item.m_FooterImage.clear();
 			g_Renderer->Menu.Item.m_FooterFrame = 0;
 		});
@@ -140,6 +140,5 @@ namespace cheat
 
 			}
 		}
-
 	}
 }

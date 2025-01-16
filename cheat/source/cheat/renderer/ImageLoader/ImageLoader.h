@@ -52,11 +52,8 @@ namespace cheat
 		std::map<int, FrameData> CreateGifTexture(ID3D11Device* device, const fs::path& path);
 		// Clear Gif/Texture Cache.
 		void ClearCache(); 
-		// Get Cache
-		template<typename ReturnType>
-		ReturnType GetCache(Cache CacheType);
-		
 		bool IsCached(const std::string_view& key);
+
 	private:
 		// Cached Gifs.
 		std::unordered_map<std::string, std::map<int, FrameData>> GifCache_;

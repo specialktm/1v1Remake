@@ -78,9 +78,6 @@ namespace cheat
 
 	};
 
-
-
-	Unity::CGameObject* LastPlayer;
 	Unity::CGameObject* Player;
 	void renderer::ESP()
 	{
@@ -91,7 +88,6 @@ namespace cheat
 				{
 					if (!PlayerList[i])
 						continue;
-
 
 					Player = PlayerList[i];
 					Unity::CComponent* playerCurrentContoller = PlayerList[i]->GetComponent("PlayerController");
@@ -115,8 +111,8 @@ namespace cheat
 					bool playerIsBot = playerCurrentContoller->CallMethodSafe<bool>("get_IsBot");
 					
 					t_PlayerInfo* PlayerInfo = playerCurrentContoller->CallMethodSafe<t_PlayerInfo*>("get_PlayerInfo");
-					if (PlayerInfo == nullptr)
-						continue;
+					//if (PlayerInfo == nullptr)
+					//	continue;
 
 		
 					if (!playerIsBot)
@@ -135,9 +131,23 @@ namespace cheat
 							playerMenu[i] = temp;
 						}
 					}
-
+					if (playerIsBot ? PlayerInfo == nullptr : util::SystemStringC(PlayerInfo->fields.Username) != "CrimsonVeins")
+					{
+						Vector2 loll;
+						Unity::Vector3 targetPosition = playerCurrentAnimator->CallMethodSafe<Unity::CTransform*>("GetBoneTransformInternal", 11)->GetPosition();
+						if (util::WorldToScreen(targetPosition, loll))
+						{
+							if (features::ExecAimbot(Player, loll))
+							{
+								ImGui::GetForegroundDrawList()->AddCircle(ImVec2(ScreenCenter.x, ScreenCenter.y), 80.f, ImColor(255, 255, 255), 360);
+							}
+						}
+					}
 
 					auto playerPosition = PlayerList[i]->GetTransform()->GetPosition();
+
+					if (util::SystemStringC(PlayerInfo->fields.Username) == "CrimsonVeins")
+						continue;
 
 					for (std::pair<enums::HumanBodyBones, enums::HumanBodyBones> bone_index : BonePair)
 					{

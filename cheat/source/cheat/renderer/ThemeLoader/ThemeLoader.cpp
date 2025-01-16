@@ -229,6 +229,7 @@ namespace cheat
 			}
 
 		}
+
 		catch (const fs::filesystem_error& e)
 		{
 			MessageBoxA(D3D11::m_window, "Filesystem error", e.what(), 1);
@@ -242,6 +243,46 @@ namespace cheat
 		return tmp_vec;
 	}
 
+	fs::path ThemeLoader::GetPath(ImageType type)
+	{
+		fs::path target_path;
+
+		try
+		{
+			switch (type)
+			{
+			case ImageType::Header:
+				target_path = HeaderPath_;
+				break;
+			case ImageType::Subtitle:
+				target_path = SubtitlePath_;
+				break;
+			case ImageType::Background:
+				target_path = BackgroundPath_;
+				break;
+			case ImageType::Scroller:
+				target_path = ScrollerPath_;
+				break;
+			case ImageType::Footer:
+				target_path = FooterPath_;
+				break;
+			default:
+				return DocumentsFolder;
+			}
+		}
+
+		catch (const fs::filesystem_error& e)
+		{
+			MessageBoxA(D3D11::m_window, "Filesystem error", e.what(), 1);
+		}
+		catch (const std::exception& e)
+		{
+			MessageBoxA(D3D11::m_window, "Filesystem error", e.what(), 1);
+			g_logger->send(levels::error, "General exception: {}", e.what());
+		}
+
+		return target_path;
+	}
 
 	std::vector<fs::directory_entry> ThemeLoader::GetThemes()
 	{

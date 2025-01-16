@@ -7,16 +7,11 @@ namespace cheat
 	void Submenus::Home()
 	{
 		Title("Home");
-		Submenu("Players", Menus::Players);
-		Submenu("ESP", Menus::MenuESP);
-		Submenu("Settings", Menus::MenuSettings);
+		Submenu("Players", &Menus::Players);
+		Submenu("No Skill", &Menus::MenuESP, ICON_FA_BINOCULARS);
+		Submenu("Settings", &Menus::MenuSettings, ICON_FA_COG);
+			
 		Input("Theme Name", "Theme Save Name", "Enter Name", buffer, sizeof(buffer));
 		Button("Save Folder Theme", [] {g_ThemeLoader.SaveThemeToFolder(buffer); });
-		Button("Lorem", [] {}, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
-		Button("Lorem", [] {}, "Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
-		IconButton(ICON_FA_COGS,"Lorem", [] {}, "Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
-		IconButton(ICON_FA_CAR,"Lorem", [] {}, "Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
-		IconButton(ICON_FA_IMAGE,"Lorem", [] {}, "Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
-		IconButton(ICON_FA_CARET_RIGHT,"Lorem", [] {}, "Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
 	}
 }
