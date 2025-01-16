@@ -7,7 +7,7 @@ namespace cheat
 	void Submenus::Menus::TextureHeader()
 	{
 		Title("Header");
-		Button("Reset Texture", [&]
+		IconButton(ICON_FA_RECYCLE,"Reset Texture", [&]
 		{
 			g_Renderer->Menu.Header.m_Header.clear();
 			g_Renderer->Menu.Header.m_HeaderFrame = 0;
@@ -27,7 +27,7 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file() && path.has_filename())
 			{
-				Button(std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
+				IconButton(ICON_FA_IMAGE, std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
 				{
 					g_ThemeLoader.LoadHeader(path);
 				});
@@ -39,7 +39,7 @@ namespace cheat
 	void Submenus::Menus::TextureSubtitle()
 	{
 		Title("Subtitle");
-		Button("Reset Texture", [&]
+		IconButton(ICON_FA_RECYCLE,"Reset Texture", [&]
 		{
 			g_Renderer->Menu.Item.m_SubtitleImage.clear();
 			g_Renderer->Menu.Item.m_SubtitleFrame = 0;
@@ -50,7 +50,7 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file())
 			{
-				Button(std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
+				IconButton(ICON_FA_IMAGE,std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
 				{
 					g_ThemeLoader.LoadSubtitle(path);
 				});
@@ -62,7 +62,7 @@ namespace cheat
 	void Submenus::Menus::TextureBackground()
 	{
 		Title("Background");
-		Button("Reset Texture", [&]
+		IconButton(ICON_FA_RECYCLE,"Reset Texture", [&]
 		{
 			g_Renderer->Menu.Item.m_BackgroundImage.clear();
 			g_Renderer->Menu.Item.m_BackgroundFrame = 0;
@@ -74,7 +74,7 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file())
 			{
-				Button(std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
+				IconButton(ICON_FA_IMAGE, std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
 				{
 					g_ThemeLoader.LoadBackground(path);
 				});
@@ -86,7 +86,7 @@ namespace cheat
 	void Submenus::Menus::TextureScroller()
 	{
 		Title("Scroller");
-		Button("Reset Texture", [&]
+		IconButton(ICON_FA_RECYCLE,"Reset Texture", [&]
 		{
 			g_Renderer->Menu.Item.m_Image.clear();
 			g_Renderer->Menu.Item.m_ScrollerFrame = 0;
@@ -104,7 +104,7 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file())
 			{
-				Button(std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
+				IconButton(ICON_FA_IMAGE, std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
 				{
 					g_ThemeLoader.LoadScroller(path);
 				});
@@ -116,7 +116,7 @@ namespace cheat
 	void Submenus::Menus::TextureFooter()
 	{
 		Title("Footer");
-		Button("Reset Texture", [&] {
+		IconButton(ICON_FA_RECYCLE,"Reset Texture", [&] {
 			g_Renderer->Menu.Item.m_FooterImage.clear();
 			g_Renderer->Menu.Item.m_FooterFrame = 0;
 		});
@@ -133,7 +133,7 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file() && path.has_filename())
 			{
-				Button(std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
+				IconButton(ICON_FA_IMAGE, std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
 				{
 					g_ThemeLoader.LoadFooter(path);
 				});
