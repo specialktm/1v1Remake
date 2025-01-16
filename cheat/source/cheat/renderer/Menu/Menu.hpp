@@ -1061,7 +1061,7 @@ namespace cheat
 						ImVec2 vIconSize = Font.CalcTextSize(Font.FontAwesome, ICON_FA_SHARE);
 						ImVec2 vIconPos(m_DrawPos + ImVec2(m_FrameWidth - 10.f - vIconSize.x, floorf((m_FrameHeight * 0.5f) - (vIconSize.y * 0.5f))));
 
-						ImGui::GetForegroundDrawList()->AddText(Font.FontAwesome, 30.f, vIconPos, m_Selected ? Color.Selected_Text : Color.Primary_Text, ICON_FA_SHARE);
+						ImGui::GetForegroundDrawList()->AddText(Font.FontAwesome, Font.FontAwesome->FontSize, vIconPos, m_Selected ? Color.Selected_Text : Color.Primary_Text, ICON_FA_SHARE);
 					}
 					break;	
 					case eImMMenuItemType_Icon:
