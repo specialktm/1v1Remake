@@ -6,6 +6,7 @@ enum eImMMenuItemType : int
 	eImMMenuItemType_Unknown = -1,
 	eImMMenuItemType_Separator = 0,
 	eImMMenuItemType_Text,
+	eImMMenuItemType_Icon,
 	eImMMenuItemType_TextUnselectable,
 	eImMMenuItemType_Section,
 	eImMMenuItemType_Checkbox,
@@ -23,6 +24,7 @@ public:
 	eImMMenuItemType m_Type = eImMMenuItemType_Unknown;
 	std::string m_Name;
 	std::string m_Description;
+	std::string m_Icon;
 
 	virtual ~C_ImMMenuItem() { }
 	virtual void Interaction() { }

@@ -43,8 +43,7 @@ namespace cheat
 {
 	// float m_DescriptionTextPadding{ 6.f };
 	inline float m_DescriptionPadding{ 6.f };
-	inline	float m_DescriptionTextPadding{ 5.f };
-
+	inline float m_DescriptionTextPadding{ 5.f };
 
 	class C_ImMMenu
 	{
@@ -230,14 +229,27 @@ namespace cheat
 
 			bool AddText(const char* p_Name, const char* desc = "")
 			{
-				if (IsDummy(eImMMenuItemType_Text)) {
+				if (IsDummy(eImMMenuItemType_Icon)) {
 					return false;
 				}
 
-				auto pItem = new C_ImMMenuItem(eImMMenuItemType_Text, p_Name);
+				auto pItem = new C_ImMMenuItem(eImMMenuItemType_Icon, p_Name);
 				pItem->m_Description = desc;
 				return (m_Interacted == AddNewItem(pItem));
 			}
+					
+			bool AddIcon(const char* icon, const char* p_Name, const char* desc = "")
+			{
+				if (IsDummy(eImMMenuItemType_Icon)) {
+					return false;
+				}
+
+				auto pItem = new C_ImMMenuItem(eImMMenuItemType_Icon, p_Name);
+				pItem->m_Description = desc;
+				pItem->m_Icon = icon;
+				return (m_Interacted == AddNewItem(pItem));
+			}
+
 
 			void AddTextUnselectable(const char* p_Name)
 			{
@@ -672,25 +684,28 @@ namespace cheat
 		{
 			ImGuiIO* m_IO = &ImGui::GetIO();
 			// Fonts
-			Font.Icons = m_IO->Fonts->AddFontFromMemoryCompressedTTF(ImGuiMMenu::Font::Icons_Data, ImGuiMMenu::Font::Icons_SizeData, 16.f);
-			Font.Primary = m_IO->Fonts->AddFontFromMemoryCompressedTTF(ImGuiMMenu::Font::Primary_Data, ImGuiMMenu::Font::Primary_SizeData, 16.f);
-			Font.Header = m_IO->Fonts->AddFontFromMemoryCompressedTTF(ImGuiMMenu::Font::Header_Data, ImGuiMMenu::Font::Header_SizeData, 64.f);
-			
+		
 			ImFontConfig IcoConfig;
 			IcoConfig.MergeMode = true;
 			IcoConfig.PixelSnapH = true;
 			IcoConfig.OversampleH = 3;
 			IcoConfig.OversampleV = 3;
-			static const ImWchar IcoRanges[]{ 0xf000,0xf3ff,0 };
+			static const ImWchar IcoRanges[]{ ICON_MIN_FA, ICON_MAX_FA,0 };
 
 			Font.FontAwesome = m_IO->Fonts->AddFontFromMemoryCompressedTTF
 			(
-				font_awesome_data, 
-				font_awesome_size, 
-				19.f, 
-				&IcoConfig, 
+				font_awesome_data,
+				font_awesome_size,
+				17.f,
+				nullptr,//&IcoConfig,
 				IcoRanges
-			);
+			); 
+			Font.Icons = m_IO->Fonts->AddFontFromMemoryCompressedTTF(ImGuiMMenu::Font::Icons_Data, ImGuiMMenu::Font::Icons_SizeData, 16.f);
+			Font.Primary = m_IO->Fonts->AddFontFromMemoryCompressedTTF(ImGuiMMenu::Font::Primary_Data, ImGuiMMenu::Font::Primary_SizeData, 16.f);
+			Font.Header = m_IO->Fonts->AddFontFromMemoryCompressedTTF(ImGuiMMenu::Font::Header_Data, ImGuiMMenu::Font::Header_SizeData, 64.f);
+
+	
+	
 			
 			if (!Font.AllLoaded()) {
 				return false;
@@ -1043,12 +1058,21 @@ namespace cheat
 						break;
 					case eImMMenuItemType_Section:
 					{
-						ImVec2 vIconSize = Font.CalcTextSize(Font.Icons, IMMENU_ICON_RIGHTARROW);
+						ImVec2 vIconSize = Font.CalcTextSize(Font.FontAwesome, ICON_FA_SHARE);
 						ImVec2 vIconPos(m_DrawPos + ImVec2(m_FrameWidth - 10.f - vIconSize.x, floorf((m_FrameHeight * 0.5f) - (vIconSize.y * 0.5f))));
 
-						ImGui::GetForegroundDrawList()->AddText(Font.Icons, Font.Icons->FontSize, vIconPos, m_Selected ? Color.Selected_Text : Color.Primary_Text, IMMENU_ICON_RIGHTARROW);
+						ImGui::GetForegroundDrawList()->AddText(Font.FontAwesome, 30.f, vIconPos, m_Selected ? Color.Selected_Text : Color.Primary_Text, ICON_FA_SHARE);
+					}
+					break;	
+					case eImMMenuItemType_Icon:
+					{
+						ImVec2 vIconSize = Font.CalcTextSize(Font.FontAwesome, pItem->m_Icon.c_str());
+						ImVec2 vIconPos(m_DrawPos + ImVec2(m_FrameWidth - 10.f - vIconSize.x, floorf((m_FrameHeight * 0.5f) - (vIconSize.y * 0.5f))));
+
+						ImGui::GetForegroundDrawList()->AddText(Font.FontAwesome, Font.FontAwesome->FontSize, vIconPos, m_Selected ? Color.Selected_Text : Color.Primary_Text, pItem->m_Icon.c_str());
 					}
 					break;
+
 					case eImMMenuItemType_Checkbox:
 					{
 						float m_BoxSize = floorf(m_FrameHeight * 0.25f);

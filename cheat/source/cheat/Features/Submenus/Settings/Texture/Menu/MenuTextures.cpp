@@ -27,7 +27,7 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file() && path.has_filename())
 			{
-				Button(std::format("Load: {}", path.filename().string()).c_str(), [path] 
+				Button(std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
 				{
 					g_ThemeLoader.LoadHeader(path);
 				});
@@ -50,7 +50,7 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file())
 			{
-				Button(std::format("Load: {}", path.filename().string()).c_str(), [path]
+				Button(std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
 				{
 					g_ThemeLoader.LoadSubtitle(path);
 				});
@@ -74,7 +74,7 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file())
 			{
-				Button(std::format("Load: {}", path.filename().string()).c_str(), [path]
+				Button(std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
 				{
 					g_ThemeLoader.LoadBackground(path);
 				});
@@ -104,7 +104,7 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file())
 			{
-				Button(std::format("Load: {}", path.filename().string()).c_str(), [path]
+				Button(std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
 				{
 					g_ThemeLoader.LoadScroller(path);
 				});
@@ -133,7 +133,7 @@ namespace cheat
 			const auto path = ent.path();
 			if (ent.is_regular_file() && path.has_filename())
 			{
-				Button(std::format("Load: {}", path.filename().string()).c_str(), [path]
+				Button(std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
 				{
 					g_ThemeLoader.LoadFooter(path);
 				});

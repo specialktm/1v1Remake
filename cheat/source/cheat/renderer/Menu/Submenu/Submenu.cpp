@@ -70,16 +70,25 @@ namespace cheat::Submenus
         g_Renderer->Menu.SetTitleText(title);
     }
 
-    bool Button(const char* name, std::function<void()> callback, const char* desc)
+    void Button(const char* name, std::function<void()> callback, const char* desc)
     {
         if (g_Renderer->Menu.Item.AddText(name,desc))
+        {
+            queue::add([callback] {
+                 callback();
+            });
+        }
+    }
+    void IconButton(const char* icon, const char* name, std::function<void()> callback, const char* desc)
+    {
+        if (g_Renderer->Menu.Item.AddIcon(icon,name, desc))
         {
             queue::add([callback] {
                 callback();
             });
         }
+       
     }
-
     void Break(const char* name)
     {
         g_Renderer->Menu.Item.AddSeparator(name);
