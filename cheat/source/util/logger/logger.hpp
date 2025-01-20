@@ -50,14 +50,11 @@ namespace cheat
             std::string formatted = std::vformat(format, std::make_format_args(msg...));
             old_send(level, formatted);
         }
-       
-    private:
         void GetTimestamp(char* buffer, size_t size) const
         {
             SYSTEMTIME st;
             GetLocalTime(&st);
             snprintf(buffer, size, "%02d:%02d:%02d", st.wHour, st.wMinute, st.wSecond);
-
         }
     private:
         void flush();

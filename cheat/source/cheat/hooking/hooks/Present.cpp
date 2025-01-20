@@ -26,6 +26,11 @@ namespace cheat
 				DXGI_SWAP_CHAIN_DESC sd;
 				pSwapChain->GetDesc(&sd);
 				m_window = sd.OutputWindow;
+				RECT tmpRect{};
+				if (GetWindowRect(m_window, &tmpRect))
+				{
+					m_WindowRect.get(tmpRect);
+				}
 				ID3D11Texture2D* pBackBuffer;
 				pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 				m_Device->CreateRenderTargetView(pBackBuffer, NULL, &m_mainRenderTargetView);

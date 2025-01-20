@@ -10,6 +10,27 @@ namespace cheat
         optionsArray.clear();
     }
 
+	void renderer::RenderWatermark()
+	{
+		if (!m_ShouldRendererWatermark)
+			return;
+
+		if (ImGui::Begin("##Watermark", &m_ShouldRendererWatermark,
+			ImGuiWindowFlags_AlwaysAutoResize |
+			ImGuiWindowFlags_NoCollapse |
+			ImGuiWindowFlags_NoInputs |
+			ImGuiWindowFlags_NoTitleBar))
+		{
+			char buffer[64];
+			g_logger->GetTimestamp(buffer, sizeof(buffer));
+			ImGui::SetNextWindowPos(ImVec2{ ScreenSize.x - D3D11::m_WindowRect.size.x, 0 });
+			ImGui::PushFont(Menu.Font.Primary);
+			ImGui::Text(APP_NAME " | Time: %s", buffer);
+			ImGui::PopFont();
+		}
+		ImGui::End();
+	}
+
     void renderer::OnPresent()
     {
         if (GetAsyncKeyState(VK_INSERT) & 1)
@@ -28,6 +49,7 @@ namespace cheat
          
         }
         // Render Loops
+		RenderWatermark();
         ESP();
     }
 

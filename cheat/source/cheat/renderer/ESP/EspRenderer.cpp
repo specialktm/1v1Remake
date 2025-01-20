@@ -131,18 +131,7 @@ namespace cheat
 							playerMenu[i] = temp;
 						}
 					}
-					if (playerIsBot ? PlayerInfo == nullptr : util::SystemStringC(PlayerInfo->fields.Username) != "CrimsonVeins")
-					{
-						Vector2 loll;
-						Unity::Vector3 targetPosition = playerCurrentAnimator->CallMethodSafe<Unity::CTransform*>("GetBoneTransformInternal", 11)->GetPosition();
-						if (util::WorldToScreen(targetPosition, loll))
-						{
-							if (features::ExecAimbot(Player, loll))
-							{
-								ImGui::GetForegroundDrawList()->AddCircle(ImVec2(ScreenCenter.x, ScreenCenter.y), 80.f, ImColor(255, 255, 255), 360);
-							}
-						}
-					}
+\
 
 					auto playerPosition = PlayerList[i]->GetTransform()->GetPosition();
 

@@ -3,11 +3,27 @@
 #include "../../util/Il2cpp_Resolver/il2cpp_resolver.hpp"
 #include <il2cpp.h>
 
+struct Rect // Anvar :)
+{
+	float left, right{};
+	float top, bottom{};
+	ImVec2 size{};
 
+	void get(const RECT& handle)
+	{
+		left = static_cast<float>(handle.left);
+		right = static_cast<float>(handle.right);
+		top = static_cast<float>(handle.top);
+		bottom = static_cast<float>(handle.bottom);
+		size.x = right - left;
+		size.y = bottom - top;
+	}
+};
 
 namespace cheat::D3D11
 {
 	inline HWND m_window = NULL;
+	inline Rect m_WindowRect;
 	inline comPtr<ID3D11Device> m_Device;
 	inline comPtr<ID3D11DeviceContext> m_Context;
 	inline ID3D11RenderTargetView* m_mainRenderTargetView;

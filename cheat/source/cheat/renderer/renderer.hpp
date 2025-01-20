@@ -20,9 +20,10 @@ namespace cheat
 		void OnPresent();
         float Text(bool foreground, ImFont* pFont, const ImVec2& pos, float size, ImU32 color, bool center, bool outlined, const char* text, ...);
         void ESP();
-
+        void RenderWatermark();
 	public:
 		bool m_Open = true;
+		bool m_ShouldRendererWatermark = true;
 		C_ImMMenu Menu;
 		// Submenus
         void* currentMenu = Submenus::Home;

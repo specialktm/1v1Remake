@@ -99,7 +99,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer|x64'">
-    <IncludePath>$(SolutionDir)vendor\AL;$(SolutionDir)vendor\audio;$(SolutionDir)vendor\stbi;$(SolutionDir)vendor\imgui;$(SolutionDir)vendor\minhook;$(SolutionDir)vendor\DirectX\Include;$(SolutionDir)vendor\Dump;$(IncludePath);$(SolutionDir)vendor\Json</IncludePath>
+    <IncludePath>$(SolutionDir)vendor\stbi;$(SolutionDir)vendor\imgui;$(SolutionDir)vendor\minhook;$(SolutionDir)vendor\DirectX\Include;$(SolutionDir)vendor\Dump;$(IncludePath);$(SolutionDir)vendor\Json</IncludePath>
     <LibraryPath>$(SolutionDir)vendor\DirectX\Library;$(SolutionDir)vendor\minhook;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Bin\$(Configuration)\$(Platform)</OutDir>
     <IntDir>$(SolutionDir)Bin\$(Configuration)\$(Platform)\Intermediate</IntDir>
@@ -108,14 +108,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Bin\$(Configuration)\$(Platform)</OutDir>
     <IntDir>$(SolutionDir)Bin\$(Configuration)\$(Platform)\Intermediate</IntDir>
-    <IncludePath>$(SolutionDir)vendor\AL;$(SolutionDir)vendor\audio;$(SolutionDir)vendor\stbi;$(SolutionDir)vendor\imgui;$(SolutionDir)vendor\minhook;$(SolutionDir)vendor\DirectX\Include;$(SolutionDir)vendor\L2CPP_Resolver\;$(IncludePath);$(SolutionDir)vendor\Json</IncludePath>
+    <IncludePath>$(SolutionDir)vendor\stbi;$(SolutionDir)vendor\imgui;$(SolutionDir)vendor\minhook;$(SolutionDir)vendor\DirectX\Include;$(SolutionDir)vendor\L2CPP_Resolver\;$(IncludePath);$(SolutionDir)vendor\Json</IncludePath>
     <LibraryPath>$(SolutionDir)vendor\DirectX\Library;$(SolutionDir)vendor\minhook;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Bin\$(Configuration)\$(Platform)</OutDir>
     <IntDir>$(SolutionDir)Bin\$(Configuration)\$(Platform)\Intermediate</IntDir>
     <EmbedManifest>false</EmbedManifest>
-    <IncludePath>$(SolutionDir)vendor\AL;$(SolutionDir)vendor\audio;$(SolutionDir)vendor\stbi;$(SolutionDir)vendor\imgui;$(SolutionDir)vendor\minhook;$(SolutionDir)vendor\DirectX\Include;$(SolutionDir)vendor\Dump;$(IncludePath);$(SolutionDir)vendor\Json</IncludePath>
+    <IncludePath>$(SolutionDir)vendor\stbi;$(SolutionDir)vendor\imgui;$(SolutionDir)vendor\minhook;$(SolutionDir)vendor\DirectX\Include;$(SolutionDir)vendor\Dump;$(IncludePath);$(SolutionDir)vendor\Json</IncludePath>
     <LibraryPath>$(SolutionDir)vendor\DirectX\Library;$(SolutionDir)vendor\minhook;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

@@ -14,6 +14,7 @@ namespace cheat
 				g_logger->send(levels::error, "Failed to open folder.");
 			}
 		});
+		Bool("Render Watermark","Watermark Top Right", &g_Renderer->m_ShouldRendererWatermark);
 		Submenu("Theme", &Menus::TextureThemes);
 		Break("Custom Textures");
 		Submenu("Header", &Menus::TextureHeader);

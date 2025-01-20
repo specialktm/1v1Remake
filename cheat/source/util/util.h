@@ -4,8 +4,6 @@
 #include "Vector.hpp"
 #include <Includes.hpp>
 
-
-
 namespace cheat::timer {
 	using namespace std::chrono;
 	using namespace std::chrono_literals;
