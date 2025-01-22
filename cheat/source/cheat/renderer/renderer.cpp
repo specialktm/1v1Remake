@@ -15,17 +15,21 @@ namespace cheat
 		if (!m_ShouldRendererWatermark)
 			return;
 
-		if (ImGui::Begin("##Watermark", &m_ShouldRendererWatermark,
+		if (ImGui::Begin("##Watermark", nullptr,
 			ImGuiWindowFlags_AlwaysAutoResize |
 			ImGuiWindowFlags_NoCollapse |
-			ImGuiWindowFlags_NoInputs |
+			ImGuiWindowFlags_NoResize |
 			ImGuiWindowFlags_NoTitleBar))
 		{
-			char buffer[64];
-			g_logger->GetTimestamp(buffer, sizeof(buffer));
-			ImGui::SetNextWindowPos(ImVec2{ ScreenSize.x - D3D11::m_WindowRect.size.x, 0 });
+
+			time_t DOT = system_clock::to_time_t(system_clock::now());
+			const char* date = std::ctime(&DOT);
+			ImGui::SetNextWindowSize({15,15});
+			ImGui::SetNextWindowPos(ImVec2(D3D11::m_WindowRect.right, 0));
+			printf("%f\n", ImVec2(D3D11::m_WindowRect.right, 0).x);
+
 			ImGui::PushFont(Menu.Font.Primary);
-			ImGui::Text(APP_NAME " | Time: %s", buffer);
+			ImGui::Text(APP_NAME " | Date: %s", date);
 			ImGui::PopFont();
 		}
 		ImGui::End();

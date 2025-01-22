@@ -95,6 +95,7 @@ namespace cheat
 	{
 		IL2CPP::Callback::Uninitialize();
 		g_Detour.unhook();
+		std::this_thread::sleep_for(10ms);
 		kiero::shutdown();
 	}
 
