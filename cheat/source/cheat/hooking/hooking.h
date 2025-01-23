@@ -17,12 +17,6 @@ struct Rect // Anvar :)
 		bottom = static_cast<float>(handle.bottom);
 		size.x = right - left;
 		size.y = bottom - top;
-		printf("A: %f\n", size.x);
-		printf("B: %f\n", size.y);
-		printf("C: %f\n", right);
-		printf("D: %f\n", left);
-		printf("E: %f\n", bottom);
-		printf("V: %f\n", top);
 	}
 };
 

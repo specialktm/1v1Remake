@@ -3,6 +3,7 @@
 
 namespace cheat
 {
+
     renderer::~renderer()
     {
         currentMenu = nullptr;
@@ -15,6 +16,8 @@ namespace cheat
 		if (!m_ShouldRendererWatermark)
 			return;
 
+		ImGui::SetNextWindowPos(ImVec2(D3D11::m_WindowRect.right - ScreenSize.x, 7.f));
+
 		if (ImGui::Begin("##Watermark", nullptr,
 			ImGuiWindowFlags_AlwaysAutoResize |
 			ImGuiWindowFlags_NoCollapse |
@@ -24,10 +27,7 @@ namespace cheat
 
 			time_t DOT = system_clock::to_time_t(system_clock::now());
 			const char* date = std::ctime(&DOT);
-			ImGui::SetNextWindowSize({15,15});
-			ImGui::SetNextWindowPos(ImVec2(D3D11::m_WindowRect.right, 0));
-			printf("%f\n", ImVec2(D3D11::m_WindowRect.right, 0).x);
-
+		
 			ImGui::PushFont(Menu.Font.Primary);
 			ImGui::Text(APP_NAME " | Date: %s", date);
 			ImGui::PopFont();
@@ -81,11 +81,6 @@ namespace cheat
 
 			if (center)
 			{
-				DrawList->AddText(pFont, size, ImVec2((pos.x - textSize.x / 2.0f) + 1, (pos.y + textSize.y * i) + 1), ImGui::GetColorU32(ImVec4(0, 0, 0, 255)), wbuffer);
-				DrawList->AddText(pFont, size, ImVec2((pos.x - textSize.x / 2.0f) - 1, (pos.y + textSize.y * i) - 1), ImGui::GetColorU32(ImVec4(0, 0, 0, 255)), wbuffer);
-				DrawList->AddText(pFont, size, ImVec2((pos.x - textSize.x / 2.0f) + 1, (pos.y + textSize.y * i) - 1), ImGui::GetColorU32(ImVec4(0, 0, 0, 255)), wbuffer);
-				DrawList->AddText(pFont, size, ImVec2((pos.x - textSize.x / 2.0f) - 1, (pos.y + textSize.y * i) + 1), ImGui::GetColorU32(ImVec4(0, 0, 0, 255)), wbuffer);
-
 				DrawList->AddText(pFont, size, ImVec2(pos.x - textSize.x / 2.0f, pos.y + textSize.y * i), ImGui::GetColorU32(color), wbuffer);
 			}
 			else if (outlined)
