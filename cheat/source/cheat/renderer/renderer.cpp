@@ -1,5 +1,6 @@
 #include "renderer.hpp"
 #include "Menu/Submenu/Submenu.h"
+#include "../Features/features.h"
 
 namespace cheat
 {
@@ -13,34 +14,47 @@ namespace cheat
 
 	void renderer::RenderWatermark()
 	{
-		if (!m_ShouldRendererWatermark)
-			return;
-
 		ImGui::SetNextWindowPos(ImVec2(D3D11::m_WindowRect.right - ScreenSize.x, 7.f));
-
+		ImGui::PushStyleColor(ImGuiCol_Border, ImColor(255, 255, 255).Value);
+		ImGui::PushStyleColor(ImGuiCol_WindowBg, ImColor(0, 0, 0, 255).Value);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.4f);
 		if (ImGui::Begin("##Watermark", nullptr,
 			ImGuiWindowFlags_AlwaysAutoResize |
 			ImGuiWindowFlags_NoCollapse |
 			ImGuiWindowFlags_NoResize |
 			ImGuiWindowFlags_NoTitleBar))
 		{
-
 			time_t DOT = system_clock::to_time_t(system_clock::now());
-			const char* date = std::ctime(&DOT);
+			std::string_view date = std::ctime(&DOT);
+
 		
 			ImGui::PushFont(Menu.Font.Primary);
-			ImGui::Text(APP_NAME " | Date: %s", date);
+
+			ImGui::Text("%s | Date: %s", APP_NAME, date.data());
+
 			ImGui::PopFont();
+		
 		}
+		ImGui::PopStyleColor(2);
+		ImGui::PopStyleVar();
 		ImGui::End();
+	
 	}
 
     void renderer::OnPresent()
     {
-        if (GetAsyncKeyState(VK_INSERT) & 1)
-        {
-            m_Open ^= 1;
-        }
+		if (GetAsyncKeyState(VK_INSERT) & 0x8000)
+		{
+			m_Open ^= 1;
+		}
+
+
+        // Render Loops
+		if (m_ShouldRendererWatermark) RenderWatermark();
+
+		if (features::EnableEsp) ESP();
+
+    
         if (m_Open)
         { 
             if (Menu.Begin())
@@ -52,9 +66,6 @@ namespace cheat
             }
          
         }
-        // Render Loops
-		RenderWatermark();
-        ESP();
     }
 
 	float renderer::Text(bool foreground, ImFont* pFont, const ImVec2& pos, float size, ImU32 color, bool center, bool outlined, const char* text, ...)

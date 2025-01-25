@@ -3,15 +3,25 @@
 
 namespace cheat
 {
-	inline char buffer[400];
+	inline char ThemeNameBuffer[400];
+
 	void Submenus::Home()
 	{
 		Title("Home");
 		Submenu("Players", &Menus::Players);
 		Submenu("No Skill", &Menus::MenuESP, ICON_FA_BINOCULARS);
 		Submenu("Settings", &Menus::MenuSettings, ICON_FA_COG);
-			
-		Input("Theme Name", "Theme Save Name", "Enter Name", buffer, sizeof(buffer));
-		Button("Save Folder Theme", [] {g_ThemeLoader.SaveThemeToFolder(buffer); });
+		Break();
+		Input("Theme Name", "Theme Save Name", "Enter Name", ThemeNameBuffer, sizeof(ThemeNameBuffer));
+		Button("Save Theme", []
+		{
+			if (ThemeNameBuffer != "")
+			{
+				std::string editBuffer{ ThemeNameBuffer };
+				editBuffer.replace(editBuffer.find("5"), 1, "");
+				g_ThemeLoader.SaveThemeToFolder(editBuffer.c_str());
+				editBuffer.clear();
+			}
+		});
 	}
 }

@@ -7,8 +7,12 @@ namespace cheat
 	void Submenus::Menus::MenuESP()
 	{
 		Title("ESP");
-		
-		Bool("Skeleton Esp", "Draw lines on the player skeleton", &features::SkeletonEsp);
-		Bool("Box Esp", "Draw box around the player", &features::BoxEsp);
+		Bool("Enable ESP", "Do you want esp?", &features::EnableEsp);
+		if (features::EnableEsp)
+		{
+			Bool("Skeleton Esp", "Draw lines on the player skeleton", &features::SkeletonEsp);
+			Bool("Box Esp", "Draw box around the player", &features::BoxEsp);
+		}
+	
 	}
 }

@@ -4,17 +4,20 @@
 
 namespace cheat
 {
+
 	void Submenus::Menus::MenuSettings() 
 	{
 		Title("Settings");
 		IconButton(ICON_FA_FOLDER_OPEN, "Open Folder", [] 
 		{
-			HINSTANCE hInst = ShellExecuteW(NULL, L"explore", g_ThemeLoader.GetPath((ImageType)404).wstring().c_str(), NULL, NULL, SW_SHOW);
+			HINSTANCE hInst = ShellExecuteW(NULL, L"explore", g_ThemeLoader.GetPath(static_cast<ImageType>(404)).wstring().c_str(), NULL, NULL, SW_SHOW);
 			if ((int)hInst <= ERROR_PATH_NOT_FOUND) {
 				g_logger->send(levels::error, "Failed to open folder.");
 			}
 		});
-		Bool("Render Watermark","Watermark Top Right", &g_Renderer->m_ShouldRendererWatermark);
+		Break("Watermark");
+		Bool("Render Watermark", "", &g_Renderer->m_ShouldRendererWatermark);
+		Break("Saved Themes");
 		Submenu("Theme", &Menus::TextureThemes);
 		Break("Custom Textures");
 		Submenu("Header", &Menus::TextureHeader);
@@ -26,8 +29,8 @@ namespace cheat
 		Break("Description");
 		Float("Description Text Padding","Padding for the description text.",&m_DescriptionTextPadding,1.f, 10.f, 0.1f);
 		Float("Description Padding","Padding for the description.",&m_DescriptionPadding,1.f, 20.f, 1.f);
-
-		Break("Reset");
+	
+		Break("Theme Related");
 		IconButton(ICON_FA_FOLDER_OPEN, "Save Theme", [&]
 		{
 			g_ThemeLoader.SaveTheme();
@@ -36,6 +39,7 @@ namespace cheat
 		{
 			g_ThemeLoader.SaveThemeFile();
 		});
+		Break("Reset");
 		IconButton(ICON_FA_SYNC, "Reset Textures", [&]
 		{
 			g_ThemeLoader.Reset();

@@ -32,7 +32,6 @@ namespace cheat
 		int menuLevel;
         int currentOption;
 		// DX11
-		inline static UINT VPS = 1;
 		Vector2 ScreenSize = { 0, 0 };
 		Vector2 ScreenCenter = { 0, 0 };
 		D3D11_VIEWPORT Viewport;

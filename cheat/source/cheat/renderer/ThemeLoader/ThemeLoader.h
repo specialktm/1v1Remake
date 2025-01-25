@@ -33,7 +33,7 @@ namespace cheat
 				Footer != Data.Footer;
 		}
 	};
-	enum class ImageType
+	enum class ImageType : int
 	{
 		Header = 1,
 		Subtitle = 2,
