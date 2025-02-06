@@ -41,6 +41,7 @@ namespace cheat::offsets
 	inline uintptr_t GameAssembly;
 	inline uintptr_t UnityPlayer;
 	inline uintptr_t AddRecoil;
+	inline uintptr_t DiscordUpdate;
 }
 
 namespace cheat::hooks
@@ -61,6 +62,7 @@ namespace cheat::hooks
 namespace cheat::util
 {
 	extern std::string SystemStringC(System_String_o* str);
+
 }
 
 namespace cheat

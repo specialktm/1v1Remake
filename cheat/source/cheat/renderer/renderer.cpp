@@ -17,7 +17,7 @@ namespace cheat
 		ImGui::SetNextWindowPos(ImVec2(D3D11::m_WindowRect.right - ScreenSize.x, 7.f));
 		ImGui::PushStyleColor(ImGuiCol_Border, ImColor(255, 255, 255).Value);
 		ImGui::PushStyleColor(ImGuiCol_WindowBg, ImColor(0, 0, 0, 255).Value);
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.4f);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 2.f);
 		if (ImGui::Begin("##Watermark", nullptr,
 			ImGuiWindowFlags_AlwaysAutoResize |
 			ImGuiWindowFlags_NoCollapse |

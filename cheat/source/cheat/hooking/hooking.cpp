@@ -6,7 +6,9 @@
 
 namespace cheat
 {
-	std::string util::SystemStringC(System_String_o* str) {
+
+	std::string util::SystemStringC(System_String_o* str) 
+	{
 		if (!str || str->fields._stringLength <= 0) return "<empty>";
 
 		const uint16_t* utf16_chars = &str->fields._firstChar;
@@ -19,7 +21,6 @@ namespace cheat
 
 		return utf8_string;
 	}
-
 
 	void InitPlayerList()
 	{
@@ -77,7 +78,6 @@ namespace cheat
 	}
 	hooking::~hooking()
 	{
-
 		this->UnHook();
 	}
 
