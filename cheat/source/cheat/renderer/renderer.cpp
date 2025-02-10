@@ -10,6 +10,11 @@ namespace cheat
         currentMenu = nullptr;
         menusArray.clear();
         optionsArray.clear();
+
+		SetWindowLongPtrA(D3D11::m_window, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hooks::ogWndProc));
+		ImGui_ImplDX11_Shutdown();
+		ImGui_ImplWin32_Shutdown();
+		ImGui::DestroyContext();
     }
 
 	void renderer::RenderWatermark()
@@ -55,7 +60,7 @@ namespace cheat
 		if (features::EnableEsp) ESP();
 
     
-        if (m_Open)
+        if (m_Open && g_Running)
         { 
             if (Menu.Begin())
             {

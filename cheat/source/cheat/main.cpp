@@ -61,8 +61,8 @@ namespace cheat
 		}
 		fiber_manager::remove_all_fibers();
 		queue::free();
-		g_Hooking.reset(nullptr);
 		g_Renderer.reset(nullptr);
+		g_Hooking.reset(nullptr);
 		g_logger.reset(nullptr);
 
 		CloseHandle(g_MainThread);
