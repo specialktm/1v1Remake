@@ -62,6 +62,7 @@ namespace cheat::hooks
 namespace cheat::util
 {
 	extern std::string SystemStringC(System_String_o* str);
+	extern System_String_o* ToSystemStringC(const std::string& utf8Str);
 
 }
 

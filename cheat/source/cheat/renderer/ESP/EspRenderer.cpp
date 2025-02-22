@@ -111,8 +111,9 @@ namespace cheat
 					bool playerIsBot = playerCurrentContoller->CallMethodSafe<bool>("get_IsBot");
 					
 					t_PlayerInfo* PlayerInfo = playerCurrentContoller->CallMethodSafe<t_PlayerInfo*>("get_PlayerInfo");
-					//if (PlayerInfo == nullptr)
-					//	continue;
+					if (PlayerInfo == nullptr || PlayerInfo->fields.Username == nullptr)
+						continue;
+					std::string_view PlayerUsername = util::SystemStringC(PlayerInfo->fields.Username);
 
 		
 					if (!playerIsBot)
@@ -125,7 +126,7 @@ namespace cheat
 						if (playerMenu[i].name.empty())
 						{
 							t_playersubmenu temp;
-							temp.name = util::SystemStringC(PlayerInfo->fields.Username);
+							temp.name = !PlayerUsername.empty() ? PlayerUsername : "Empty Name: Error";
 							temp.uuid = util::SystemStringC(PlayerInfo->fields.UUID);
 							temp.skin = util::SystemStringC(PlayerInfo->fields.PlayerSkin);
 							playerMenu[i] = temp;
@@ -135,7 +136,7 @@ namespace cheat
 
 					auto playerPosition = PlayerList[i]->GetTransform()->GetPosition();
 
-					if (util::SystemStringC(PlayerInfo->fields.Username) == "CrimsonVeins")
+					if (util::SystemStringC(PlayerInfo->fields.Username) == "CrimsonVeins" || !PlayerUsername.empty())
 						continue;
 
 					for (std::pair<enums::HumanBodyBones, enums::HumanBodyBones> bone_index : BonePair)

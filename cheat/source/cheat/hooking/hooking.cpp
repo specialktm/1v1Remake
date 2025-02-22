@@ -7,6 +7,34 @@
 namespace cheat
 {
 
+	System_String_o* allocateSystemString(const wchar_t* utf16_chars, int length)
+	{
+		if (length < 0) return nullptr;
+
+		size_t structSize = sizeof(System_String_o) + (length - 1) * sizeof(wchar_t);
+		System_String_o* sysStr = (System_String_o*)malloc(structSize);
+		if (!sysStr) return nullptr;
+
+		sysStr->fields._stringLength = length;
+		memcpy(&sysStr->fields._firstChar, utf16_chars, length * sizeof(wchar_t));
+
+		return sysStr;
+	}
+
+	System_String_o* util::ToSystemStringC(const std::string& utf8Str)
+	{
+		if (utf8Str.empty()) return nullptr;
+
+		int utf16_size = MultiByteToWideChar(CP_UTF8, 0, utf8Str.c_str(), -1, nullptr, 0);
+		if (utf16_size <= 0) return nullptr;
+
+		std::vector<wchar_t> utf16_string(utf16_size);
+		MultiByteToWideChar(CP_UTF8, 0, utf8Str.c_str(), -1, utf16_string.data(), utf16_size);
+
+		return allocateSystemString(utf16_string.data(), utf16_size - 1);
+	}
+
+
 	std::string util::SystemStringC(System_String_o* str) 
 	{
 		if (!str || str->fields._stringLength <= 0) return "<empty>";
@@ -65,13 +93,12 @@ namespace cheat
 		IL2CPP::Callback::Initialize();
 	
 		offsets::GameAssembly = (uintptr_t)GetModuleHandleA("GameAssembly.dll");
-		offsets::UnityPlayer = (uintptr_t)GetModuleHandleA("UnityPlayer.dll");
+		offsets::UnityPlayer = (uintptr_t)GetModuleHandleA("UnityPlayer.dll");	
 	
 		Unity::il2cppClass* ThirdPersonCameraClass = IL2CPP::Class::Find("vThirdPersonCamera");
 		offsets::AddRecoil = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(ThirdPersonCameraClass, "AddRecoil");
 	
 		g_logger->send(levels::developer, "Offsets: G: [{:#X}] | U: [{:#X}]", offsets::GameAssembly, offsets::UnityPlayer);
-	
 	
 		fiber_manager::add_fiber("PlayerListCache", &InitPlayerList);
 		this->Hook();
@@ -94,8 +121,10 @@ namespace cheat
 	void hooking::UnHook()
 	{
 		g_Detour.unhook();
+		
 		std::this_thread::sleep_for(10ms);
 		kiero::shutdown();
+
 		std::this_thread::sleep_for(10ms);
 		IL2CPP::Callback::Uninitialize();
 	}

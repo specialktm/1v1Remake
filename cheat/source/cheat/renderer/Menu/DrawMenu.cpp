@@ -13,6 +13,7 @@ namespace cheat
 		Submenu("Settings", &Menus::MenuSettings, ICON_FA_COG);
 		Break();
 		Input("Theme Name", "Theme Save Name", "Enter Name", ThemeNameBuffer, sizeof(ThemeNameBuffer));
+		
 		Button("Save Theme", []
 		{
 			if (ThemeNameBuffer != "")

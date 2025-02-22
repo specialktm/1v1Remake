@@ -48,6 +48,9 @@ namespace cheat
 
     void renderer::OnPresent()
     {
+		if (!g_Running)
+			return;
+
 		if (GetAsyncKeyState(VK_INSERT) & 0x8000)
 		{
 			m_Open ^= 1;
