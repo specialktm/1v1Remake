@@ -58,14 +58,6 @@ namespace cheat::hooks
 }
 
 
-
-namespace cheat::util
-{
-	extern std::string SystemString(System_String_o* str);
-	extern System_String_o* ToSystemString(const std::string& utf8Str);
-
-}
-
 namespace cheat
 {
 	inline std::vector<Unity::CGameObject*> PlayerList(NULL);

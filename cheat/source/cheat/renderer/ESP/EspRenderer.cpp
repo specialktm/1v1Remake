@@ -107,12 +107,14 @@ namespace cheat
 
 					bool playerIsTeam = playerCurrentContoller->CallMethodSafe<bool>("get_IsTeammate");
 					if (playerIsTeam)
-						continue;			
+						continue;	
+
 					bool playerIsBot = playerCurrentContoller->CallMethodSafe<bool>("get_IsBot");
 					
 					t_PlayerInfo* PlayerInfo = playerCurrentContoller->CallMethodSafe<t_PlayerInfo*>("get_PlayerInfo");
 					if (PlayerInfo == nullptr || PlayerInfo->fields.Username == nullptr)
 						continue;
+
 					std::string_view PlayerUsername = util::SystemString(PlayerInfo->fields.Username);
 
 		

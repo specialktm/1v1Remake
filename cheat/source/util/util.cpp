@@ -4,7 +4,6 @@
 
 namespace cheat::util
 {
-   
 
     void MouseMove(float tarx, float tary, float X, float Y, int smooth)
     {
@@ -126,35 +125,69 @@ namespace cheat::util
 
     bool WorldToScreen(Unity::Vector3 world, Vector2& screen)
     {
-        Unity::CCamera* CameraMain = Unity::Camera::GetMain(); // Get The Main Camera
+        Unity::CCamera* CameraMain = Unity::Camera::GetMain();
         if (!CameraMain) {
-         //   printf_s("false\n");
             return false;
         }
-
-        //Unity::Vector3 buffer = WorldToScreenPoint(CameraMain, world, 2);
 
         Unity::Vector3 buffer = CameraMain->CallMethodSafe<Unity::Vector3>("WorldToScreenPoint", world, Unity::eye::mono); // Call the worldtoscren function using monoeye (2)
 
         if (buffer.x > g_Renderer->ScreenSize.x || buffer.y > g_Renderer->ScreenSize.y || buffer.x < 0 || buffer.y < 0 || buffer.z < 0) // check if point is on screen
         {
-           // printf("Buffer: (%f, %f, %f), Screen Size: (%f, %f)\n",
-              //  buffer.x, buffer.y, buffer.z, g_Renderer->ScreenSize.x, g_Renderer->ScreenSize.y);
-
-            //printf_s("false 2\n");
             return false;
         }
 
-        if (buffer.z > 0.0f) // Check if point is in view
+        if (buffer.z > 0.0f)
         {
-           // printf_s("is view\n");
             screen = Vector2(buffer.x, g_Renderer.get()->ScreenSize.y - buffer.y);
         }
 
-        if (screen.x > 0 || screen.y > 0) // Check if point is in view
+        if (screen.x > 0 || screen.y > 0)
         {
-            //printf_s("true\n");
             return true;
         }
     }
+}
+
+System_String_o* cheat::util::allocateSystemString(const wchar_t* utf16_chars, int length)
+{
+    if (length < 0) return nullptr;
+
+    size_t structSize = sizeof(System_String_o) + (length - 1) * sizeof(wchar_t);
+    System_String_o* sysStr = (System_String_o*)malloc(structSize);
+    if (!sysStr) return nullptr;
+
+    sysStr->fields._stringLength = length;
+    memcpy(&sysStr->fields._firstChar, utf16_chars, length * sizeof(wchar_t));
+
+    return sysStr;
+}
+
+System_String_o* cheat::util::ToSystemString(const std::string& utf8Str)
+{
+    if (utf8Str.empty()) return nullptr;
+
+    int utf16_size = MultiByteToWideChar(CP_UTF8, 0, utf8Str.c_str(), -1, nullptr, 0);
+    if (utf16_size <= 0) return nullptr;
+
+    std::vector<wchar_t> utf16_string(utf16_size);
+    MultiByteToWideChar(CP_UTF8, 0, utf8Str.c_str(), -1, utf16_string.data(), utf16_size);
+
+    return allocateSystemString(utf16_string.data(), utf16_size - 1);
+}
+
+
+std::string cheat::util::SystemString(System_String_o* str)
+{
+    if (!str || str->fields._stringLength <= 0) return "<empty>";
+
+    const uint16_t* utf16_chars = &str->fields._firstChar;
+    int utf8_size = WideCharToMultiByte(CP_UTF8, 0, (LPCWCH)utf16_chars, str->fields._stringLength, nullptr, 0, nullptr, nullptr);
+
+    if (utf8_size <= 0) return "<conversion error>";
+
+    std::string utf8_string(utf8_size, 0);
+    WideCharToMultiByte(CP_UTF8, 0, (LPCWCH)utf16_chars, str->fields._stringLength, &utf8_string[0], utf8_size, nullptr, nullptr);
+
+    return utf8_string;
 }

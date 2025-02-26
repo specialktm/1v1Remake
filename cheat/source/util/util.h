@@ -1,8 +1,9 @@
 #pragma once
-#include "../fiber/Fiber.h"
 #include "../pch/pch.h"
-#include "Vector.hpp"
+#include <il2cpp.h>
 #include <Includes.hpp>
+#include "Vector.hpp"
+#include "../fiber/Fiber.h"
 
 namespace cheat::timer {
 	using namespace std::chrono;
@@ -47,6 +48,7 @@ namespace cheat::timer {
 namespace cheat::util
 {
 	
+
 	uint8_t char_to_byte(char c);
 	std::optional<std::uint8_t> char_to_hex(const char c);
 
@@ -71,6 +73,10 @@ namespace cheat::util
 	}
 
 	bool WorldToScreen(Unity::Vector3 world, Vector2& screen);
+	std::string SystemString(System_String_o* str);
+	System_String_o* ToSystemString(const std::string& utf8Str);
+	System_String_o* allocateSystemString(const wchar_t* utf16_chars, int length);
+
 
 #define do_once(block)                     \
     do {                                   \
