@@ -21,7 +21,7 @@ namespace cheat
 		return sysStr;
 	}
 
-	System_String_o* util::ToSystemStringC(const std::string& utf8Str)
+	System_String_o* util::ToSystemString(const std::string& utf8Str)
 	{
 		if (utf8Str.empty()) return nullptr;
 
@@ -35,7 +35,7 @@ namespace cheat
 	}
 
 
-	std::string util::SystemStringC(System_String_o* str) 
+	std::string util::SystemString(System_String_o* str) 
 	{
 		if (!str || str->fields._stringLength <= 0) return "<empty>";
 
