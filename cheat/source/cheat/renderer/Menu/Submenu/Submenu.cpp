@@ -102,7 +102,7 @@ namespace cheat::Submenus
 
     bool Float(const char* name, const char* m_Description, float* p_Value, float m_Min, float m_Max, float m_Power, bool m_Clamp)
     {
-        return g_Renderer->Menu.Item.AddFloat(name, m_Description, p_Value, m_Min, m_Max,m_Power, "%.3f", m_Clamp);
+        return g_Renderer->Menu.Item.AddFloat(name, m_Description, p_Value, m_Min, m_Max,m_Power, "%.1f", m_Clamp);
     }
 
     bool Number(const char* m_Name, const char* m_Description, int* p_Value, int m_Min, int m_Max, int m_Power, bool m_Clamp)

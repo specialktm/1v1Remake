@@ -51,7 +51,7 @@ namespace cheat
 		if (!g_Running)
 			return;
 
-		if (GetAsyncKeyState(VK_INSERT) & 0x8000)
+		if (GetAsyncKeyState(VK_INSERT) & 0x8000) 
 		{
 			m_Open ^= 1;
 		}

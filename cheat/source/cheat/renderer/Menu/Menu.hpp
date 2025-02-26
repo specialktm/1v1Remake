@@ -163,7 +163,7 @@ namespace cheat
 				return -2;
 			}
 
-			int m_NumToShow = 10;
+			int m_NumToShow = 12;
 			int m_Index = 0; // From which item to start render
 			int m_Selected = 0; // Current selected item
 			int m_Interacted = -1; // If there was value change or pressed this value will be temporary set

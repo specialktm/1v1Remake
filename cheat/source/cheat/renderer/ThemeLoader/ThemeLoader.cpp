@@ -376,8 +376,6 @@ namespace cheat
 			 fs::path FooterPath{ ThemePath / "Footer" / "Footer" += ThemeData_.Footer.extension() };
 			 LoadedTheme_ = ThemePath;
 
-
-
 			 if (!fs::exists(ThemePath))
 			 {
 				 if (!fs::create_directories(ThemePath))
