@@ -1,5 +1,6 @@
 #include "../../../renderer/Menu/Submenu/Submenu.h"
 #include "../../../hooking/hooking.h"
+#include "../../../discord/discord.h"
 #include <shellapi.h>
 
 namespace cheat
@@ -22,7 +23,8 @@ namespace cheat
 
 		Break("Watermark");
 		Bool("Render Watermark", "", &g_Renderer->m_ShouldRendererWatermark);
-
+		Break("Discord");
+		Bool("Enable Discord Rich Presence", "", &g_DiscordManager.m_RichPresenceEnabled);
 		Break("Saved Themes");
 		Submenu("Theme", &Menus::TextureThemes);
 		Break("Custom Textures");

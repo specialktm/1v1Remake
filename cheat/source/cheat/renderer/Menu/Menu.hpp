@@ -434,6 +434,11 @@ namespace cheat
 				return m_Section;
 			}
 
+			void SetSelected(int NewSelected)
+			{
+				m_Selected = NewSelected;
+			}
+
 			void SetSection(int p_NewSection)
 			{
 				m_SectionsLast.emplace_back(m_Section);
@@ -869,7 +874,7 @@ namespace cheat
 				if (Item.m_Selected >= m_SelectableCount)
 				{
 					Item.m_Index = 0;
-					Item.m_Selected = (m_SelectableCount ? 0 : -1);
+					Item.SetSelected(m_SelectableCount > 0 ? 1 : -1);
 				}
 
 				int firstIndex = Item.m_Index;
@@ -883,12 +888,12 @@ namespace cheat
 				}
 
 
-				ImVec2 size(m_FrameWidth, itemHeight); // gayyy
+				ImVec2 m_BackgroundSize(m_FrameWidth, itemHeight);
 				if (Item.m_BackgroundImage.empty())
 				{
 					m_DrawList->AddRectFilled(
 						m_DrawPos,
-						m_DrawPos + size,
+						m_DrawPos + m_BackgroundSize,
 						Color.Item
 					);
 				}
@@ -907,7 +912,7 @@ namespace cheat
 					m_DrawList->AddImage(
 						Item.m_BackgroundImage[Item.m_BackgroundFrame].m_Texture,
 						m_DrawPos,
-						m_DrawPos + size,
+						m_DrawPos + m_BackgroundSize,
 						ImVec2(0, 0),
 						ImVec2(1, 1),
 						IM_COL32_WHITE
@@ -963,14 +968,17 @@ namespace cheat
 						m_CurrentCoord = lerp(m_CurrentCoord, m_DrawPos.y, 0.1f);
 						m_CurrentCoord2 = lerp(m_CurrentCoord2, m_DrawPos.x, 0.1f);
 
+						ImVec2 m_ScrollerMin{ m_CurrentCoord2, m_CurrentCoord };
+						ImVec2 m_ScrollerSize{ m_FrameWidth, m_FrameHeight };
+						ImVec2 m_ScrollerMax = m_ScrollerMin + m_ScrollerSize;
 
 						if (Item.m_Image.empty())
 						{
 							Color.Selected_Text = ImColor(0, 0, 0);
 						
 							m_DrawList->AddRectFilled(
-								ImVec2{ m_CurrentCoord2, m_CurrentCoord },
-								ImVec2{ m_CurrentCoord2, m_CurrentCoord } + ImVec2(m_FrameWidth, m_FrameHeight),
+								m_ScrollerMin,
+								m_ScrollerMax,
 								Color.ItemSelected,
 								Item.m_Rounded ? Item.m_Rounding : 0,
 								Item.m_Rounded ? ImDrawFlags_RoundCornersAll : 0

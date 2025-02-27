@@ -4,33 +4,7 @@
 #include "../kiero/kiero.h"
 #include "renderer/ThemeLoader/ThemeLoader.h"
 #include "../util/Il2cpp_Resolver/Il2cpp_Resolver.hpp"
-
-#ifdef Developer
-/*	
-	Author:
-		[A] VoDKa
-
-	Credit:
-		[C] Mister9982 (Aera Image Loading),
-		[C] Sneaky Evil (Menu, IL2CPP Resolver)
-
-	TODO:
-	    [T] Fix FA (FontAwesome),
-	    [T] Add More Features (e.g Aimbot, Godmode, etc)
-
-	Changelog: Commit 22
-		[I] Caching now uses file name (e.x Texture.jpg) instead of file path (e.x C:\Textures\Texture.jpg) -
-		fixes recaching the same image.
-
-	Features:
-		[1] Skeleton ESP,
-		[2] Box ESP,
-		[3] Full Menu Customization,
-		[4] Theme Loading/Saving through Folders and Json,
-		[5] Custom Themes
-		[6] No Recoil (can't toggle maybe future)
-*/
-#endif
+#include "../cheat/discord/discord.h"
 
 namespace cheat
 {
@@ -46,21 +20,25 @@ namespace cheat
 		queue::initialize();
 		g_Renderer = std::make_unique<renderer>();
 		g_Hooking = std::make_unique<hooking>();
-
+		g_DiscordManager.Initialize("1227026134827270245");
 		queue::add([&] {
 			g_ThemeLoader.CreateFolders();
 		}); 
 
 		while (g_Running)
 		{
+			g_DiscordManager.Tick();
+
 			fiber_manager::tick();
 			queue::tick();
+
 			if (GetAsyncKeyState(VK_END))
 			{
 				g_Running = false;
 			}
 			std::this_thread::sleep_for(400ms);
 		}
+		g_DiscordManager.UnInitialize();
 		fiber_manager::remove_all_fibers();
 		queue::free();
 		g_Renderer.reset(nullptr);

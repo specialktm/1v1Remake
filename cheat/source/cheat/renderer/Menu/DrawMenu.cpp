@@ -7,6 +7,7 @@ namespace cheat
 
 	void Submenus::Home()
 	{
+
 		Title("Home");
 		Submenu("Players", &Menus::Players);
 		Submenu("No Skill", &Menus::MenuESP, ICON_FA_BINOCULARS);

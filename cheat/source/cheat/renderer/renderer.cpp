@@ -1,6 +1,7 @@
 #include "renderer.hpp"
 #include "Menu/Submenu/Submenu.h"
 #include "../Features/features.h"
+#include "../discord/discord.h"
 
 namespace cheat
 {
@@ -36,6 +37,7 @@ namespace cheat
 			ImGui::PushFont(Menu.Font.Primary);
 
 			ImGui::Text("%s | Date: %s", APP_NAME, date.data());
+			ImGui::Text("Connected Discord User %s", g_DiscordManager.m_DiscordUsername);
 
 			ImGui::PopFont();
 		
