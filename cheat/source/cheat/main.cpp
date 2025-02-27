@@ -46,7 +46,7 @@ namespace cheat
 		g_logger.reset();
 
 		CloseHandle(g_MainThread);
-		FreeLibraryAndExitThread(g_Module,0);
+		FreeLibraryAndExitThread(g_Module, 0);
 	}
 
 }

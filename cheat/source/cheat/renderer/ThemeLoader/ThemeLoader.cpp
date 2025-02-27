@@ -192,8 +192,9 @@ namespace cheat
 				g_logger->send(levels::error, "Subfolder not found or not a directory: {}", subfolderPath.string());
 			}
 
-			LoadedTheme_ = folder;
 		}
+		LoadedTheme_ = folder;
+		g_logger->send(levels::success, "Theme Loaded: {}", folder.string().c_str());
 	}
 
 	std::vector<fs::directory_entry> ThemeLoader::GetFiles(ImageType type)
