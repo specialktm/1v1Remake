@@ -874,7 +874,7 @@ namespace cheat
 				if (Item.m_Selected >= m_SelectableCount)
 				{
 					Item.m_Index = 0;
-					Item.SetSelected(m_SelectableCount > 0 ? 1 : -1);
+					Item.SetSelected((m_SelectableCount ? 0 : -1));
 				}
 
 				int firstIndex = Item.m_Index;

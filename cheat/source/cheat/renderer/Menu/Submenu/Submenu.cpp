@@ -36,7 +36,12 @@ namespace cheat::Submenus
         g_Renderer->optionsArray.push_back(g_Renderer->Menu.Item.m_Selected);
         g_Renderer->menuLevel++;
         g_Renderer->currentMenu = Submenu;
-        g_Renderer->Menu.Item.m_Selected = 0;
+        int m_SelectableCount = g_Renderer->Menu.Item.GetSelectableCount();
+        if (g_Renderer->Menu.Item.m_Selected >= m_SelectableCount)
+        {
+            g_Renderer->Menu.Item.m_Index = 0;
+            g_Renderer->Menu.Item.SetSelected((m_SelectableCount ? 0 : -1));
+        }
     }
 
     void Back()
@@ -54,7 +59,11 @@ namespace cheat::Submenus
             g_Renderer->menusArray.pop_back();
             g_Renderer->optionsArray.pop_back();
             g_Renderer->menuLevel--;
-
+            int m_SelectableCount = g_Renderer->Menu.Item.GetSelectableCount();
+            if (g_Renderer->Menu.Item.m_Selected >= m_SelectableCount)
+            {
+                g_Renderer->Menu.Item.m_Index = g_Renderer->Menu.Item.m_Selected;
+            }
         }
     }
 
