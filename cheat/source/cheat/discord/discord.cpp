@@ -4,12 +4,10 @@ namespace cheat
 {
 
 
-	const char* DiscordManager::m_DiscordUsername = "Null";
 
 	void DiscordManager::HandlerDiscordReady(const DiscordUser* ConnectedUser)
 	{
 		g_logger->send(levels::info, "Discord User Connected: {}:{}", ConnectedUser->username, ConnectedUser->userId);
-		m_DiscordUsername = reinterpret_cast<const char*>(ConnectedUser->username);
 	}
 
 	void DiscordManager::HandlerDiscordDisconnected(int ErrorCode, const char* ErrorMessage)

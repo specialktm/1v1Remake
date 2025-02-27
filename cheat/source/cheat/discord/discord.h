@@ -13,7 +13,6 @@ namespace cheat
 		void UnInitialize();
 	public:
 		bool m_RichPresenceEnabled = true;
-		static const char* m_DiscordUsername;
 	private:
 		static void HandlerDiscordReady(const DiscordUser* ConnectedUser);
 		static void HandlerDiscordDisconnected(int ErrorCode, const char* ErrorMessage);

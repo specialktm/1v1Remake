@@ -41,9 +41,9 @@ namespace cheat
 		g_DiscordManager.UnInitialize();
 		fiber_manager::remove_all_fibers();
 		queue::free();
-		g_Renderer.reset(nullptr);
-		g_Hooking.reset(nullptr);
-		g_logger.reset(nullptr);
+		g_Renderer.reset();
+		g_Hooking.reset();
+		g_logger.reset();
 
 		CloseHandle(g_MainThread);
 		FreeLibraryAndExitThread(g_Module,0);
