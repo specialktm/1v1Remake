@@ -2,6 +2,7 @@
 
 namespace cheat
 {
+
 	void DiscordManager::HandlerDiscordReady(const DiscordUser* ConnectedUser)
 	{
 		g_logger->send(levels::info, "Discord User Connected: {}:{}", ConnectedUser->username, ConnectedUser->userId);

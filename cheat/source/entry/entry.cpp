@@ -1,7 +1,7 @@
 #include "../pch/pch.h"
 #include "../cheat/main.h"
 
-bool __stdcall DllMain(HMODULE hModule, unsigned long ul_reason_for_call, void* lpReserved)
+int __stdcall DllMain(HMODULE hModule, unsigned long ul_reason_for_call, void* lpReserved)
 {
 	UNREFERENCED_PARAMETER(lpReserved);
 
@@ -11,5 +11,5 @@ bool __stdcall DllMain(HMODULE hModule, unsigned long ul_reason_for_call, void* 
         DisableThreadLibraryCalls(g_Module);
         g_MainThread = CreateThread(nullptr, NULL, &cheat::main_entry, nullptr, NULL, nullptr);
     }
-    return true;
+    return 1;
 }

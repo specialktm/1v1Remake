@@ -58,7 +58,12 @@ namespace cheat
 		ImVec2 m_DrawPos;
 		float m_CurrentCoord;
 		float m_CurrentCoord2;
+		float m_CurrentTextX;
+		float m_CurrentTextY;
+		float m_CurrentIconY;
 		float m_DescriptionHeight;
+		float m_LerpSpeed{ 0.1f };
+		bool m_LerpText = false;
 
 		//==========================================================================
 		// Header
@@ -468,17 +473,23 @@ namespace cheat
 			std::map<int, FrameData> m_BackgroundImage;
 			std::map<int, FrameData> m_Image;
 			std::map<int, FrameData> m_FooterImage;
+			std::map<int, FrameData> m_DescriptionImage;
 
 			int m_SubtitleFrame = 0;
 			int m_BackgroundFrame = 0;
 			int m_ScrollerFrame = 0;
 			int m_FooterFrame = 0;
+			int m_DescriptionFrame = 0;
+
 
 			bool m_Rounded = true;
 			float m_Rounding = 4.f;
 
 			bool m_FooterRounded = true;
 			float m_FooterRounding = 4.f;
+			bool m_DescriptionRounded = true;
+			bool m_DescriptionOutlineEnaled = true;
+			float m_DescriptionRounding = 4.f;
 
 			ImVec2 m_BreakUnderline { 125.0f, 0.f };
 			//ImVec2 m_BreakUnderline { 165.0f, 0.f };
@@ -865,6 +876,7 @@ namespace cheat
 			int last_scroller_count = 0;
 			int last_background_count = 0;
 			int last_frame_count_footer = 0;
+			int last_frame_count_description = 0;
 			if (Item.GetCount())
 			{
 
@@ -965,8 +977,8 @@ namespace cheat
 
 					if (m_Selected) // draw smooth scrolled selected
 					{
-						m_CurrentCoord = lerp(m_CurrentCoord, m_DrawPos.y, 0.1f);
-						m_CurrentCoord2 = lerp(m_CurrentCoord2, m_DrawPos.x, 0.1f);
+						m_CurrentCoord = lerp(m_CurrentCoord, m_DrawPos.y, m_LerpSpeed);
+						m_CurrentCoord2 = lerp(m_CurrentCoord2, m_DrawPos.x, m_LerpSpeed);
 
 						ImVec2 m_ScrollerMin{ m_CurrentCoord2, m_CurrentCoord };
 						ImVec2 m_ScrollerSize{ m_FrameWidth, m_FrameHeight };
@@ -1048,13 +1060,23 @@ namespace cheat
 						displayedText = displayedText.substr(0, displayedText.length() - 20) + "...";
 					}
 
+				
+
+					if (m_Selected && m_LerpText) {
+						m_CurrentTextY = lerp(m_CurrentTextY, vTextPos.y, m_LerpSpeed);
+						m_CurrentTextX = lerp(m_CurrentTextX, vTextPos.x, m_LerpSpeed);
+					}
+		
+
+					ImVec2 m_NewTextPos = m_Selected && m_LerpText ? ImVec2(m_CurrentTextX, m_CurrentTextY) : vTextPos;
+
 					ImGui::GetForegroundDrawList()->AddText(
 						Font.Primary,
 						Font.Primary->FontSize,
-						vTextPos, 
-						m_Selected ? Color.Selected_Text : Color.Primary_Text, 
+						m_NewTextPos,
+						m_Selected ? Color.Selected_Text : Color.Primary_Text,
 						displayedText.c_str());
-					
+
 					
 					
 					//ImGui::GetForegroundDrawList()->AddText(Font.Primary, Font.Primary->FontSize, vTextPos, m_Selected ? Color.Selected_Text : Color.Primary_Text, &sString.substr(0, sNewlinePos)[0], nullptr, 0.f, pClip);
@@ -1077,7 +1099,7 @@ namespace cheat
 					{
 						ImVec2 vIconSize = Font.CalcTextSize(Font.FontAwesome, pItem->m_Icon.c_str());
 						ImVec2 vIconPos(m_DrawPos + ImVec2(m_FrameWidth - 10.f - vIconSize.x, floorf((m_FrameHeight * 0.5f) - (vIconSize.y * 0.5f))));
-
+		
 						ImGui::GetForegroundDrawList()->AddText(Font.FontAwesome, Font.FontAwesome->FontSize, vIconPos, m_Selected ? Color.Selected_Text : Color.Primary_Text, pItem->m_Icon.c_str());
 					}
 					break;
@@ -1247,13 +1269,15 @@ namespace cheat
 				{
 					if (Item.m_FooterFrame >= 0 && Item.m_FooterFrame < Item.m_FooterImage.size())
 					{
-						m_DrawList->AddImage(
+						m_DrawList->AddImageRounded(
 							Item.m_FooterImage[Item.m_FooterFrame].m_Texture,
 							m_DrawPos,
 							m_DrawPos + ImVec2(m_FrameWidth, m_FooterHeight),
 							ImVec2(0, 0),
 							ImVec2(1, 1),
-							IM_COL32_WHITE
+							IM_COL32_WHITE,
+							Item.m_FooterRounded ? Item.m_FooterRounding : 0,
+							Item.m_FooterRounded ? ImDrawFlags_RoundCornersBottom : 0
 						);
 					}
 					else
@@ -1312,24 +1336,85 @@ namespace cheat
 
 					m_DescriptionHeight = lerp(m_DescriptionHeight, targetHeight, 0.2f);
 					
-					m_DrawList->AddRectFilled
-					(
-						m_DrawPos, 
-						m_DrawPos + ImVec2(m_FrameWidth, m_DescriptionHeight),
-						Color.Description, 
-						Item.m_FooterRounded ? Item.m_FooterRounding + 1 : 0,
-						Item.m_FooterRounded ? ImDrawFlags_RoundCornersAll : 0
-					);
+					static timer::simpleTimer tick(0ms);
 
-					m_DrawList->AddRect
-					(
-						m_DrawPos,
-						m_DrawPos + ImVec2(m_FrameWidth, m_DescriptionHeight),
-						Color.Footer_Text,
-						Item.m_FooterRounded ? Item.m_FooterRounding : 0,
-						Item.m_FooterRounded ? ImDrawFlags_RoundCornersAll : 0,
-						1.f
-					);
+					if (!Item.m_DescriptionImage.empty())
+					{
+						tick.set_delay(Item.m_DescriptionImage[Item.m_DescriptionFrame].m_Delay);
+						if (tick.update() && last_frame_count_description != ImGui::GetFrameCount())
+						{
+							last_frame_count_description = ImGui::GetFrameCount();
+							if (Item.m_DescriptionImage.size() > 1)
+							{
+								Item.m_DescriptionFrame = static_cast<int>((Item.m_DescriptionFrame + 1) % Item.m_DescriptionImage.size());
+							}
+						}
+					}
+
+					if (Item.m_DescriptionImage.empty())
+					{
+						m_DrawList->AddRectFilled
+						(
+							m_DrawPos,
+							m_DrawPos + ImVec2(m_FrameWidth, m_DescriptionHeight),
+							Color.Description,
+							Item.m_DescriptionRounded ? Item.m_DescriptionRounding : 0,
+							Item.m_DescriptionRounded ? ImDrawFlags_RoundCornersAll : 0
+						);
+					}
+					
+						if (Item.m_DescriptionImage.empty())
+						{
+							m_DrawList->AddRectFilled
+							(
+								m_DrawPos,
+								m_DrawPos + ImVec2(m_FrameWidth, m_DescriptionHeight),
+								Color.Description,
+								Item.m_DescriptionRounded ? Item.m_DescriptionRounding : 0,
+								Item.m_DescriptionRounded ? ImDrawFlags_RoundCornersAll : 0
+							);
+						}
+						else
+						{
+							if (Item.m_DescriptionFrame >= 0 && Item.m_DescriptionFrame < Item.m_DescriptionImage.size())
+							{
+								m_DrawList->AddImageRounded(
+									Item.m_DescriptionImage[Item.m_DescriptionFrame].m_Texture,
+									m_DrawPos,
+									m_DrawPos + ImVec2(m_FrameWidth, m_DescriptionHeight),
+									ImVec2(0, 0),
+									ImVec2(1, 1),
+									IM_COL32_WHITE,
+									Item.m_DescriptionRounded ? Item.m_DescriptionRounding : 0,
+									Item.m_DescriptionRounded ? ImDrawFlags_RoundCornersAll : 0
+								);
+							}
+							else
+							{
+								m_DrawList->AddRectFilled
+								(
+									m_DrawPos,
+									m_DrawPos + ImVec2(m_FrameWidth, m_DescriptionHeight),
+									Color.Description,
+									Item.m_DescriptionRounded ? Item.m_DescriptionRounding : 0,
+									Item.m_DescriptionRounded ? ImDrawFlags_RoundCornersAll : 0
+								);
+							}
+						}
+					
+						if (Item.m_DescriptionOutlineEnaled)
+						{
+							m_DrawList->AddRect
+							(
+								m_DrawPos,
+								m_DrawPos + ImVec2(m_FrameWidth, m_DescriptionHeight),
+								Color.Footer_Text,
+								Item.m_DescriptionRounded ? Item.m_DescriptionRounding + 1.f : 0,
+								Item.m_DescriptionRounded ? ImDrawFlags_RoundCornersAll : 0,
+								1.f
+							);
+						}
+				
 				/*
 				
 					m_DrawList->AddLine(

@@ -33,13 +33,19 @@ namespace cheat
 			time_t DOT = system_clock::to_time_t(system_clock::now());
 			std::string_view date = std::ctime(&DOT);
 
-		
 			ImGui::PushFont(Menu.Font.Primary);
-
-			ImGui::Text("%s | Date: %s", APP_NAME, date.data());
-
+			ImGui::Text("%s", APP_NAME);
 			ImGui::PopFont();
-		
+			ImGui::SameLine();
+
+			ImGui::PushFont(Menu.Font.FontAwesome);
+			ImGui::Text(ICON_FA_CLOCK);
+			ImGui::PopFont();
+			ImGui::SameLine();
+			
+			ImGui::PushFont(Menu.Font.Primary);
+			ImGui::Text("Date: %s", date.data());
+			ImGui::PopFont();
 		}
 		ImGui::PopStyleColor(2);
 		ImGui::PopStyleVar();

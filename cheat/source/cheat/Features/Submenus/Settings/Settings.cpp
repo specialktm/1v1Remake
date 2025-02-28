@@ -33,11 +33,10 @@ namespace cheat
 		Submenu("Background", &Menus::TextureBackground);
 		Submenu("Scroller", &Menus::TextureScroller);
 		Submenu("Footer", &Menus::TextureFooter);
-
-		Break("Description");
-		Float("Description Text Padding","Padding for the description text.",&m_DescriptionTextPadding, 1.f, 10.f, 0.1f);
-		Float("Description Padding","Padding for the description.",&m_DescriptionPadding, 1.f, 20.f, 1.f);
+		Submenu("Description", &Menus::TextureDescription);
 		Break("Menu Related");
+		Float("Scrolling Animation Speed", "", &g_Renderer->Menu.m_LerpSpeed,0.001f,1.0f,0.01f);
+		Bool("Move Text With Scroller", "", &g_Renderer->Menu.m_LerpText);
 		Number("Max Options Visible", "", &g_Renderer->Menu.Item.m_NumToShow, 12, 20);
 		Break("Theme Related");
 		IconButton(ICON_FA_FOLDER_OPEN, "Save Theme", [&]

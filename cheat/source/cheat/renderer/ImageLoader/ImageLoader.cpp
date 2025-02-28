@@ -166,6 +166,25 @@ namespace cheat
 
 	}
 
+	void ImageLoader::RemoveFromCache(const std::string_view& key)
+	{
+
+		if (!key.find(".gif"))
+		{
+			TextureCache_[key.data()]->Release();
+			TextureCache_.erase(key.data());
+		}
+		else
+		{
+			for (auto& [CachedKey, CachedFrame] : GifCache_[key.data()])
+			{
+				CachedFrame.m_Texture->Release();
+				g_logger->send(levels::debug, "Cached Key: {}", CachedKey);
+			}
+			GifCache_.erase(key.data());
+		}
+		
+	}
 
 	bool ImageLoader::IsCached(const std::string_view& key)
 	{

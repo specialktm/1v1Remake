@@ -16,6 +16,7 @@ namespace cheat
 		fs::path Background;
 		fs::path Scroller;
 		fs::path Footer;
+		fs::path Description;
 		
 		bool operator==(const ThemeFormat& Data) const {
 			return Header == Data.Header &&
@@ -33,13 +34,15 @@ namespace cheat
 				Footer != Data.Footer;
 		}
 	};
+
 	enum class ImageType : int
 	{
-		Header = 1,
-		Subtitle = 2,
-		Background = 3,
-		Scroller = 4,
-		Footer = 5,
+		Header = 0,
+		Subtitle,
+		Background,
+		Scroller,
+		Footer,
+		Description
 
 	};
 
@@ -58,6 +61,7 @@ namespace cheat
 		void LoadBackground(const fs::path& file);
 		void LoadScroller(const fs::path& file);
 		void LoadFooter(const fs::path& file);
+		void LoadDescription(const fs::path& file);
 		void Reset();
 
 		std::vector<fs::directory_entry> GetFiles(ImageType type);
@@ -71,6 +75,7 @@ namespace cheat
 		fs::path BackgroundPath_{ DocumentsFolder / "Textures" / "Background" };
 		fs::path ScrollerPath_{ DocumentsFolder / "Textures" / "Scroller" };
 		fs::path FooterPath_{ DocumentsFolder / "Textures" / "Footer" };
+		fs::path DescriptionPath_{ DocumentsFolder / "Textures" / "Description" };
 		fs::path ThemePath_{ DocumentsFolder / "Themes" };
 		fs::path SavedThemePath_{ DocumentsFolder / "theme.json" };
 		fs::path LoadedTheme_ = "";

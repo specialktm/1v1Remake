@@ -28,8 +28,9 @@ namespace cheat
 		fs::path BackgroundPath{ ThemePath / "Background" };
 		fs::path ScrollerPath{ ThemePath / "Scroller" };
 		fs::path FooterPath{ ThemePath / "Footer" };
+		fs::path DescriptionPath{ ThemePath / "Description" };
 
-		std::vector<fs::path> paths = { HeaderPath, SubtitlePath, BackgroundPath, ScrollerPath, FooterPath, ThemePath };
+		std::vector<fs::path> paths = { HeaderPath, SubtitlePath, BackgroundPath, ScrollerPath, FooterPath, DescriptionPath, ThemePath };
 		for (const auto& folder : paths)
 		{
 			if (!fs::exists(folder))
@@ -48,7 +49,7 @@ namespace cheat
 
 	void ThemeLoader::CreateFolders()
 	{
-		std::vector<fs::path> paths = { HeaderPath_, SubtitlePath_, BackgroundPath_, ScrollerPath_, FooterPath_, ThemePath_ };
+		std::vector<fs::path> paths = { HeaderPath_, SubtitlePath_, BackgroundPath_, ScrollerPath_, FooterPath_,DescriptionPath_, ThemePath_ };
 
 		for (const auto& path : paths)
 		{
@@ -161,7 +162,23 @@ namespace cheat
 		}
 		ThemeData_.Footer = file;
 	}
+	void ThemeLoader::LoadDescription(const fs::path& file)
+	{
+		ThemeData_.Description.clear();
 
+		g_Renderer->Menu.Item.m_DescriptionImage.clear();
+		g_Renderer->Menu.Item.m_DescriptionFrame = 0;
+
+		if (file.extension() == ".gif")
+		{
+			g_Renderer->Menu.Item.m_DescriptionImage = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
+		}
+		else
+		{
+			g_Renderer->Menu.Item.m_DescriptionImage.try_emplace(0, 0, g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file));
+		}
+		ThemeData_.Description = file;
+	}
 	void ThemeLoader::LoadTheme(const fs::path& folder) 
 	{
 		Reset();
@@ -170,7 +187,8 @@ namespace cheat
 				{"Subtitle", &ThemeLoader::LoadSubtitle},
 				{"Background", &ThemeLoader::LoadBackground},
 				{"Scroller", &ThemeLoader::LoadScroller},
-				{"Footer", &ThemeLoader::LoadFooter}
+				{"Footer", &ThemeLoader::LoadFooter},
+				{"Description", &ThemeLoader::LoadDescription}
 		};
 
 		for (const auto& [subfolderName, loadFunction] : loadFunctions) 
@@ -221,6 +239,9 @@ namespace cheat
 			case ImageType::Footer:
 				target_path = fs::directory_iterator(FooterPath_);
 				break;
+			case ImageType::Description:
+				target_path = fs::directory_iterator(DescriptionPath_);
+				break;
 			default:
 				return tmp_vec;
 			}
@@ -266,6 +287,9 @@ namespace cheat
 				break;
 			case ImageType::Footer:
 				target_path = FooterPath_;
+				break;
+			case ImageType::Description:
+				target_path = DescriptionPath_;
 				break;
 			default:
 				return DocumentsFolder;
@@ -332,6 +356,7 @@ namespace cheat
 		JsonData["Background"] = ThemeData_.Background.string();
 		JsonData["Scroller"] = ThemeData_.Scroller.string();
 		JsonData["Footer"] = ThemeData_.Footer.string();
+		JsonData["Description"] = ThemeData_.Description.string();
 
 		std::ofstream file{ SavedThemePath_.string() };
 		if (file.is_open()) {
@@ -361,6 +386,7 @@ namespace cheat
 			if (JsonData.contains("Background")) LoadBackground(JsonData["Background"]);
 			if (JsonData.contains("Scroller")) LoadScroller(JsonData["Scroller"]);
 			if (JsonData.contains("Footer")) LoadFooter(JsonData["Footer"]);
+			if (JsonData.contains("Description")) LoadFooter(JsonData["Description"]);
 		}
 	}
 	
@@ -375,6 +401,7 @@ namespace cheat
 			 fs::path BackgroundPath{ ThemePath / "Background" / "Background" += ThemeData_.Background.extension() };
 			 fs::path ScrollerPath{ ThemePath / "Scroller" / "Scroller" += ThemeData_.Scroller.extension() };
 			 fs::path FooterPath{ ThemePath / "Footer" / "Footer" += ThemeData_.Footer.extension() };
+			 fs::path DescriptionPath{ ThemePath / "Footer" / "Description" += ThemeData_.Description.extension() };
 			 LoadedTheme_ = ThemePath;
 
 			 if (!fs::exists(ThemePath))
@@ -413,6 +440,7 @@ namespace cheat
 				 if (!copy_with_overwrite(ThemeData_.Background, BackgroundPath)) return false;
 				 if (!copy_with_overwrite(ThemeData_.Scroller, ScrollerPath)) return false;
 				 if (!copy_with_overwrite(ThemeData_.Footer, FooterPath)) return false;
+				 if (!copy_with_overwrite(ThemeData_.Description, DescriptionPath)) return false;
 			 }
 
 			 SaveTheme();
@@ -425,12 +453,19 @@ namespace cheat
 	{
 		g_Renderer->Menu.Item.m_FooterImage.clear();
 		g_Renderer->Menu.Item.m_FooterFrame = 0;
+		//
 		g_Renderer->Menu.Item.m_Image.clear();
 		g_Renderer->Menu.Item.m_ScrollerFrame = 0;
+		//
 		g_Renderer->Menu.Item.m_BackgroundImage.clear();
 		g_Renderer->Menu.Item.m_BackgroundFrame = 0;
+		//
 		g_Renderer->Menu.Item.m_SubtitleImage.clear();
 		g_Renderer->Menu.Item.m_SubtitleFrame = 0;
+		//
+		g_Renderer->Menu.Item.m_DescriptionImage.clear();
+		g_Renderer->Menu.Item.m_DescriptionFrame = 0;
+		//
 		g_Renderer->Menu.Header.m_Header.clear();
 		g_Renderer->Menu.Header.m_HeaderFrame = 0;
 

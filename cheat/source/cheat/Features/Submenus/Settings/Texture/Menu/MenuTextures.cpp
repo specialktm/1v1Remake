@@ -141,4 +141,33 @@ namespace cheat
 			}
 		}
 	}
+	void Submenus::Menus::TextureDescription()
+	{
+		Title("Description");
+		IconButton(ICON_FA_SYNC, "Reset Texture", [&]
+		{
+			g_Renderer->Menu.Item.m_DescriptionImage.clear();
+			g_Renderer->Menu.Item.m_DescriptionFrame = 0;
+		});
+		Break("Rounding");
+		Bool("Rounded", "Round the Description", &g_Renderer->Menu.Item.m_DescriptionRounded);
+		if (g_Renderer->Menu.Item.m_DescriptionRounded)
+		{
+			Float("Rounding", "Amount that the Description is rounded", &g_Renderer->Menu.Item.m_DescriptionRounding, 0.f, 100.f, 1.f);
+		}
+
+		Break("Textures");
+		for (const auto& ent : g_ThemeLoader.GetFiles(ImageType::Description))
+		{
+			const auto path = ent.path();
+			if (ent.is_regular_file() && path.has_filename())
+			{
+				IconButton(ICON_FA_IMAGE, std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
+				{
+					g_ThemeLoader.LoadDescription(path);
+				});
+
+			}
+		}
+	}
 }

@@ -52,6 +52,7 @@ namespace cheat
 		std::map<int, FrameData> CreateGifTexture(ID3D11Device* device, const fs::path& path);
 		// Clear Gif/Texture Cache.
 		void ClearCache(); 
+		void RemoveFromCache(const std::string_view& key);
 		bool IsCached(const std::string_view& key);
 
 	private:

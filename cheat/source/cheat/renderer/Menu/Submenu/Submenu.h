@@ -17,6 +17,7 @@ namespace cheat::Submenus
 	void Button(const char* name,std::function<void()> callback, const char* desc = "");
 	void IconButton(const char* icon, const char* name, std::function<void()> callback, const char* desc = "");
 	void Break(const char* name = "");
+	void Dummy(const char* name = "");
 	bool Bool(const char* name, const char* m_Description, bool* p_Value);
 	bool Float(const char* name, const char* m_Description, float* p_Value, float m_Min, float m_Max, float m_Power = 0.1f, bool m_Clamp = false);
 	bool Number(const char* m_Name, const char* m_Description, int* p_Value, int m_Min, int m_Max, int m_Power = 1, bool m_Clamp = false);
@@ -32,6 +33,7 @@ namespace cheat::Submenus
 		void TextureScroller();
 		void TextureFooter();
 		void TextureFooter();
+		void TextureDescription();
 		void MenuESP();
 		// Theme
 		void TextureThemes();
