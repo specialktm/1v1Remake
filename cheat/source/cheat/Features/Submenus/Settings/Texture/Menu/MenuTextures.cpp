@@ -18,7 +18,7 @@ namespace cheat
 		Bool("Rounded", "Round the header", &g_Renderer->Menu.Header.m_Rounded);
 		if (g_Renderer->Menu.Header.m_Rounded)
 		{
-			Float("Rounding", "Amount that the Header is rounded", &g_Renderer->Menu.Header.m_Rounding, 0.f, 100.f, 1.f);
+			Float("Rounding", "Amount that the Header is rounded", &g_Renderer->Menu.Header.m_Rounding, 0.0f, 100.f, 1.f);
 		}
 
 		Break("Textures");
