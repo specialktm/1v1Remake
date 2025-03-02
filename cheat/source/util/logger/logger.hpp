@@ -10,9 +10,9 @@
 // Includes
 #define APP_NAME "Cortez"
 #ifdef Developer
-#define APP_VERSION "1.0 | Developer"
+#define APP_VERSION "Developer"
 #else
-#define APP_VERSION "1.0"
+#define APP_VERSION "1.0.0"
 #endif
 #include "../../pch/pch.h"
 

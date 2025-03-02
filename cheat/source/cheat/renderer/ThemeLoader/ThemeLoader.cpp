@@ -386,7 +386,7 @@ namespace cheat
 			if (JsonData.contains("Background")) LoadBackground(JsonData["Background"]);
 			if (JsonData.contains("Scroller")) LoadScroller(JsonData["Scroller"]);
 			if (JsonData.contains("Footer")) LoadFooter(JsonData["Footer"]);
-			if (JsonData.contains("Description")) LoadFooter(JsonData["Description"]);
+			if (JsonData.contains("Description")) LoadDescription(JsonData["Description"]); // oops LoadFooter Lmao | Oxy (02/03/25)
 		}
 	}
 	

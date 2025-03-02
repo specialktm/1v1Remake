@@ -15,7 +15,7 @@ namespace cheat
 
 	void DiscordManager::HandlerDiscordError(int ErrorCode, const char* ErrorMessage)
 	{
-		g_logger->send(levels::error, "Discord Error: Error Code: {}; Error Message: {};", ErrorCode, ErrorMessage);
+		g_logger->send(levels::critical, "Discord Error: Error Code: {}; Error Message: {};", ErrorCode, ErrorMessage);
 	}
 
 	void DiscordManager::Initialize(std::string_view ApplicationId)
