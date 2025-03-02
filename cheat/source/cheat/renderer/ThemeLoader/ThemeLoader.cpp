@@ -395,7 +395,13 @@ namespace cheat
 		 if (!std::empty(ThemeName))
 		 {
 
+
 			 fs::path ThemePath{ ThemePath_ / ThemeName };
+			 if (fs::exists(ThemePath))
+			 {
+				 g_logger->send(levels::error, "The theme named '{}' already exists!", ThemeName);
+				 return false;
+			 }
 			 fs::path HeaderPath{ ThemePath / "Header" / "Header" += ThemeData_.Header.extension() };
 			 fs::path SubtitlePath{ ThemePath / "Subtitle" / "Subtitle" += ThemeData_.Subtitle.extension() };
 			 fs::path BackgroundPath{ ThemePath / "Background" / "Background" += ThemeData_.Background.extension() };
