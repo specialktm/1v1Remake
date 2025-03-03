@@ -9,10 +9,10 @@ namespace cheat
 	{
 		int length;
 		unsigned char* png = stbi_write_png_to_mem(static_cast<const unsigned char*>(data), stride_bytes, x, y, comp,
-			&length);
+		                                           &length);
 		if (!png)
 			return {};
-		return { png, length, delay };
+		return {png, length, delay};
 	}
 
 	Image ImageLoader::LoadImageFromMemory(const ImageData& data)
@@ -23,10 +23,11 @@ namespace cheat
 		{
 			return {};
 		}
-		return { image, {static_cast<int>(std::round(width)), static_cast<int>(std::round(height))} };
+		return {image, {static_cast<int>(std::round(width)), static_cast<int>(std::round(height))}};
 	}
 
-	ID3D11ShaderResourceView* ImageLoader::CreateResourceView(ID3D11Device* device, unsigned char* img_data, const intVec2 img_size)
+	ID3D11ShaderResourceView* ImageLoader::CreateResourceView(ID3D11Device* device, unsigned char* img_data,
+	                                                          const intVec2 img_size)
 	{
 		if (!img_data) return nullptr;
 		D3D11_TEXTURE2D_DESC desc = {};
@@ -39,7 +40,7 @@ namespace cheat
 		desc.Usage = D3D11_USAGE_DEFAULT;
 		desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
 		ID3D11Texture2D* p_texture = nullptr;
-		const D3D11_SUBRESOURCE_DATA sub_resource = { img_data, desc.Width * 4, 0 };
+		const D3D11_SUBRESOURCE_DATA sub_resource = {img_data, desc.Width * 4, 0};
 		device->CreateTexture2D(&desc, &sub_resource, &p_texture);
 		D3D11_SHADER_RESOURCE_VIEW_DESC srv_desc = {};
 		srv_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -69,8 +70,8 @@ namespace cheat
 		}
 		int* delays = nullptr;
 		int width, height, frame_count, comp;
-		const auto data = stbi_load_gif_from_memory(reinterpret_cast<stbi_uc*>(buffer.data()), (int)size, &delays, &width,
-			&height, &frame_count, &comp, 0);
+		const auto data = stbi_load_gif_from_memory(reinterpret_cast<stbi_uc*>(buffer.data()), size, &delays, &width,
+		                                            &height, &frame_count, &comp, 0);
 		if (!data)
 		{
 			return frames;
@@ -78,18 +79,19 @@ namespace cheat
 		const size_t bytes = static_cast<size_t>(width) * comp;
 		for (auto i = 0; i < frame_count; i++)
 		{
-			frames.insert({ i, WritePngToMemory(width, height, comp, data + bytes * height * i, 0, delays[i]) });
+			frames.insert({i, WritePngToMemory(width, height, comp, data + bytes * height * i, 0, delays[i])});
 		}
 		stbi_image_free(data);
 		return frames;
 	}
 
-	ID3D11ShaderResourceView* ImageLoader::CreateTexture(ID3D11Device* device, const fs::path& file_path) 
+	ID3D11ShaderResourceView* ImageLoader::CreateTexture(ID3D11Device* device, const fs::path& file_path)
 	{
 		const std::string key = file_path.filename().string();
 
 		auto it = TextureCache_.find(key);
-		if (it != TextureCache_.end()) {
+		if (it != TextureCache_.end())
+		{
 			g_logger->send(levels::debug, "Texture cache found for: {}", key);
 			return it->second;
 		}
@@ -100,15 +102,18 @@ namespace cheat
 			stbi_image_free
 		);
 
-		if (!image_data) {
+		if (!image_data)
+		{
 			g_logger->send(levels::error, "Failed to load image: {}", file_path.string());
 			return nullptr;
 		}
 
-		g_logger->send(levels::debug, "Successfully loaded image: {} ({}x{})", file_path.filename().string(), v2.x, v2.y);
+		g_logger->send(levels::debug, "Successfully loaded image: {} ({}x{})", file_path.filename().string(), v2.x,
+		               v2.y);
 
 		ID3D11ShaderResourceView* resource_view = CreateResourceView(device, image_data.get(), v2);
-		if (resource_view) {
+		if (resource_view)
+		{
 			TextureCache_[key] = resource_view;
 			g_logger->send(levels::debug, "Texture cached: {}", key);
 		}
@@ -117,23 +122,24 @@ namespace cheat
 	}
 
 
-
-	std::map<int, FrameData> ImageLoader::CreateGifTexture(ID3D11Device* device, const fs::path& path) 
+	std::map<int, FrameData> ImageLoader::CreateGifTexture(ID3D11Device* device, const fs::path& path)
 	{
 		const std::string key = path.filename().string();
 
 		auto it = GifCache_.find(key);
-		if (it != GifCache_.end()) {
+		if (it != GifCache_.end())
+		{
 			g_logger->send(levels::debug, "GIF cache found for: {}", key);
 			return it->second;
 		}
 
 		const auto gif_data = LoadGif(path);
 		std::map<int, FrameData> tmp_arr;
-		for (const auto& [frame_index, image_data] : gif_data) {
+		for (const auto& [frame_index, image_data] : gif_data)
+		{
 			const auto [data, dimensions] = LoadImageFromMemory(image_data);
 			auto resource_view = CreateResourceView(device, data, dimensions);
-			tmp_arr.emplace(frame_index, FrameData{ image_data.Delay, resource_view });
+			tmp_arr.emplace(frame_index, FrameData{image_data.Delay, resource_view});
 		}
 
 		GifCache_[key] = tmp_arr;
@@ -142,12 +148,15 @@ namespace cheat
 		return tmp_arr;
 	}
 
-	void ImageLoader::ClearCache() 
+	void ImageLoader::ClearCache()
 	{
 		// Clear Gifs
-		for (auto& [key, frames] : GifCache_) {
-			for (auto& [frame_index, frame] : frames) {
-				if (frame.m_Texture) {
+		for (auto& [key, frames] : GifCache_)
+		{
+			for (auto& [frame_index, frame] : frames)
+			{
+				if (frame.m_Texture)
+				{
 					frame.m_Texture->Release();
 				}
 			}
@@ -156,19 +165,19 @@ namespace cheat
 		g_logger->send(levels::debug, "GIF cache cleared.");
 
 		// Clear Textures
-		for (auto& [key, resource_view] : TextureCache_) {
-			if (resource_view) {
+		for (auto& [key, resource_view] : TextureCache_)
+		{
+			if (resource_view)
+			{
 				resource_view->Release();
 			}
 		}
 		TextureCache_.clear();
 		g_logger->send(levels::debug, "Texture cache cleared.");
-
 	}
 
 	void ImageLoader::RemoveFromCache(const std::string_view& key)
 	{
-
 		if (!key.find(".gif"))
 		{
 			TextureCache_[key.data()]->Release();
@@ -183,7 +192,6 @@ namespace cheat
 			}
 			GifCache_.erase(key.data());
 		}
-		
 	}
 
 	bool ImageLoader::IsCached(const std::string_view& key)
