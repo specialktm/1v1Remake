@@ -2,6 +2,7 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "ImageLoader.h"
 #include "../../../common/common.h"
+#include "../notification/notification.h"
 
 namespace cheat
 {
@@ -108,8 +109,7 @@ namespace cheat
 			return nullptr;
 		}
 
-		g_logger->send(levels::debug, "Successfully loaded image: {} ({}x{})", file_path.filename().string(), v2.x,
-		               v2.y);
+		g_logger->send(levels::debug, "Successfully loaded image: {} ({}x{})", file_path.filename().string(), v2.x, v2.y);
 
 		ID3D11ShaderResourceView* resource_view = CreateResourceView(device, image_data.get(), v2);
 		if (resource_view)

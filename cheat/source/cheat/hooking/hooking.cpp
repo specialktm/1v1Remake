@@ -57,7 +57,11 @@ namespace cheat
 		offsets::AddRecoil = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(ThirdPersonCameraClass, "AddRecoil");
 	
 		g_logger->send(levels::developer, "Offsets: G: [{:#X}] | U: [{:#X}]", offsets::GameAssembly, offsets::UnityPlayer);
-	
+
+		auto adr = std::addressof(InitPlayerList);
+		g_logger->send(levels::developer, "this+{:#X}", uintptr_t(adr));
+		
+
 		fiber_manager::add_fiber("PlayerListCache", &InitPlayerList);
 		this->Hook();
 	}

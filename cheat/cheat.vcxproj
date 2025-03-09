@@ -59,6 +59,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <EnableASAN>true</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -66,6 +67,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <EnableASAN>true</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -73,6 +75,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -259,6 +262,7 @@
     <ClCompile Include="source\cheat\renderer\Menu\Fonts\font_awesome_data.cpp" />
     <ClCompile Include="source\cheat\renderer\Menu\Submenu\Submenu.cpp" />
     <ClCompile Include="source\cheat\renderer\Menu\Submenu\Types\Player.cpp" />
+    <ClCompile Include="source\cheat\renderer\notification\notification.cpp" />
     <ClCompile Include="source\cheat\renderer\renderer.cpp" />
     <ClCompile Include="source\cheat\renderer\ThemeLoader\ThemeLoader.cpp" />
     <ClCompile Include="source\entry\entry.cpp" />
@@ -314,6 +318,7 @@
     <ClInclude Include="source\cheat\renderer\Menu\Submenu\Submenu.h" />
     <ClInclude Include="source\cheat\renderer\Menu\Submenu\Types\Player.h" />
     <ClInclude Include="source\cheat\renderer\Menu\TextMultiColor.hpp" />
+    <ClInclude Include="source\cheat\renderer\notification\notification.h" />
     <ClInclude Include="source\cheat\renderer\renderer.hpp" />
     <ClInclude Include="source\cheat\renderer\ThemeLoader\ThemeLoader.h" />
     <ClInclude Include="source\common\common.h" />

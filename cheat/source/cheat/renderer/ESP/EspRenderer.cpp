@@ -138,8 +138,8 @@ namespace cheat
 
 					auto playerPosition = PlayerList[i]->GetTransform()->GetPosition();
 
-					if (util::SystemString(PlayerInfo->fields.Username) == "CrimsonVeins" || !PlayerUsername.empty())
-						continue;
+				//	if (util::SystemString(PlayerInfo->fields.Username) == "CrimsonVeins" || !PlayerUsername.empty())
+				//		continue;
 
 					for (std::pair<enums::HumanBodyBones, enums::HumanBodyBones> bone_index : BonePair)
 					{

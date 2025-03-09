@@ -11,12 +11,13 @@ namespace cheat
 		void Initialize(std::string_view ApplicationId);
 		void Tick();
 		void UnInitialize();
-	public:
+	public: // Useless I know
 		bool m_RichPresenceEnabled = true;
+		DiscordUser m_DiscordUser{};
 	private:
-		static void HandlerDiscordReady(const DiscordUser* ConnectedUser);
-		static void HandlerDiscordDisconnected(int ErrorCode, const char* ErrorMessage);
-		static void HandlerDiscordError(int ErrorCode, const char* ErrorMessage);
+		void HandlerDiscordReady(const DiscordUser* ConnectedUser);
+		void HandlerDiscordDisconnected(int ErrorCode, const char* ErrorMessage);
+		void HandlerDiscordError(int ErrorCode, const char* ErrorMessage);
 	private:
 		const char* m_LargeImage = "https://isniffsharpie.com/Icons/7rUfmwF.png";
 		const char* m_SmallImage = "https://isniffsharpie.com/Icons/hack_bird.gif";

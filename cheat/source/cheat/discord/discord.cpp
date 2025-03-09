@@ -5,6 +5,10 @@ namespace cheat
 
 	void DiscordManager::HandlerDiscordReady(const DiscordUser* ConnectedUser)
 	{
+		m_DiscordUser.username = ConnectedUser->username;
+		m_DiscordUser.userId = ConnectedUser->userId;
+		m_DiscordUser.avatar = ConnectedUser->avatar;
+		m_DiscordUser.discriminator = ConnectedUser->discriminator;
 		g_logger->send(levels::info, "Discord User Connected: {}:{}", ConnectedUser->username, ConnectedUser->userId);
 	}
 
@@ -17,21 +21,27 @@ namespace cheat
 	{
 		g_logger->send(levels::critical, "Discord Error: Error Code: {}; Error Message: {};", ErrorCode, ErrorMessage);
 	}
+	inline long long m_time = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
 	void DiscordManager::Initialize(std::string_view ApplicationId)
 	{
 		DiscordEventHandlers m_DiscordEventHandlers{};
 		memset(&m_DiscordEventHandlers, 0, sizeof(m_DiscordEventHandlers));
-		m_DiscordEventHandlers.ready = HandlerDiscordReady;
-		m_DiscordEventHandlers.disconnected = HandlerDiscordDisconnected;
-		m_DiscordEventHandlers.errored = HandlerDiscordError;
+
+		m_DiscordEventHandlers.ready = [](const DiscordUser* ConnectedUser) 
+		{ g_DiscordManager.HandlerDiscordReady(ConnectedUser); };
+
+		m_DiscordEventHandlers.disconnected = [](int ErrorCode, const char* ErrorMessage)
+		{ g_DiscordManager.HandlerDiscordDisconnected(ErrorCode, ErrorMessage); };
+
+		m_DiscordEventHandlers.errored = [](int ErrorCode, const char* ErrorMessage)
+		{ g_DiscordManager.HandlerDiscordError(ErrorCode, ErrorMessage); };
 
 		Discord_Initialize(ApplicationId.data(), &m_DiscordEventHandlers, 1, 0);
 #ifdef Developer
 		m_SmallImage = "https://isniffsharpie.com/Icons/Developer.gif";
 #endif
 	}
-
 	void DiscordManager::Tick()
 	{
 		if (!m_RichPresenceEnabled) 
@@ -44,10 +54,9 @@ namespace cheat
 #endif
 		Discord_RunCallbacks();
 
-		DiscordRichPresence m_Presence;
+
+		DiscordRichPresence m_Presence{};
 		memset(&m_Presence, 0, sizeof(m_Presence));
-		
-		
 		m_Presence.state = "Playing With " APP_NAME " Menu";
 		m_Presence.details = "Using Version " APP_VERSION;
 		m_Presence.largeImageKey = m_LargeImage;

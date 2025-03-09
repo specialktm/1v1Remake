@@ -2,7 +2,7 @@
 #include "Menu/Submenu/Submenu.h"
 #include "../Features/features.h"
 #include "../discord/discord.h"
-
+#include "notification/notification.h"
 namespace cheat
 {
 
@@ -34,7 +34,7 @@ namespace cheat
 			std::string_view date = std::ctime(&DOT);
 
 			ImGui::PushFont(Menu.Font.Primary);
-			ImGui::Text("%s", APP_NAME);
+			ImGui::Text("%s: Discord: %s", APP_NAME,g_DiscordManager.m_DiscordUser.username);
 			ImGui::PopFont();
 			ImGui::SameLine();
 
@@ -44,7 +44,7 @@ namespace cheat
 			ImGui::SameLine();
 			
 			ImGui::PushFont(Menu.Font.Primary);
-			ImGui::Text("Date: %s", date.data());
+			ImGui::Text("%s", date.data());
 			ImGui::PopFont();
 		}
 		ImGui::PopStyleColor(2);
@@ -58,18 +58,17 @@ namespace cheat
 		if (!g_Running)
 			return;
 
-		if (GetAsyncKeyState(VK_INSERT) & 0x8000) 
-		{
-			m_Open ^= 1;
+		if (ImGui::IsKeyDown(ImGuiKey_Insert)) {
+			auto now = std::chrono::steady_clock::now();
+			if (now - m_LastToggleTime > 200ms) {
+				m_Open ^= 1; 
+				m_LastToggleTime = now;
+			}
 		}
 
 
         // Render Loops
-		if (m_ShouldRendererWatermark) RenderWatermark();
 
-		if (features::EnableEsp) ESP();
-
-    
         if (m_Open && g_Running)
         { 
             if (Menu.Begin())
@@ -79,8 +78,13 @@ namespace cheat
                 Menu.SetFooterText(APP_VERSION);
                 Menu.End();
             }
-         
         }
+		if (m_ShouldRendererWatermark) RenderWatermark();
+		if (features::EnableEsp) ESP();
+
+		ImGui::render_notifications();
+
+    
     }
 
 	float renderer::Text(bool foreground, ImFont* pFont, const ImVec2& pos, float size, ImU32 color, bool center, bool outlined, const char* text, ...)

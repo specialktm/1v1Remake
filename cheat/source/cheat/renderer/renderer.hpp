@@ -36,6 +36,7 @@ namespace cheat
 		Vector2 ScreenCenter = { 0, 0 };
 		D3D11_VIEWPORT Viewport;
         private:
+		std::chrono::steady_clock::time_point m_LastToggleTime = std::chrono::steady_clock::now();
 	};
 	inline std::unique_ptr<renderer> g_Renderer;
 
