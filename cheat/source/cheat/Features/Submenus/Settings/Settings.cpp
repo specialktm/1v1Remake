@@ -34,7 +34,7 @@ namespace cheat
 		Submenu("Scroller", &Menus::TextureScroller);
 		Submenu("Footer", &Menus::TextureFooter);
 		Submenu("Description", &Menus::TextureDescription);
-		IconButton(ICON_FA_TRASH, "Clear Cached Images/Gifs", [] { g_ThemeLoader.Reset(); Fiber::get()->yield(300ms); g_ImageLoader.ClearCache(); });
+		IconButton(ICON_FA_TRASH, "Clear Cached Images/Gifs", [] { g_ThemeLoader.ResetTheme(); Fiber::get()->yield(300ms); g_ImageLoader.ClearCache(); });
 		Break("Menu Related");
 		Float("Scroller Animation Speed", "", &g_Renderer->Menu.m_LerpSpeed,0.001f,1.0f,0.01f);
 		Bool("Move Text With Scroller", "", &g_Renderer->Menu.m_LerpText);
@@ -46,12 +46,12 @@ namespace cheat
 		});
 		IconButton(ICON_FA_FOLDER_OPEN, "Save Custom Textures", [&]
 		{
-			g_ThemeLoader.SaveThemeFile();
+			g_ThemeLoader.SaveTheme(true);
 		});
 		Break("Reset");
 		IconButton(ICON_FA_SYNC, "Reset Textures", [&]
 		{
-			g_ThemeLoader.Reset();
+			g_ThemeLoader.ResetTheme();
 		});
 	}
 	

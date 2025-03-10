@@ -53,16 +53,15 @@ namespace cheat
 
 		void LoadTheme(const fs::path& folder);
 		void LoadThemeFromFile(const fs::path& file);
-		void SaveTheme();
+		void SaveTheme(bool isFile = false);
 		bool SaveThemeToFolder(const std::string_view& ThemeName);
-		void SaveThemeFile();
 		void LoadHeader(const fs::path& file);
 		void LoadSubtitle(const fs::path& file);
 		void LoadBackground(const fs::path& file);
 		void LoadScroller(const fs::path& file);
 		void LoadFooter(const fs::path& file);
 		void LoadDescription(const fs::path& file);
-		void Reset();
+		void ResetTheme();
 
 		std::vector<fs::directory_entry> GetFiles(ImageType type);
 		std::vector<fs::directory_entry> GetThemes();

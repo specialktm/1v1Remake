@@ -181,7 +181,7 @@ namespace cheat
 	}
 	void ThemeLoader::LoadTheme(const fs::path& folder) 
 	{
-		Reset();
+		ResetTheme();
 		std::unordered_map<std::string, void (ThemeLoader::*)(const fs::path&)> loadFunctions = {
 				{"Header", &ThemeLoader::LoadHeader},
 				{"Subtitle", &ThemeLoader::LoadSubtitle},
@@ -336,21 +336,21 @@ namespace cheat
 		return tmp_vec;
 	}
 
-	void ThemeLoader::SaveTheme()
+	void ThemeLoader::SaveTheme(bool isFile)
 	{
-		nlohmann::json JsonData;
-		JsonData["SavedTheme"] = LoadedTheme_.string();
-		std::ofstream file{ SavedThemePath_.string() };
-		if (file.is_open()) {
-			file << JsonData.dump(4);
-			file.close();
+		if (!isFile)
+		{
+			nlohmann::json JsonData;
+			JsonData["SavedTheme"] = LoadedTheme_.string();
+			std::ofstream file{ SavedThemePath_.string() };
+			if (file.is_open()) {
+				file << JsonData.dump(4);
+				file.close();
+			}
+			return;
 		}
-	}
-
-	void ThemeLoader::SaveThemeFile()
-	{
 		nlohmann::json JsonData;
-		
+
 		JsonData["Header"] = ThemeData_.Header.string();
 		JsonData["Subtitle"] = ThemeData_.Subtitle.string();
 		JsonData["Background"] = ThemeData_.Background.string();
@@ -455,7 +455,7 @@ namespace cheat
 		 }
 	}
 
-	void ThemeLoader::Reset()
+	void ThemeLoader::ResetTheme()
 	{
 		g_Renderer->Menu.Item.m_FooterImage.clear();
 		g_Renderer->Menu.Item.m_FooterFrame = 0;
