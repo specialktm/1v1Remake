@@ -961,12 +961,12 @@ namespace cheat
 						if (!pItem->m_Name.empty() && pItem->m_Name != "")
 						{
 							m_ItemName.Draw(ImGui::GetForegroundDrawList(), Font.Primary, Font.Primary->FontSize, vTextPos);
-							m_DrawList->AddLine(m_UnderlinePos - ImVec2(floorf(125.f * 1.f) + 20.f, 0.f), m_UnderlinePos + ImVec2(floorf(125.f * 1.0f) + 20.f, 0.f), Color.Separator, 2.f);
+							ImGui::GetForegroundDrawList()->AddLine(m_UnderlinePos - ImVec2(floorf(125.f * 1.f) + 20.f, 0.f), m_UnderlinePos + ImVec2(floorf(125.f * 1.0f) + 20.f, 0.f), Color.Separator, 2.f);
 							//m_DrawList->AddLine(m_UnderlinePos - ImVec2(floorf(vTextSize.x * 1.f) + 20.f, 0.f), m_UnderlinePos + ImVec2(floorf(vTextSize.x * 1.0f) + 20.f, 0.f), Color.Separator, 2.f);
 						}
 						else
 						{
-							m_DrawList->AddLine(vTextPos - ImVec2(floorf(Item.m_BreakUnderline.x * 1.f) + 20.f, 0.f), vTextPos + ImVec2(floorf(Item.m_BreakUnderline.x * 1.0f) + 20.f, 0.f), Color.Separator, 2.f);
+							ImGui::GetForegroundDrawList()->AddLine(vTextPos - ImVec2(floorf(Item.m_BreakUnderline.x * 1.f) + 20.f, 0.f), vTextPos + ImVec2(floorf(Item.m_BreakUnderline.x * 1.0f) + 20.f, 0.f), Color.Separator, 2.f);
 						}
 						
 						m_DrawPos.y += m_FrameHeight;
@@ -1056,8 +1056,15 @@ namespace cheat
 
 					std::string displayedText = &Item.Get(i)->m_Name[0];
 					if (vTextSize.x > m_FrameWidth - 20.f) {
-						
+
+						if (displayedText.size() > 20)
+						{
+							displayedText.erase(20, displayedText.size() - 20);
+							displayedText += "...";
+						}
+						/*
 						displayedText = displayedText.substr(0, displayedText.length() - 20) + "...";
+						 */
 					}
 
 				

@@ -150,12 +150,16 @@ namespace cheat
 			g_Renderer->Menu.Item.m_DescriptionFrame = 0;
 		});
 		Break("Rounding");
-		Bool("Rounded", "Round the Description", &g_Renderer->Menu.Item.m_DescriptionRounded);
+		Bool("Rounded Enabled", "Round the Description", &g_Renderer->Menu.Item.m_DescriptionRounded);
 		if (g_Renderer->Menu.Item.m_DescriptionRounded)
 		{
 			Float("Rounding", "Amount that the Description is rounded", &g_Renderer->Menu.Item.m_DescriptionRounding, 0.f, 100.f, 1.f);
 		}
-
+		Break("Outline");
+		Bool("Outline Enabled", "Round the Description", &g_Renderer->Menu.Item.m_DescriptionOutlineEnaled);
+		Break("Padding");
+		Float("Description Text Padding", "Padding for the description text.", &m_DescriptionTextPadding, 1.f, 10.f, 0.1f);
+		Float("Description Padding", "Padding for the description.", &m_DescriptionPadding, 1.f, 20.f, 1.f);
 		Break("Textures");
 		for (const auto& ent : g_ThemeLoader.GetFiles(ImageType::Description))
 		{

@@ -36,9 +36,9 @@ namespace cheat
 		Submenu("Description", &Menus::TextureDescription);
 		IconButton(ICON_FA_TRASH, "Clear Cached Images/Gifs", [] { g_ThemeLoader.Reset(); Fiber::get()->yield(300ms); g_ImageLoader.ClearCache(); });
 		Break("Menu Related");
-		Float("Scrolling Animation Speed", "", &g_Renderer->Menu.m_LerpSpeed,0.001f,1.0f,0.01f);
+		Float("Scroller Animation Speed", "", &g_Renderer->Menu.m_LerpSpeed,0.001f,1.0f,0.01f);
 		Bool("Move Text With Scroller", "", &g_Renderer->Menu.m_LerpText);
-		Number("Max Options Visible", "", &g_Renderer->Menu.Item.m_NumToShow, 12, 20);
+		Number("Options Visible", "", &g_Renderer->Menu.Item.m_NumToShow, 12, 20);
 		Break("Theme Related");
 		IconButton(ICON_FA_FOLDER_OPEN, "Save Theme", [&]
 		{
