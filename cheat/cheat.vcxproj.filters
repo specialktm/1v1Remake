@@ -180,6 +180,9 @@
     <ClCompile Include="source\cheat\renderer\notification\notification.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\cheat\renderer\ImageLoader\DDS\DDSTextures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\pch\pch.h">
@@ -411,6 +414,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\cheat\renderer\notification\notification.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\cheat\renderer\ImageLoader\DDS\DDSTextures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

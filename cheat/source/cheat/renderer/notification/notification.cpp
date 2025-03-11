@@ -181,7 +181,7 @@ namespace ImGui
 
 				GetBackgroundDrawList()->AddRectFilled(
 					timer_bar_pos,
-					ImVec2(timer_bar_pos.x + timer_bar_width, timer_bar_pos.y + 5.0f),
+					ImVec2(timer_bar_pos.x + timer_bar_width, timer_bar_pos.y + 2.0f),
 					ImColor(color.x, color.y, color.z, color.w)
 				);
 			}

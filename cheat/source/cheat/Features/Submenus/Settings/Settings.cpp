@@ -53,6 +53,12 @@ namespace cheat
 		{
 			g_ThemeLoader.ResetTheme();
 		});
+
+#ifdef Developer
+		Break("Debug");
+		Button("Clear Console", [] { system("cls"); });
+
+#endif
 	}
 	
 }

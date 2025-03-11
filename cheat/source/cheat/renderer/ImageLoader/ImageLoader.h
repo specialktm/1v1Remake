@@ -1,8 +1,8 @@
 #pragma once
-#include "../../../pch/pch.h"
+#include "../../pch/pch.h"
 
 namespace cheat
-{
+{ 
 	// simply Vector2.
 	struct intVec2
 	{
@@ -60,7 +60,8 @@ namespace cheat
 		void ClearCache();
 		void RemoveFromCache(const std::string_view& key);
 		bool IsCached(const std::string_view& key);
-
+		std::unordered_map<std::string, ID3D11ShaderResourceView*> GetTextureCache();
+		bool AddToTextureCache(const std::string_view& key,ID3D11ShaderResourceView* resource);
 	private:
 		// Cached Gifs.
 		std::unordered_map<std::string, std::map<int, FrameData>> GifCache_;

@@ -62,6 +62,7 @@ namespace cheat
 		void LoadFooter(const fs::path& file);
 		void LoadDescription(const fs::path& file);
 		void ResetTheme();
+		void LoadTextureFromEnum(ImageType Enum, const fs::path& file);
 
 		std::vector<fs::directory_entry> GetFiles(ImageType type);
 		std::vector<fs::directory_entry> GetThemes();

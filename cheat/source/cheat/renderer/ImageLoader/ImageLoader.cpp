@@ -1,8 +1,9 @@
 #define STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "ImageLoader.h"
-#include "../../../common/common.h"
 #include "../notification/notification.h"
+
+#include <DDSTextureLoader.h>
 
 namespace cheat
 {
@@ -27,8 +28,7 @@ namespace cheat
 		return {image, {static_cast<int>(std::round(width)), static_cast<int>(std::round(height))}};
 	}
 
-	ID3D11ShaderResourceView* ImageLoader::CreateResourceView(ID3D11Device* device, unsigned char* img_data,
-	                                                          const intVec2 img_size)
+	ID3D11ShaderResourceView* ImageLoader::CreateResourceView(ID3D11Device* device, unsigned char* img_data, const intVec2 img_size)
 	{
 		if (!img_data) return nullptr;
 		D3D11_TEXTURE2D_DESC desc = {};
@@ -148,6 +148,7 @@ namespace cheat
 		return tmp_arr;
 	}
 
+
 	void ImageLoader::ClearCache()
 	{
 		// Clear Gifs
@@ -196,15 +197,37 @@ namespace cheat
 
 	bool ImageLoader::IsCached(const std::string_view& key)
 	{
+		
 		if (key.ends_with(".gif"))
 		{
-			if (GifCache_.contains(std::string(key)))
+			if (GifCache_.contains(key.data()))
 				return true;
 		}
-		if (TextureCache_.contains(std::string(key)))
+		if (TextureCache_.contains(key.data()))
+		{
+			if (key.ends_with(".dds"))
+			{
+				g_logger->send(levels::debug, "Logging {}", key);
+			}
 			return true;
+		}
 
 		return false;
+	}
+
+	bool ImageLoader::AddToTextureCache(const std::string_view& key, ID3D11ShaderResourceView* resource)
+	{
+		if (!IsCached(key))
+		{
+			TextureCache_[key.data()] = resource;
+			return IsCached(key);
+		}
+		return IsCached(key);
+	}
+
+	std::unordered_map<std::string, ID3D11ShaderResourceView*> ImageLoader::GetTextureCache()
+	{
+		return TextureCache_;
 	}
 
 	ImageLoader::~ImageLoader()

@@ -111,7 +111,7 @@ namespace cheat
                 return "\33[1m\33[38;5;237m[Info]";
             case levels::success:
                 return "\33[1m\33[38;5;119m[Success]";
-            case levels::warn:
+            case levels::warning:
                 return "\33[1m\33[38;5;136m[Warn]";
             case levels::error:
                 return "\33[1m\33[38;5;196m[Error]\33[m";

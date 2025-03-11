@@ -1,5 +1,6 @@
 #include "../renderer.hpp"
 #include "submenu/Submenu.h"
+#include "../notification/notification.h"
 
 namespace cheat
 {
@@ -13,6 +14,10 @@ namespace cheat
 		Submenu("No Skill", &Menus::MenuESP, ICON_FA_BINOCULARS);
 		Submenu("Settings", &Menus::MenuSettings, ICON_FA_COG);
 		Break();
+		Button("LL",[]
+		{
+			notify(Info, 3s,"AA");
+		});
 		Input("Theme Name", "Theme Save Name", "Enter Name", ThemeNameBuffer, sizeof(ThemeNameBuffer));
 		
 		Button("Save Theme", []

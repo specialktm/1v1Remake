@@ -11,6 +11,11 @@ namespace cheat
 		{
 			g_Renderer->Menu.Header.m_Header.clear();
 			g_Renderer->Menu.Header.m_HeaderFrame = 0;
+			auto l = g_ImageLoader.GetTextureCache();
+			for (const auto& [k, v] : l) {
+				g_logger->send(levels::debug, "Cache key: {}", k);
+			}
+
 		});
 
 

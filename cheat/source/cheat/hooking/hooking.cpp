@@ -33,6 +33,16 @@ namespace cheat
 
 	hooking::hooking()
 	{
+
+		D3D11::m_window = FindWindowA("UnityWndClass", nullptr);
+
+		int length = GetWindowTextLengthA(D3D11::m_window);
+		LPSTR m_WindowTitle = new char[length + 1];
+		GetWindowTextA(D3D11::m_window, m_WindowTitle, length + 1);
+		D3D11::m_WindowName = m_WindowTitle;
+		delete[] m_WindowTitle;
+		g_logger->send(levels::info,"Hooking: {}", D3D11::m_WindowName.data());
+		SetWindowTextA(D3D11::m_window, std::format("{} Cheats {} Menu", D3D11::m_WindowName.data(), APP_NAME).c_str());
 		auto status = MH_Initialize();
 		if (status != MH_OK)
 		{
@@ -56,11 +66,7 @@ namespace cheat
 		Unity::il2cppClass* ThirdPersonCameraClass = IL2CPP::Class::Find("vThirdPersonCamera");
 		offsets::AddRecoil = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(ThirdPersonCameraClass, "AddRecoil");
 	
-		g_logger->send(levels::developer, "Offsets: G: [{:#X}] | U: [{:#X}]", offsets::GameAssembly, offsets::UnityPlayer);
-
-		auto adr = std::addressof(InitPlayerList);
-		g_logger->send(levels::developer, "this+{:#X}", uintptr_t(adr));
-		
+		g_logger->send(levels::developer, "Offsets: G: [{:X}] | U: [{:X}]", offsets::GameAssembly, offsets::UnityPlayer);
 
 		fiber_manager::add_fiber("PlayerListCache", &InitPlayerList);
 		this->Hook();

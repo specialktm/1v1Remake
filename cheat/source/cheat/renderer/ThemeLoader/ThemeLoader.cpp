@@ -3,6 +3,8 @@
 
 #include <shlobj.h>
 #include <objbase.h>
+#include "../notification/notification.h"
+#include "../ImageLoader/DDS/DDSTextures.h"
 #pragma comment(lib,"Shell32")
 #pragma comment(lib,"Ole32")
 
@@ -80,105 +82,194 @@ namespace cheat
 
 	void ThemeLoader::LoadHeader(const fs::path& file)
 	{
+		ID3D11ShaderResourceView* m_LoadedTexture;
 		ThemeData_.Header.clear();
 		g_Renderer->Menu.Header.m_Header.clear();
 		g_Renderer->Menu.Header.m_HeaderFrame = 0;
-
+	
 		if (file.extension() == ".gif")
 		{
-			g_Renderer->Menu.Header.m_Header = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
+			auto m_GifTexture = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
+			if (!std::empty(m_GifTexture))
+			{
+				g_Renderer->Menu.Header.m_Header = m_GifTexture;
+			}
+		}
+		else if (file.extension() == ".dds")
+		{
+			m_LoadedTexture = g_DDSTextureLoader.LoadDDSFromFile(D3D11::m_Device.Get(), file);
 		}
 		else
 		{
-			g_Renderer->Menu.Header.m_Header.try_emplace(0, 0, g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file));
+			m_LoadedTexture = g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file);
 		}
+		g_Renderer->Menu.Header.m_Header.try_emplace(0, 0, m_LoadedTexture);
 		ThemeData_.Header = file;
 	}
 
 	void ThemeLoader::LoadSubtitle(const fs::path& file)
 	{
+		ID3D11ShaderResourceView* m_LoadedTexture;
 		ThemeData_.Subtitle.clear();
 		g_Renderer->Menu.Item.m_SubtitleImage.clear();
 		g_Renderer->Menu.Item.m_SubtitleFrame = 0;
 
 		if (file.extension() == ".gif")
 		{
-			g_Renderer->Menu.Item.m_SubtitleImage = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
+			auto m_LoadedGif = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
+			g_Renderer->Menu.Item.m_SubtitleImage = m_LoadedGif;
+		}
+
+		else if (file.extension() == ".dds")
+		{
+			m_LoadedTexture = g_DDSTextureLoader.LoadDDSFromFile(D3D11::m_Device.Get(), file);
 		}
 		else
 		{
-			g_Renderer->Menu.Item.m_SubtitleImage.try_emplace(0, 0, g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file));
+			m_LoadedTexture = g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file);
 		}
+		g_Renderer->Menu.Item.m_SubtitleImage.try_emplace(0, 0, m_LoadedTexture);
 		ThemeData_.Subtitle= file;
 	}
 
 	void ThemeLoader::LoadBackground(const fs::path& file)
 	{
+		ID3D11ShaderResourceView* m_LoadedTexture;
 		ThemeData_.Background.clear();
 		g_Renderer->Menu.Item.m_BackgroundImage.clear();
 		g_Renderer->Menu.Item.m_BackgroundFrame = 0;
+
 		if (file.extension() == ".gif")
 		{
-			g_Renderer->Menu.Item.m_BackgroundImage = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
+			auto m_LoadedGif = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
+			g_Renderer->Menu.Item.m_BackgroundImage = m_LoadedGif;
+		}
+
+		else if (file.extension() == ".dds")
+		{
+			m_LoadedTexture = g_DDSTextureLoader.LoadDDSFromFile(D3D11::m_Device.Get(), file);
 		}
 		else
 		{
-			g_Renderer->Menu.Item.m_BackgroundImage.try_emplace(0, 0, g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file));
-
+			m_LoadedTexture = g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file);
 		}
+		g_Renderer->Menu.Item.m_BackgroundImage.try_emplace(0, 0, m_LoadedTexture);
 		ThemeData_.Background = file;
 	}
 
 	void ThemeLoader::LoadScroller(const fs::path& file)
 	{
+		ID3D11ShaderResourceView* m_LoadedTexture;
 		ThemeData_.Scroller.clear();
 		g_Renderer->Menu.Item.m_Image.clear();
 		g_Renderer->Menu.Item.m_ScrollerFrame = 0;
 		if (file.extension() == ".gif")
 		{
-			g_Renderer->Menu.Item.m_Image = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
+			auto m_LoadedGif = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
+			g_Renderer->Menu.Item.m_Image = m_LoadedGif;
+		}
+		else if (file.extension() == ".dds")
+		{
+			m_LoadedTexture = g_DDSTextureLoader.LoadDDSFromFile(D3D11::m_Device.Get(), file);
 		}
 		else
 		{
-			g_Renderer->Menu.Item.m_Image.try_emplace(0, 0, g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file));
-
+			m_LoadedTexture = g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file);
 		}
+		g_Renderer->Menu.Item.m_Image.try_emplace(0, 0, m_LoadedTexture);
 		ThemeData_.Scroller = file;
 	}
 	void ThemeLoader::LoadFooter(const fs::path& file)
 	{
+		ID3D11ShaderResourceView* m_LoadedTexture;
 		ThemeData_.Footer.clear();
-
 		g_Renderer->Menu.Item.m_FooterImage.clear();
 		g_Renderer->Menu.Item.m_FooterFrame = 0;
-
 		if (file.extension() == ".gif")
 		{
-			g_Renderer->Menu.Item.m_FooterImage = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
+			auto m_LoadedGif = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
+			g_Renderer->Menu.Item.m_FooterImage = m_LoadedGif;
+		}
+
+		else if (file.extension() == ".dds")
+		{
+			m_LoadedTexture = g_DDSTextureLoader.LoadDDSFromFile(D3D11::m_Device.Get(), file);
 		}
 		else
 		{
-			g_Renderer->Menu.Item.m_FooterImage.try_emplace(0, 0, g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file));
+			m_LoadedTexture = g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file);
 		}
+		g_Renderer->Menu.Item.m_FooterImage.try_emplace(0, 0, m_LoadedTexture);
 		ThemeData_.Footer = file;
+
 	}
 	void ThemeLoader::LoadDescription(const fs::path& file)
 	{
+		ID3D11ShaderResourceView* m_LoadedTexture;
 		ThemeData_.Description.clear();
-
 		g_Renderer->Menu.Item.m_DescriptionImage.clear();
 		g_Renderer->Menu.Item.m_DescriptionFrame = 0;
-
 		if (file.extension() == ".gif")
 		{
-			g_Renderer->Menu.Item.m_DescriptionImage = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
+			auto m_LoadedGif = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
+			g_Renderer->Menu.Item.m_DescriptionImage = m_LoadedGif;
+		}
+
+		else if (file.extension() == ".dds")
+		{
+			m_LoadedTexture = g_DDSTextureLoader.LoadDDSFromFile(D3D11::m_Device.Get(), file);
 		}
 		else
 		{
-			g_Renderer->Menu.Item.m_DescriptionImage.try_emplace(0, 0, g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file));
+			m_LoadedTexture = g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file);
 		}
+		g_Renderer->Menu.Item.m_DescriptionImage.try_emplace(0, 0, m_LoadedTexture);
 		ThemeData_.Description = file;
 	}
+
+	void ThemeLoader::LoadTextureFromEnum(ImageType Enum, const fs::path& file)
+	{
+		if (file.empty() || !fs::exists(file))
+		{
+			g_logger->send(levels::error, "Invalid or missing file path for texture loading: {}", file.string());
+			return;
+		}
+
+		switch (Enum)
+		{
+			case ImageType::Header:
+				LoadHeader(file);
+				break;
+
+			case ImageType::Subtitle:
+				LoadSubtitle(file);
+				break;
+
+			case ImageType::Background:
+				LoadBackground(file);
+				break;
+
+			case ImageType::Scroller:
+				LoadScroller(file);
+				break;
+
+			case ImageType::Footer:
+				LoadFooter(file);
+				break;
+
+			case ImageType::Description:
+				LoadDescription(file);
+				break;
+
+			default:
+				g_logger->send(levels::warning, "Unhandled ImageType: {}", static_cast<int>(Enum));
+				return;
+		}
+
+		g_logger->send(levels::success, "Texture loaded for {}: {}", static_cast<int>(Enum), file.string());
+	}
+
+
 	void ThemeLoader::LoadTheme(const fs::path& folder) 
 	{
 		ResetTheme();
@@ -213,6 +304,7 @@ namespace cheat
 		}
 		LoadedTheme_ = folder;
 		g_logger->send(levels::success, "Theme Loaded: {}", folder.string().c_str());
+		notify(Success,3s, "Theme Loaded: {}", folder.filename().string().c_str());
 	}
 
 	std::vector<fs::directory_entry> ThemeLoader::GetFiles(ImageType type)

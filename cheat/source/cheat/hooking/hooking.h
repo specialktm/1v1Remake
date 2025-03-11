@@ -23,6 +23,7 @@ struct Rect // Anvar :)
 namespace cheat::D3D11
 {
 	inline HWND m_window = NULL;
+	inline std::string_view m_WindowName;
 	inline Rect m_WindowRect;
 	inline comPtr<ID3D11Device> m_Device;
 	inline comPtr<ID3D11DeviceContext> m_Context;

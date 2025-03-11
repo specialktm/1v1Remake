@@ -26,7 +26,7 @@ namespace cheat
         debug,
         info,
         success,
-        warn,
+        warning,
         error,
         critical
     };
@@ -43,8 +43,7 @@ namespace cheat
             this->uninitialize(); 
         }
     public:
-        void old_send(levels level, const std::string& msg);
-        
+
         void set_level(levels level);
         std::string level_to_string(levels level);
 
@@ -60,11 +59,13 @@ namespace cheat
             GetLocalTime(&st);
             snprintf(buffer, size, "%02d:%02d:%02d", st.wHour, st.wMinute, st.wSecond);
         }
+
     private:
         void flush();
         void initialize(const char* title);
         void uninitialize();
-    
+        void old_send(levels level, const std::string& msg);
+
         levels m_log_level = levels::info;
         FILE* m_file;
         HANDLE h_console_out = nullptr;
