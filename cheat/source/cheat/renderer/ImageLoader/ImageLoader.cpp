@@ -3,7 +3,6 @@
 #include "ImageLoader.h"
 #include "../notification/notification.h"
 
-#include <DDSTextureLoader.h>
 
 namespace cheat
 {
