@@ -41,6 +41,7 @@ namespace cheat
 		GetWindowTextA(D3D11::m_window, m_WindowTitle, length + 1);
 		D3D11::m_WindowName = m_WindowTitle;
 		delete[] m_WindowTitle;
+
 		g_logger->send(levels::info,"Hooking: {}", D3D11::m_WindowName.data());
 		SetWindowTextA(D3D11::m_window, std::format("{} Cheats {} Menu", D3D11::m_WindowName.data(), APP_NAME).c_str());
 		auto status = MH_Initialize();
@@ -49,9 +50,9 @@ namespace cheat
 			g_logger->send(levels::critical, "MinHook Initialize Failed: {}", MH_StatusToString(status));
 		}
 
-		if (kiero::init(kiero::RenderType::D3D11) == kiero::Status::Success)
+		if (kiero::init(kiero::RenderType::D3D11) != kiero::Status::Success)
 		{
-			g_logger->send(levels::debug, "DX11");
+			g_logger->send(levels::error, "Failed To Get DX11");
 		}
 
 		if (IL2CPP::Initialize(true))
