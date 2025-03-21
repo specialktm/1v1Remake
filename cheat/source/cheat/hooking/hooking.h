@@ -54,8 +54,8 @@ namespace cheat::hooks
 	LRESULT __stdcall WndProc(const HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	inline types::WNDPROC ogWndProc;
 
-	void AddRecoil(vThirdPersonCamera_o* _this, UnityEngine_Vector2_o BCPJCLHKGAP, float DOPDJOKDDOE, float GCKNJNLFICA, const MethodInfo* method);
-	inline void(UNITY_CALLING_CONVENTION ogAddRecoil)(vThirdPersonCamera_o* _this, UnityEngine_Vector2_o BCPJCLHKGAP, float DOPDJOKDDOE, float GCKNJNLFICA, const MethodInfo* method);
+	void AddRecoil(vThirdPersonCamera_o* _this, UnityEngine_Vector2_o recoil, float recoilDuration, float returnForce, const MethodInfo* method);
+	inline void(UNITY_CALLING_CONVENTION ogAddRecoil)(vThirdPersonCamera_o* _this, UnityEngine_Vector2_o recoil, float recoilDuration, float returnForce, const MethodInfo* method);
 }
 
 

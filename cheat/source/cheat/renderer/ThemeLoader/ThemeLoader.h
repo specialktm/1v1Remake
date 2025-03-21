@@ -49,8 +49,6 @@ namespace cheat
 	class ThemeLoader 
 	{
 	public:
-		void CreateFolders();
-
 		void LoadTheme(const fs::path& folder);
 		void LoadThemeFromFile(const fs::path& file);
 		void SaveTheme(bool isFile = false);
@@ -67,8 +65,10 @@ namespace cheat
 		std::vector<fs::directory_entry> GetFiles(ImageType type);
 		std::vector<fs::directory_entry> GetThemes();
 		fs::path GetPath(ImageType type);
-
 	private:
+		void CreateFolders();
+		fs::path GetDocumentsPath();
+
 		fs::path DocumentsFolder{ GetDocumentsPath() / "CortezMenu"};
 		fs::path HeaderPath_{ DocumentsFolder / "Textures" / "Header" };
 		fs::path SubtitlePath_{ DocumentsFolder / "Textures" / "Subtitle" };
@@ -77,17 +77,19 @@ namespace cheat
 		fs::path FooterPath_{ DocumentsFolder / "Textures" / "Footer" };
 		fs::path DescriptionPath_{ DocumentsFolder / "Textures" / "Description" };
 		fs::path ThemePath_{ DocumentsFolder / "Themes" };
-		fs::path SavedThemePath_{ DocumentsFolder / "theme.json" };
+		fs::path SavedThemePath_{ DocumentsFolder / "theme.simp" };
 		fs::path LoadedTheme_ = "";
 		ThemeFormat ThemeData_{};
 
-		fs::path GetDocumentsPath();
 		bool IsExtensionValid(const fs::path& filePath) {
-			std::string ext = filePath.extension().string();
-			for (const auto& validExt : ValidExtensions) {
-				if (ext == validExt) {
-					return true;
-				}
+			const char* ext = filePath.extension().string().c_str();
+			if (std::ranges::find(ValidExtensions.begin(), ValidExtensions.end(), ext) != ValidExtensions.end())
+			{
+				return true;
+			}
+			for (const auto& extension : ValidExtensions.end())
+			{
+				g_logger->send(levels::error, "Invalid extension: {}", extension);
 			}
 			return false;
 		}

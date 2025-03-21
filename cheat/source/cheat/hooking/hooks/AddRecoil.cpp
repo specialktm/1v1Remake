@@ -3,7 +3,7 @@
 
 namespace cheat
 {
-	void hooks::AddRecoil(vThirdPersonCamera_o* _this, UnityEngine_Vector2_o BCPJCLHKGAP, float DOPDJOKDDOE, float GCKNJNLFICA, const MethodInfo* method)
+	void hooks::AddRecoil(vThirdPersonCamera_o* _this, UnityEngine_Vector2_o recoil, float recoilDuration, float returnForce, const MethodInfo* method)
 	{
 		return;
 	}

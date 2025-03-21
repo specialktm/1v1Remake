@@ -1,4 +1,5 @@
 #include "discord.h"
+#include "../hooking/hooking.h"
 
 namespace cheat
 {
@@ -9,7 +10,9 @@ namespace cheat
 		m_DiscordUser.userId = ConnectedUser->userId;
 		m_DiscordUser.avatar = ConnectedUser->avatar;
 		m_DiscordUser.discriminator = ConnectedUser->discriminator;
+		
 		g_logger->send(levels::info, "Discord User Connected: {} UserId: {}", m_DiscordUser.username, m_DiscordUser.userId);
+		g_logger->send(levels::info, "Discord User Avatar: https://cdn.discordapp.com/avatars/{}/{}.webp?size=80", m_DiscordUser.userId, m_DiscordUser.avatar);
 	}
 
 	void DiscordManager::HandlerDiscordDisconnected(int ErrorCode, const char* ErrorMessage)

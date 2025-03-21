@@ -430,9 +430,9 @@ namespace cheat
 
 	void ThemeLoader::SaveTheme(bool isFile)
 	{
+		nlohmann::json JsonData;
 		if (!isFile)
 		{
-			nlohmann::json JsonData;
 			JsonData["SavedTheme"] = LoadedTheme_.string();
 			std::ofstream file{ SavedThemePath_.string() };
 			if (file.is_open()) {
@@ -441,7 +441,6 @@ namespace cheat
 			}
 			return;
 		}
-		nlohmann::json JsonData;
 
 		JsonData["Header"] = ThemeData_.Header.string();
 		JsonData["Subtitle"] = ThemeData_.Subtitle.string();

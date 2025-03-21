@@ -8,6 +8,8 @@ namespace cheat
 		std::string name{};
 		std::string uuid{};
 		std::string skin{};
+		int RankXP{};
+		int KillCount{};
 
 	};
 
