@@ -48,7 +48,7 @@ namespace cheat
         std::string level_to_string(levels level);
 
         template <typename... args>
-        void send(levels level, const std::string& format, args... msg)
+        void send(levels level, const std::string_view& format, args... msg)
         {
             std::string formatted = std::vformat(format, std::make_format_args(msg...));
             old_send(level, formatted);
@@ -64,7 +64,7 @@ namespace cheat
         void flush();
         void initialize(const char* title);
         void uninitialize();
-        void old_send(levels level, const std::string& msg);
+        void old_send(levels level, const std::string_view& msg);
 
         levels m_log_level = levels::info;
         FILE* m_file;
