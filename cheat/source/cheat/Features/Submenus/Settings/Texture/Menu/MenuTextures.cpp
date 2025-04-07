@@ -34,7 +34,7 @@ namespace cheat
 			{
 				IconButton(ICON_FA_IMAGE, std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
 				{
-					g_ThemeLoader.LoadHeader(path);
+					g_ThemeLoader.LoadTextureFromEnum(ImageType::Header, path);
 				});
 			}
 		}
@@ -57,7 +57,7 @@ namespace cheat
 			{
 				IconButton(ICON_FA_IMAGE,std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
 				{
-					g_ThemeLoader.LoadSubtitle(path);
+					g_ThemeLoader.LoadTextureFromEnum(ImageType::Subtitle,path);
 				});
 			}
 		}
@@ -81,7 +81,7 @@ namespace cheat
 			{
 				IconButton(ICON_FA_IMAGE, std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
 				{
-					g_ThemeLoader.LoadBackground(path);
+					g_ThemeLoader.LoadTextureFromEnum(ImageType::Background,path);
 				});
 			}
 		}
@@ -111,7 +111,7 @@ namespace cheat
 			{
 				IconButton(ICON_FA_IMAGE, std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
 				{
-					g_ThemeLoader.LoadScroller(path);
+					g_ThemeLoader.LoadTextureFromEnum(ImageType::Scroller,path);
 				});
 			}
 		}
@@ -140,7 +140,7 @@ namespace cheat
 			{
 				IconButton(ICON_FA_IMAGE, std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
 				{
-					g_ThemeLoader.LoadFooter(path);
+					g_ThemeLoader.LoadTextureFromEnum(ImageType::Footer,path);
 				});
 
 			}
@@ -173,7 +173,7 @@ namespace cheat
 			{
 				IconButton(ICON_FA_IMAGE, std::format("Load: {} {}", path.filename().string(), g_ImageLoader.IsCached(path.filename().string().c_str()) ? "(Cached)" : "").c_str(), [path]
 				{
-					g_ThemeLoader.LoadDescription(path);
+					g_ThemeLoader.LoadTextureFromEnum(ImageType::Description, path);
 				});
 
 			}

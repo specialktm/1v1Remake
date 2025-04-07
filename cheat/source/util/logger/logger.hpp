@@ -64,7 +64,7 @@ namespace cheat
         void flush();
         void initialize(const char* title);
         void uninitialize();
-        void old_send(levels level, const std::string_view& msg);
+        void old_send(levels level, const std::string& msg);
 
         levels m_log_level = levels::info;
         FILE* m_file;

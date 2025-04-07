@@ -80,7 +80,7 @@ namespace cheat
 	}
 
 
-	void ThemeLoader::LoadHeader(const fs::path& file)
+	bool ThemeLoader::LoadHeader(const fs::path& file)
 	{
 		ID3D11ShaderResourceView* m_LoadedTexture;
 		ThemeData_.Header.clear();
@@ -90,24 +90,31 @@ namespace cheat
 		if (file.extension() == ".gif")
 		{
 			auto m_GifTexture = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
-			if (!std::empty(m_GifTexture))
-			{
-				g_Renderer->Menu.Header.m_Header = m_GifTexture;
-			}
+			if (m_GifTexture.empty())
+				return false;
+
+			g_Renderer->Menu.Header.m_Header = m_GifTexture;
 		}
-		else if (file.extension() == ".dds")
+		if (file.extension() == ".dds")
 		{
 			m_LoadedTexture = g_DDSTextureLoader.LoadDDSFromFile(D3D11::m_Device.Get(), file);
+			if (!m_LoadedTexture)
+				return false;
+			g_Renderer->Menu.Header.m_Header.try_emplace(0, 0, m_LoadedTexture);
 		}
 		else
 		{
 			m_LoadedTexture = g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file);
+			if (!m_LoadedTexture)
+				return false;
+			g_Renderer->Menu.Header.m_Header.try_emplace(0, 0, m_LoadedTexture);
 		}
-		g_Renderer->Menu.Header.m_Header.try_emplace(0, 0, m_LoadedTexture);
 		ThemeData_.Header = file;
+	
+		return true;
 	}
 
-	void ThemeLoader::LoadSubtitle(const fs::path& file)
+	bool ThemeLoader::LoadSubtitle(const fs::path& file)
 	{
 		ID3D11ShaderResourceView* m_LoadedTexture;
 		ThemeData_.Subtitle.clear();
@@ -117,22 +124,33 @@ namespace cheat
 		if (file.extension() == ".gif")
 		{
 			auto m_LoadedGif = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
-			g_Renderer->Menu.Item.m_SubtitleImage = m_LoadedGif;
-		}
+			if (m_LoadedGif.empty())
+				return false;
 
-		else if (file.extension() == ".dds")
+			g_Renderer->Menu.Item.m_SubtitleImage = m_LoadedGif;
+		
+		}
+		if (file.extension() == ".dds")
 		{
 			m_LoadedTexture = g_DDSTextureLoader.LoadDDSFromFile(D3D11::m_Device.Get(), file);
+			if (!m_LoadedTexture)
+				return false;
+
+			g_Renderer->Menu.Item.m_SubtitleImage.try_emplace(0, 0, m_LoadedTexture);
 		}
 		else
 		{
-			m_LoadedTexture = g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file);
+			m_LoadedTexture = g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file); 
+			if (!m_LoadedTexture)
+				return false;
+
+			g_Renderer->Menu.Item.m_SubtitleImage.try_emplace(0, 0, m_LoadedTexture);
 		}
-		g_Renderer->Menu.Item.m_SubtitleImage.try_emplace(0, 0, m_LoadedTexture);
 		ThemeData_.Subtitle= file;
+		return true;
 	}
 
-	void ThemeLoader::LoadBackground(const fs::path& file)
+	bool ThemeLoader::LoadBackground(const fs::path& file)
 	{
 		ID3D11ShaderResourceView* m_LoadedTexture;
 		ThemeData_.Background.clear();
@@ -142,22 +160,33 @@ namespace cheat
 		if (file.extension() == ".gif")
 		{
 			auto m_LoadedGif = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
+			if (m_LoadedGif.empty())
+				return false;
+
 			g_Renderer->Menu.Item.m_BackgroundImage = m_LoadedGif;
 		}
 
 		else if (file.extension() == ".dds")
 		{
 			m_LoadedTexture = g_DDSTextureLoader.LoadDDSFromFile(D3D11::m_Device.Get(), file);
+			if (!m_LoadedTexture)
+				return false;
+
+			g_Renderer->Menu.Item.m_BackgroundImage.try_emplace(0, 0, m_LoadedTexture);
 		}
 		else
 		{
 			m_LoadedTexture = g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file);
+			if (!m_LoadedTexture)
+				return false;
+			
+			g_Renderer->Menu.Item.m_BackgroundImage.try_emplace(0, 0, m_LoadedTexture);
 		}
-		g_Renderer->Menu.Item.m_BackgroundImage.try_emplace(0, 0, m_LoadedTexture);
 		ThemeData_.Background = file;
+		return true;
 	}
 
-	void ThemeLoader::LoadScroller(const fs::path& file)
+	bool ThemeLoader::LoadScroller(const fs::path& file)
 	{
 		ID3D11ShaderResourceView* m_LoadedTexture;
 		ThemeData_.Scroller.clear();
@@ -166,20 +195,33 @@ namespace cheat
 		if (file.extension() == ".gif")
 		{
 			auto m_LoadedGif = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
+			if (m_LoadedGif.empty())
+				return false;
+
 			g_Renderer->Menu.Item.m_Image = m_LoadedGif;
 		}
-		else if (file.extension() == ".dds")
+		if (file.extension() == ".dds")
 		{
 			m_LoadedTexture = g_DDSTextureLoader.LoadDDSFromFile(D3D11::m_Device.Get(), file);
+			if (!m_LoadedTexture)
+				return false;
+
+			g_Renderer->Menu.Item.m_Image.try_emplace(0, 0, m_LoadedTexture);
 		}
 		else
 		{
 			m_LoadedTexture = g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file);
+			if (!m_LoadedTexture)
+				return false;
+
+			g_Renderer->Menu.Item.m_Image.try_emplace(0, 0, m_LoadedTexture);
+
 		}
-		g_Renderer->Menu.Item.m_Image.try_emplace(0, 0, m_LoadedTexture);
 		ThemeData_.Scroller = file;
+
+		return true;
 	}
-	void ThemeLoader::LoadFooter(const fs::path& file)
+	bool ThemeLoader::LoadFooter(const fs::path& file)
 	{
 		ID3D11ShaderResourceView* m_LoadedTexture;
 		ThemeData_.Footer.clear();
@@ -188,22 +230,34 @@ namespace cheat
 		if (file.extension() == ".gif")
 		{
 			auto m_LoadedGif = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
+			if (m_LoadedGif.empty())
+				return false;
+
 			g_Renderer->Menu.Item.m_FooterImage = m_LoadedGif;
 		}
 
-		else if (file.extension() == ".dds")
+		if (file.extension() == ".dds")
 		{
 			m_LoadedTexture = g_DDSTextureLoader.LoadDDSFromFile(D3D11::m_Device.Get(), file);
+			if (!m_LoadedTexture)
+				return false;
+
+			g_Renderer->Menu.Item.m_FooterImage.try_emplace(0, 0, m_LoadedTexture);
 		}
 		else
 		{
 			m_LoadedTexture = g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file);
+			if (!m_LoadedTexture)
+				return false;
+
+			g_Renderer->Menu.Item.m_FooterImage.try_emplace(0, 0, m_LoadedTexture);
+
 		}
-		g_Renderer->Menu.Item.m_FooterImage.try_emplace(0, 0, m_LoadedTexture);
 		ThemeData_.Footer = file;
 
+		return true;
 	}
-	void ThemeLoader::LoadDescription(const fs::path& file)
+	bool ThemeLoader::LoadDescription(const fs::path& file)
 	{
 		ID3D11ShaderResourceView* m_LoadedTexture;
 		ThemeData_.Description.clear();
@@ -212,19 +266,30 @@ namespace cheat
 		if (file.extension() == ".gif")
 		{
 			auto m_LoadedGif = g_ImageLoader.CreateGifTexture(D3D11::m_Device.Get(), file);
+			if (m_LoadedGif.empty())
+				return false;
+
 			g_Renderer->Menu.Item.m_DescriptionImage = m_LoadedGif;
 		}
-
-		else if (file.extension() == ".dds")
+		
+		if (file.extension() == ".dds")
 		{
 			m_LoadedTexture = g_DDSTextureLoader.LoadDDSFromFile(D3D11::m_Device.Get(), file);
+			if (!m_LoadedTexture)
+				return false;
+
+			g_Renderer->Menu.Item.m_DescriptionImage.try_emplace(0, 0, m_LoadedTexture);
 		}
 		else
 		{
 			m_LoadedTexture = g_ImageLoader.CreateTexture(D3D11::m_Device.Get(), file);
+			if (!m_LoadedTexture)
+				return false;
+
+			g_Renderer->Menu.Item.m_DescriptionImage.try_emplace(0, 0, m_LoadedTexture);
 		}
-		g_Renderer->Menu.Item.m_DescriptionImage.try_emplace(0, 0, m_LoadedTexture);
 		ThemeData_.Description = file;
+		return true;
 	}
 
 	void ThemeLoader::LoadTextureFromEnum(ImageType Enum, const fs::path& file)
@@ -273,7 +338,7 @@ namespace cheat
 	void ThemeLoader::LoadTheme(const fs::path& folder) 
 	{
 		ResetTheme();
-		std::unordered_map<std::string, void (ThemeLoader::*)(const fs::path&)> loadFunctions = {
+		std::unordered_map<std::string, bool (ThemeLoader::*)(const fs::path&)> loadFunctions = {
 				{"Header", &ThemeLoader::LoadHeader},
 				{"Subtitle", &ThemeLoader::LoadSubtitle},
 				{"Background", &ThemeLoader::LoadBackground},
@@ -286,12 +351,19 @@ namespace cheat
 		{
 			fs::path subfolderPath = folder / subfolderName;
 
-			if (fs::exists(subfolderPath) && fs::is_directory(subfolderPath)) 
+			if (fs::exists(subfolderPath) && fs::is_directory(subfolderPath))
 			{
 				for (const auto& entry : fs::directory_iterator(subfolderPath)) {
 					
-					if (entry.is_regular_file() && IsExtensionValid(entry.path())) {
-						(this->*loadFunction)(entry.path());
+					if (entry.is_regular_file() && IsExtensionValid(entry.path())) 
+					{
+
+						if ((this->*loadFunction)(entry.path())) {
+							break; // Load the first valid file and break
+						}
+						else {
+							g_logger->send(levels::error, "Failed to load {}: {}", subfolderName, entry.path().string());
+						}
 						break;
 					}
 				}

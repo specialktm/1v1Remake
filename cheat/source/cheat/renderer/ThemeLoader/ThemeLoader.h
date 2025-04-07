@@ -46,30 +46,30 @@ namespace cheat
 
 	};
 
-	class ThemeLoader 
+	class ThemeLoader
 	{
 	public:
 		void LoadTheme(const fs::path& folder);
 		void LoadThemeFromFile(const fs::path& file);
 		void SaveTheme(bool isFile = false);
 		bool SaveThemeToFolder(const std::string_view& ThemeName);
-		void LoadHeader(const fs::path& file);
-		void LoadSubtitle(const fs::path& file);
-		void LoadBackground(const fs::path& file);
-		void LoadScroller(const fs::path& file);
-		void LoadFooter(const fs::path& file);
-		void LoadDescription(const fs::path& file);
+		bool LoadHeader(const fs::path& file);
+		bool LoadSubtitle(const fs::path& file);
+		bool LoadBackground(const fs::path& file);
+		bool LoadScroller(const fs::path& file);
+		bool LoadFooter(const fs::path& file);
+		bool LoadDescription(const fs::path& file);
 		void ResetTheme();
 		void LoadTextureFromEnum(ImageType Enum, const fs::path& file);
 
 		std::vector<fs::directory_entry> GetFiles(ImageType type);
 		std::vector<fs::directory_entry> GetThemes();
 		fs::path GetPath(ImageType type);
-	private:
 		void CreateFolders();
+	private:
 		fs::path GetDocumentsPath();
 
-		fs::path DocumentsFolder{ GetDocumentsPath() / "CortezMenu"};
+		fs::path DocumentsFolder{ GetDocumentsPath() / "CortezMenu" };
 		fs::path HeaderPath_{ DocumentsFolder / "Textures" / "Header" };
 		fs::path SubtitlePath_{ DocumentsFolder / "Textures" / "Subtitle" };
 		fs::path BackgroundPath_{ DocumentsFolder / "Textures" / "Background" };
@@ -82,18 +82,10 @@ namespace cheat
 		ThemeFormat ThemeData_{};
 
 		bool IsExtensionValid(const fs::path& filePath) {
-			const char* ext = filePath.extension().string().c_str();
-			if (std::ranges::find(ValidExtensions.begin(), ValidExtensions.end(), ext) != ValidExtensions.end())
-			{
-				return true;
-			}
-			for (const auto& extension : ValidExtensions.end())
-			{
-				g_logger->send(levels::error, "Invalid extension: {}", extension);
-			}
-			return false;
+			const std::string ext = filePath.extension().string();
+			return std::ranges::find(ValidExtensions, ext) != ValidExtensions.end();
 		}
-		
+
 	};
 	inline ThemeLoader g_ThemeLoader;
 }

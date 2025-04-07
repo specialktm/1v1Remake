@@ -27,7 +27,9 @@ inline HMODULE g_Module;
 inline HANDLE g_MainThread;
 inline bool g_Running = true;
 
-const std::vector<const char[]> ValidExtensions = {".png", ".jpeg", ".jpg",".bmp", ".psd", ".tga", ".gif", ".hdr", ".pic", ".ppm", ".pgm",".dds"};
+const std::vector<std::string> ValidExtensions = {
+    ".png", ".jpeg", ".jpg", ".bmp", ".psd", ".tga", ".gif", ".hdr", ".pic", ".ppm", ".pgm", ".dds"
+};
 
 // ComPtr
 template <typename t>

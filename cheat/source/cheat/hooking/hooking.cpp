@@ -55,21 +55,21 @@ namespace cheat
 			g_logger->send(levels::error, "Failed To Get DX11");
 		}
 
-		if (IL2CPP::Initialize(true))
-		{
-			g_logger->send(levels::success, "IL2CPP Initialized");
-		}
-		IL2CPP::Callback::Initialize();
+		//if (IL2CPP::Initialize(true))
+		//{
+		//	g_logger->send(levels::success, "IL2CPP Initialized");
+		//}
+		//IL2CPP::Callback::Initialize();
 	
-		offsets::GameAssembly = (uintptr_t)GetModuleHandleA("GameAssembly.dll");
-		offsets::UnityPlayer = (uintptr_t)GetModuleHandleA("UnityPlayer.dll");	
-	
-		Unity::il2cppClass* ThirdPersonCameraClass = IL2CPP::Class::Find("vThirdPersonCamera");
-		offsets::AddRecoil = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(ThirdPersonCameraClass, "AddRecoil");
-	
-		g_logger->send(levels::developer, "Offsets: G: [{:X}] | U: [{:X}]", offsets::GameAssembly, offsets::UnityPlayer);
+		//offsets::GameAssembly = (uintptr_t)GetModuleHandleA("GameAssembly.dll");
+		//offsets::UnityPlayer = (uintptr_t)GetModuleHandleA("UnityPlayer.dll");	
+		//
+		//Unity::il2cppClass* ThirdPersonCameraClass = IL2CPP::Class::Find("vThirdPersonCamera");
+		//offsets::AddRecoil = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(ThirdPersonCameraClass, "AddRecoil");
+		//
+		//g_logger->send(levels::developer, "Offsets: G: [{:X}] | U: [{:X}]", offsets::GameAssembly, offsets::UnityPlayer);
 
-		fiber_manager::add_fiber("PlayerListCache", &InitPlayerList);
+		//fiber_manager::add_fiber("PlayerListCache", &InitPlayerList);
 		this->Hook();
 	}
 	hooking::~hooking()
@@ -82,7 +82,7 @@ namespace cheat
 		// D3D11
 		kiero::bind(8, (void**)&hooks::ogPresent, hooks::Present);
 		// Detour
-		detour("AddRecoil", (LPVOID)offsets::AddRecoil, &hooks::ogAddRecoil, hooks::AddRecoil);
+		//detour("AddRecoil", (LPVOID)offsets::AddRecoil, &hooks::ogAddRecoil, hooks::AddRecoil);
 
 		g_logger->send(levels::success, "Hooking Complete");
 	}
@@ -95,7 +95,7 @@ namespace cheat
 		kiero::shutdown();
 
 		std::this_thread::sleep_for(10ms);
-		IL2CPP::Callback::Uninitialize();
+		//IL2CPP::Callback::Uninitialize();
 	}
 
 

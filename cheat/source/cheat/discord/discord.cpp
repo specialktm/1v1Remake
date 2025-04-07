@@ -13,6 +13,8 @@ namespace cheat
 		
 		g_logger->send(levels::info, "Discord User Connected: {} UserId: {}", m_DiscordUser.username, m_DiscordUser.userId);
 		g_logger->send(levels::info, "Discord User Avatar: https://cdn.discordapp.com/avatars/{}/{}.webp?size=80", m_DiscordUser.userId, m_DiscordUser.avatar);
+
+		m_SmallImage = std::format("https://discordimageproxy.isniffsharpie.com/avatars/{}/{}.webp?size=80", m_DiscordUser.userId, m_DiscordUser.avatar).c_str();
 	}
 
 	void DiscordManager::HandlerDiscordDisconnected(int ErrorCode, const char* ErrorMessage)
@@ -42,8 +44,9 @@ namespace cheat
 
 		Discord_Initialize(ApplicationId.data(), &m_DiscordEventHandlers, 1, 0);
 #ifdef Developer
-		m_SmallImage = "https://isniffsharpie.com/Icons/Developer.gif";
+		//m_SmallImage = "https://isniffsharpie.com/Icons/Developer.gif";
 #endif
+
 	}
 	void DiscordManager::Tick()
 	{
@@ -64,6 +67,7 @@ namespace cheat
 		m_Presence.details = "Using Version " APP_VERSION;
 		m_Presence.largeImageKey = m_LargeImage;
 		m_Presence.smallImageKey = m_SmallImage;
+		m_Presence.smallImageText = m_DiscordUser.username;
 		Discord_UpdatePresence(&m_Presence);
 
 	}

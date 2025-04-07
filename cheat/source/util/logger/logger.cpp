@@ -82,7 +82,7 @@ namespace cheat
             printf("[%s] %s\n", buffer, newMsg.c_str());
             if (m_file)
             {
-                fprintf(m_file, "[%s] %s\n", buffer, msg.c_str());
+                fprintf(m_file, "[%s] %s\n", buffer, msg.data());
                 fflush(m_file);
             }  
         }       
