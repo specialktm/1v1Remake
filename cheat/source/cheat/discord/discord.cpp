@@ -12,9 +12,7 @@ namespace cheat
 		m_DiscordUser.discriminator = ConnectedUser->discriminator;
 		
 		g_logger->send(levels::info, "Discord User Connected: {} UserId: {}", m_DiscordUser.username, m_DiscordUser.userId);
-		g_logger->send(levels::info, "Discord User Avatar: https://cdn.discordapp.com/avatars/{}/{}.webp?size=80", m_DiscordUser.userId, m_DiscordUser.avatar);
-
-		m_SmallImage = std::format("https://discordimageproxy.isniffsharpie.com/avatars/{}/{}.webp?size=80", m_DiscordUser.userId, m_DiscordUser.avatar).c_str();
+		g_logger->send(levels::developer, "Discord User Avatar: https://discordimageproxy.isniffsharpie.com/avatars/{}/{}.webp?size=300", m_DiscordUser.userId, m_DiscordUser.avatar);
 	}
 
 	void DiscordManager::HandlerDiscordDisconnected(int ErrorCode, const char* ErrorMessage)
@@ -59,14 +57,18 @@ namespace cheat
 		Discord_UpdateConnection();
 #endif
 		Discord_RunCallbacks();
+		if (m_DiscordUser.userId != nullptr && m_DiscordUser.avatar != nullptr)
+		{
+			m_SmallImage = std::format("https://discordimageproxy.isniffsharpie.com/avatars/{}/{}.webp?size=300", m_DiscordUser.userId, m_DiscordUser.avatar).data();
+		}
 
 
 		DiscordRichPresence m_Presence{};
 		memset(&m_Presence, 0, sizeof(m_Presence));
 		m_Presence.state = "Playing With " APP_NAME " Menu";
 		m_Presence.details = "Using Version " APP_VERSION;
-		m_Presence.largeImageKey = m_LargeImage;
-		m_Presence.smallImageKey = m_SmallImage;
+		m_Presence.largeImageKey = m_LargeImage.data();
+		m_Presence.smallImageKey = m_SmallImage.data();
 		m_Presence.smallImageText = m_DiscordUser.username;
 		Discord_UpdatePresence(&m_Presence);
 

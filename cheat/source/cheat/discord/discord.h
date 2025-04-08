@@ -19,8 +19,8 @@ namespace cheat
 		void HandlerDiscordDisconnected(int ErrorCode, const char* ErrorMessage);
 		void HandlerDiscordError(int ErrorCode, const char* ErrorMessage);
 	private:
-		const char* m_LargeImage = "https://isniffsharpie.com/Icons/7rUfmwF.png";
-		const char* m_SmallImage = "https://isniffsharpie.com/Icons/hack_bird.gif";
+		std::string_view m_LargeImage = "https://isniffsharpie.com/Icons/7rUfmwF.png";
+		std::string_view m_SmallImage = "https://isniffsharpie.com/Icons/hack_bird.gif";
 	};
 	inline DiscordManager g_DiscordManager;
 }
