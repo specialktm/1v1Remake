@@ -45,6 +45,7 @@ namespace cheat
 			g_logger->send(levels::developer, "Game Window Name: {}", cheat::D3D11::m_WindowName);
 			SetWindowTextA(D3D11::m_window, std::format("{} Cheats {} Menu", D3D11::m_WindowName.data(), APP_NAME).c_str());
 		}
+
 		auto status = MH_Initialize();
 		if (status != MH_OK)
 		{
