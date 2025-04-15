@@ -18,6 +18,7 @@ namespace cheat
     HRESULT __stdcall hooks::Present(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags)
     {
         using namespace D3D11;
+        if (!g_Running) return ogPresent(pSwapChain, SyncInterval, Flags);
 
         if (!PresentHooked)
         {

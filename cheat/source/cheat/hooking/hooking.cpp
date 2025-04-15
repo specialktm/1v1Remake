@@ -36,14 +36,15 @@ namespace cheat
 
 		D3D11::m_window = FindWindowA("UnityWndClass", nullptr);
 
-		int length = GetWindowTextLengthA(D3D11::m_window);
-		LPSTR m_WindowTitle = new char[length + 1];
-		GetWindowTextA(D3D11::m_window, m_WindowTitle, length + 1);
-		D3D11::m_WindowName = m_WindowTitle;
-		delete[] m_WindowTitle;
-
-		g_logger->send(levels::info,"Hooking: {}", D3D11::m_WindowName.data());
-		SetWindowTextA(D3D11::m_window, std::format("{} Cheats {} Menu", D3D11::m_WindowName.data(), APP_NAME).c_str());
+		int length = GetWindowTextLengthA(cheat::D3D11::m_window);
+		if (length > 0)
+		{
+			std::vector<char> windowTitle(length + 1);
+			GetWindowTextA(cheat::D3D11::m_window, windowTitle.data(), length + 1);
+			cheat::D3D11::m_WindowName = windowTitle.data();
+			g_logger->send(levels::developer, "Game Window Name: {}", cheat::D3D11::m_WindowName);
+			SetWindowTextA(D3D11::m_window, std::format("{} Cheats {} Menu", D3D11::m_WindowName.data(), APP_NAME).c_str());
+		}
 		auto status = MH_Initialize();
 		if (status != MH_OK)
 		{
@@ -89,7 +90,7 @@ namespace cheat
 
 	void hooking::UnHook()
 	{
-		g_Detour.unhook();
+		//g_Detour.unhook();
 		
 		std::this_thread::sleep_for(10ms);
 		kiero::shutdown();

@@ -5,7 +5,6 @@
 
 namespace cheat
 {
-
 	void Submenus::Menus::MenuSettings() 
 	{
 		Title("Settings");

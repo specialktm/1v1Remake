@@ -15,9 +15,14 @@ namespace cheat
 		Submenu("Settings", &Menus::MenuSettings, ICON_FA_COG);
 		Break();
 		Button("LL",[]
-		{
+		{ 
 			notify(Info, 3s,"AA");
-		});
+		});		
+		Button("LL", []
+		{
+			notify(Info, 3s, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+		}, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+		
 		Input("Theme Name", "Theme Save Name", "Enter Name", ThemeNameBuffer, sizeof(ThemeNameBuffer));
 		
 		Button("Save Theme", []

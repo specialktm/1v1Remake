@@ -78,6 +78,7 @@ namespace cheat
         {
             for (auto hook : get_detoured())
             {
+                g_logger->send(levels::debug, "Attempting to unhook method at address: {}", hook.detour_address);
                 auto status = MH_DisableHook(hook.detour_address);
                 if (status != MH_OK)
                     g_logger->send(levels::critical,"Failed To Disable: {} Reason: {}", hook.display_name, MH_StatusToString(status));

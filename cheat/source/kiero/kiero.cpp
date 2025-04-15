@@ -667,10 +667,7 @@ void kiero::shutdown()
 {
 	if (g_renderType != RenderType::None)
 	{
-#if KIERO_USE_MINHOOK
-		//MH_DisableHook(MH_ALL_HOOKS);
-#endif
-
+		cheat::g_Detour.unhook();
 		::free(g_methodsTable);
 		g_methodsTable = NULL;
 		g_renderType = RenderType::None;
