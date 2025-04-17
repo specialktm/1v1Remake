@@ -26,29 +26,30 @@
 #include <source_location>
 #include <sysinfoapi.h>
 
-enum class levels
-{
-    developer = 0,
-    debug,
-    info,
-    success,
-    warning,
-    error,
-    critical,
-    custom
-};
-enum class eColors
-{
-    developer = 0,
-    debug,
-    info,
-    success,
-    warning,
-    error,
-    critical
-};
 
 
+namespace cheat {
+    enum class levels
+    {
+        developer = 0,
+        debug,
+        info,
+        success,
+        warning,
+        error,
+        critical,
+        custom
+    };
+    enum class eColors
+    {
+        developer = 0,
+        debug,
+        info,
+        success,
+        warning,
+        error,
+        critical
+    };
 class logger {
 public:
     logger() : m_file(nullptr)
@@ -139,3 +140,4 @@ private:
 
 inline std::unique_ptr<logger> g_logger;
 
+};
