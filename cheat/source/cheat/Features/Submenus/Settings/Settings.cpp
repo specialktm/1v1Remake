@@ -55,8 +55,8 @@ namespace cheat
 
 #ifdef Developer
 		Break("Debug");
+		Button("Switch Interface", [] { g_Renderer->SetInterface(false); });
 		Button("Clear Console", [] { system("cls"); });
-
 #endif
 	}
 	

@@ -12,8 +12,6 @@ namespace cheat
 
 	unsigned long main_entry(void*)
 	{
-
-
 		g_logger = std::make_unique<logger>();
 		g_logger->send(levels::info, "Build Date: {}", __DATE__);
 		Fiber::ensure_thread_is_a_fiber();

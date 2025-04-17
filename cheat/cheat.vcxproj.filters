@@ -183,6 +183,21 @@
     <ClCompile Include="source\cheat\renderer\ImageLoader\DDS\DDSTextures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\Button\Button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\Checkbox\Element\Toggle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\Checkbox\Checkbox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\ProgressBar\Progress.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\cheat\renderer\Menu\ClickInterface\Render.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\pch\pch.h">
@@ -417,6 +432,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\cheat\renderer\ImageLoader\DDS\DDSTextures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\Button\Button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\Checkbox\Element\Toggle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\Checkbox\CheckBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\ProgressBar\Progress.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

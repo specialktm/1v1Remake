@@ -260,6 +260,11 @@
     <ClCompile Include="source\cheat\renderer\ESP\EspRenderer.cpp" />
     <ClCompile Include="source\cheat\renderer\ImageLoader\DDS\DDSTextures.cpp" />
     <ClCompile Include="source\cheat\renderer\ImageLoader\ImageLoader.cpp" />
+    <ClCompile Include="source\cheat\renderer\Menu\ClickInterface\Render.cpp" />
+    <ClCompile Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\Button\Button.cpp" />
+    <ClCompile Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\Checkbox\Checkbox.cpp" />
+    <ClCompile Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\Checkbox\Element\Toggle.cpp" />
+    <ClCompile Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\ProgressBar\Progress.cpp" />
     <ClCompile Include="source\cheat\renderer\Menu\DrawMenu.cpp" />
     <ClCompile Include="source\cheat\renderer\Menu\Fonts\font_awesome_data.cpp" />
     <ClCompile Include="source\cheat\renderer\Menu\Submenu\Submenu.cpp" />
@@ -312,6 +317,10 @@
     <ClInclude Include="source\cheat\main.h" />
     <ClInclude Include="source\cheat\renderer\ImageLoader\DDS\DDSTextures.h" />
     <ClInclude Include="source\cheat\renderer\ImageLoader\ImageLoader.h" />
+    <ClInclude Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\Button\Button.h" />
+    <ClInclude Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\Checkbox\CheckBox.h" />
+    <ClInclude Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\Checkbox\Element\Toggle.h" />
+    <ClInclude Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\ProgressBar\Progress.h" />
     <ClInclude Include="source\cheat\renderer\Menu\Fonts\font_awesome.h" />
     <ClInclude Include="source\cheat\renderer\Menu\Fonts\Header.hpp" />
     <ClInclude Include="source\cheat\renderer\Menu\Fonts\Icons.hpp" />

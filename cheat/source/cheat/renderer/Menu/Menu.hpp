@@ -1,4 +1,5 @@
 #pragma once
+
 #include "../../../pch/pch.h"
 #include <math.h>
 #include <string>
@@ -21,6 +22,7 @@
 #include "Submenu/Submenu.h"
 #include "Fonts/font_awesome_data.cpp"
 #undef min
+
 
 #define IMMENU_ICON_LEFTARROW			"<"
 #define IMMENU_ICON_RIGHTARROW			">"

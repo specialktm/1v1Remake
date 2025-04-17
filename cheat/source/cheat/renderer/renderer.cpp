@@ -71,13 +71,33 @@ namespace cheat
 
         if (m_Open && g_Running)
         { 
-            if (Menu.Begin())
-            {
-                Menu.SetHeaderText(APP_NAME);
-                Submenus::Tick();
-                Menu.SetFooterText(APP_VERSION);
-                Menu.End();
-            }
+			if (m_ListInterface)
+			{
+			
+				if (Menu.Begin())
+				{
+					Menu.SetHeaderText(APP_NAME);
+					Submenus::Tick();
+					Menu.SetFooterText(APP_VERSION);
+					Menu.End();
+				}
+			}
+			else
+			{
+				ImGui::SetNextWindowSize({ 550,320 });
+				ImGui::PushFont(Menu.Font.Primary);
+				if (ImGui::Begin(APP_NAME " " APP_VERSION, &g_Running,
+					ImGuiWindowFlags_NoSavedSettings |
+					ImGuiWindowFlags_NoResize |
+					ImGuiWindowFlags_NoCollapse |
+					ImGuiWindowFlags_AlwaysAutoResize |
+					ImGuiWindowFlags_AlwaysUseWindowPadding))
+				{
+					this->RenderClickInterface();
+				}
+				ImGui::PopFont();
+				ImGui::End();
+			}
         }
 		if (m_ShouldRendererWatermark) RenderWatermark();
 		if (features::EnableEsp) ESP();
