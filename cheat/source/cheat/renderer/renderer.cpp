@@ -58,7 +58,7 @@ namespace cheat
 		if (!g_Running)
 			return;
 
-		if (ImGui::IsKeyDown(ImGuiKey_Insert)) {
+		if (ImGui::IsKeyDown(ImGuiKey_Insert, false) || ImGui::IsKeyDown(ImGuiKey_GamepadDpadLeft,false) && ImGui::IsKeyDown(ImGuiKey_GamepadR3, false)) {
 			auto now = std::chrono::steady_clock::now();
 			if (now - m_LastToggleTime > 200ms) {
 				m_Open ^= 1; 
@@ -73,7 +73,6 @@ namespace cheat
         { 
 			if (m_ListInterface)
 			{
-			
 				if (Menu.Begin())
 				{
 					Menu.SetHeaderText(APP_NAME);

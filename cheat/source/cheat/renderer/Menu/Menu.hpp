@@ -619,17 +619,26 @@ namespace cheat
 
 			bool m_EnableNative = true; // You can disable this if you wanna handle it different way...
 			double m_NavigationRepeatDelta = 0.25;
-
-			ImGuiKey m_NavigationKeys[4] =
+			ImGuiKey m_NavigationKeys[8] =
 			{
-				ImGuiKey_Keypad8, ImGuiKey_Keypad2,
-				ImGuiKey_Keypad4, ImGuiKey_Keypad6
+				ImGuiKey_Keypad8,         // Up
+				ImGuiKey_Keypad2,         // Down
+				ImGuiKey_Keypad4,         // Left
+				ImGuiKey_Keypad6,         // Right
+				ImGuiKey_GamepadDpadUp,   // Gamepad Up
+				ImGuiKey_GamepadDpadDown, // Gamepad Down
+				ImGuiKey_GamepadDpadLeft, // Gamepad Left
+				ImGuiKey_GamepadDpadRight // Gamepad Right
 			};
-			int m_NavigationEmulatedPressMaxCount = 50;
-			int m_NagivationEmulatedPressCount[4] = { 0, 0, 0, 0 }; // This is used to make selection faster each time the key is repeated hold and emulated press
-			double m_NavigationLastPress[4] = { 0.0, 0.0, 0.0, 0.0 };
 
-			ImGuiKey m_InteractionKey = ImGuiKey_Keypad5;
+			int m_NavigationEmulatedPressMaxCount = 50;
+
+			int m_NavigationEmulatedPressCount[8] = { 0, 0, 0, 0, 0, 0, 0, 0 }; // Used to speed up navigation when holding key
+			double m_NavigationLastPress[8] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+
+			ImGuiKey m_InteractionKeyKeyboard = ImGuiKey_Keypad5;
+			ImGuiKey m_InteractionKeyGamepad = ImGuiKey_GamepadFaceDown;
+
 
 			bool IsInteractingWithKeybind = false;
 			bool IsInteractingWithInputText = false;
@@ -642,19 +651,19 @@ namespace cheat
 			{
 				if (BlockedByItem())
 				{
-					for (int i = 0; 4 > i; ++i)
+					for (int i = 0; IM_ARRAYSIZE(m_NavigationKeys) > i; ++i)
 					{
-						m_NagivationEmulatedPressCount[i] = 1;
+						m_NavigationEmulatedPressCount[i] = 1;
 						m_NavigationLastPress[i] = m_CurrentTime + m_NavigationRepeatDelta;
 					}
 					return;
 				}
 
-				for (int i = 0; 4 > i; ++i)
+				for (int i = 0; IM_ARRAYSIZE(m_NavigationKeys) > i; ++i)
 				{
 					if (!ImGui::IsKeyDown(m_NavigationKeys[i]))
 					{
-						m_NagivationEmulatedPressCount[i] = 1;
+						m_NavigationEmulatedPressCount[i] = 1;
 						m_NavigationLastPress[i] = 0.0;
 						continue;
 					}
@@ -663,22 +672,35 @@ namespace cheat
 						continue;
 					}
 
-					if (m_NavigationEmulatedPressMaxCount > m_NagivationEmulatedPressCount[i]) {
-						++m_NagivationEmulatedPressCount[i];
+					if (m_NavigationEmulatedPressMaxCount > m_NavigationEmulatedPressCount[i]) {
+						++m_NavigationEmulatedPressCount[i];
 					}
 
-					m_NavigationLastPress[i] = (m_CurrentTime + (m_NavigationRepeatDelta / (static_cast<double>(m_NagivationEmulatedPressCount[i]) * 0.5)));
+					m_NavigationLastPress[i] = (m_CurrentTime + (m_NavigationRepeatDelta / (static_cast<double>(m_NavigationEmulatedPressCount[i]) * 0.5)));
 
 					switch (i)
 					{
-					case 0: SelectUp(); break;
-					case 1: SelectDown(); break;
-					case 2: SelectLeft(); break;
-					case 3: SelectRight(); break;
+						// Keyboard
+						case 0: // Keypad8
+						case 4: // GamepadDpadUp
+							SelectUp(); break;
+
+						case 1: // Keypad2
+						case 5: // GamepadDpadDown
+							SelectDown(); break;
+
+						case 2: // Keypad4
+						case 6: // GamepadDpadLeft
+							SelectLeft(); break;
+
+						case 3: // Keypad6
+						case 7: // GamepadDpadRight
+							SelectRight(); break;
 					}
+
 				}
 
-				if (ImGui::IsKeyPressed(m_InteractionKey, false))
+				if (ImGui::IsKeyPressed(m_InteractionKeyKeyboard, false) || ImGui::IsKeyPressed(m_InteractionKeyGamepad, false))
 					SelectInteraction();
 			}
 
@@ -1495,14 +1517,14 @@ namespace cheat
 			}
 			else if (Input.IsInteractingWithInputText)
 			{
-				if (ImGui::IsKeyPressed(Input.m_InteractionKey, false))
+				if (ImGui::IsKeyPressed(Input.m_InteractionKeyKeyboard, false) || ImGui::IsKeyPressed(Input.m_InteractionKeyGamepad, false))
 				{
 					C_ImMMenuItemInputText* pInputText = reinterpret_cast<C_ImMMenuItemInputText*>(Item.GetSelectableItem(Item.m_Selected));
 					memcpy(pInputText->m_Buffer, &Item.m_TextInputBuffer[0], pInputText->m_BufferSize);
 					Item.m_TextInputBuffer.clear();
 					Input.IsInteractingWithInputText = false;
 				}
-				else if (ImGui::IsKeyPressed(ImGuiKey_Escape, false)) {
+				else if (ImGui::IsKeyPressed(ImGuiKey_Escape, false) || ImGui::IsKeyPressed(ImGuiKey_GamepadFaceRight, false)) {
 					Input.IsInteractingWithInputText = false;
 				}
 			}
@@ -1567,7 +1589,7 @@ namespace cheat
 				else {
 					Item.m_Interacted = -1;
 				}
-				if (ImGui::IsKeyPressed(ImGuiKey_Keypad0, false)) {
+				if (ImGui::IsKeyPressed(ImGuiKey_Keypad0, false) || ImGui::IsKeyPressed(ImGuiKey_GamepadFaceRight, false)) {
 					Submenus::Back();
 				}
 			}

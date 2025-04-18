@@ -75,6 +75,9 @@ namespace cheat
             g_Renderer->ScreenSize = { static_cast<float>(sd.BufferDesc.Width), static_cast<float>(sd.BufferDesc.Height) };
         }
 
+
+	
+	
         ImGui_ImplDX11_NewFrame();
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
