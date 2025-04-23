@@ -7,7 +7,8 @@ namespace cheat
 	bool m_TestFeature;
 	void renderer::RenderClickInterface()
 	{
-        if (g_Renderer->m_Open && !g_Renderer->m_ListInterface)
+        
+        if (m_Open && !m_ListInterface)
         {
             ImGui::GetIO().MouseDrawCursor = true;
             ImGui::GetIO().ConfigFlags &= ~ImGuiConfigFlags_NoMouse;
