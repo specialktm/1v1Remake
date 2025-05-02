@@ -198,6 +198,15 @@
     <ClCompile Include="source\cheat\renderer\Menu\ClickInterface\Render.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\cheat\renderer\InterfaceRewrite\Interface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\cheat\renderer\InterfaceRewrite\Types\option.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\cheat\renderer\InterfaceRewrite\Types\IconOption\IconOption.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\pch\pch.h">
@@ -444,6 +453,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\ProgressBar\Progress.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\cheat\renderer\InterfaceRewrite\Interface.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\cheat\renderer\InterfaceRewrite\Types\option.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\cheat\renderer\InterfaceRewrite\Types\IconOption\IconOption.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

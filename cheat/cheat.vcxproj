@@ -260,6 +260,9 @@
     <ClCompile Include="source\cheat\renderer\ESP\EspRenderer.cpp" />
     <ClCompile Include="source\cheat\renderer\ImageLoader\DDS\DDSTextures.cpp" />
     <ClCompile Include="source\cheat\renderer\ImageLoader\ImageLoader.cpp" />
+    <ClCompile Include="source\cheat\renderer\InterfaceRewrite\Interface.cpp" />
+    <ClCompile Include="source\cheat\renderer\InterfaceRewrite\Types\IconOption\IconOption.cpp" />
+    <ClCompile Include="source\cheat\renderer\InterfaceRewrite\Types\option.cpp" />
     <ClCompile Include="source\cheat\renderer\Menu\ClickInterface\Render.cpp" />
     <ClCompile Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\Button\Button.cpp" />
     <ClCompile Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\Checkbox\Checkbox.cpp" />
@@ -317,6 +320,9 @@
     <ClInclude Include="source\cheat\main.h" />
     <ClInclude Include="source\cheat\renderer\ImageLoader\DDS\DDSTextures.h" />
     <ClInclude Include="source\cheat\renderer\ImageLoader\ImageLoader.h" />
+    <ClInclude Include="source\cheat\renderer\InterfaceRewrite\Interface.hpp" />
+    <ClInclude Include="source\cheat\renderer\InterfaceRewrite\Types\IconOption\IconOption.hpp" />
+    <ClInclude Include="source\cheat\renderer\InterfaceRewrite\Types\option.hpp" />
     <ClInclude Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\Button\Button.h" />
     <ClInclude Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\Checkbox\CheckBox.h" />
     <ClInclude Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\Checkbox\Element\Toggle.h" />

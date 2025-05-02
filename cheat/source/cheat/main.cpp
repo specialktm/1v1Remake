@@ -16,8 +16,9 @@ namespace cheat
 		g_logger->send(levels::info, "Build Date: {}", __DATE__);
 		Fiber::ensure_thread_is_a_fiber();
 		queue::initialize();
-		g_Renderer = std::make_unique<renderer>();
 		g_Hooking = std::make_unique<hooking>();
+		g_Renderer = std::make_unique<renderer>();
+		g_Renderer->Interface = std::make_unique<Interface>();
 		g_DiscordManager.Initialize("1227026134827270245");
 		queue::add([&] {
 			g_ThemeLoader.CreateFolders();
