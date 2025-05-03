@@ -47,8 +47,6 @@ namespace cheat
 	};
 	inline std::unique_ptr<renderer> g_Renderer;
 
-
-
 	namespace imgui_style
 	{
        inline void initStyle()

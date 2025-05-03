@@ -204,7 +204,7 @@
     <ClCompile Include="source\cheat\renderer\InterfaceRewrite\Types\option.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\cheat\renderer\InterfaceRewrite\Types\IconOption\IconOption.cpp">
+    <ClCompile Include="source\cheat\renderer\Menu\InputHandler\InputHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -461,7 +461,7 @@
     <ClInclude Include="source\cheat\renderer\InterfaceRewrite\Types\option.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\cheat\renderer\InterfaceRewrite\Types\IconOption\IconOption.hpp">
+    <ClInclude Include="source\cheat\renderer\Menu\InputHandler\InputHandler.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -22,6 +22,7 @@
 #include "Submenu/Submenu.h"
 #include "Fonts/font_awesome_data.cpp"
 #undef min
+#include "InputHandler/InputHandler.hpp"
 
 
 #define IMMENU_ICON_LEFTARROW			"<"
@@ -659,49 +660,20 @@ namespace cheat
 					return;
 				}
 
-				for (int i = 0; IM_ARRAYSIZE(m_NavigationKeys) > i; ++i)
-				{
-					if (!ImGui::IsKeyDown(m_NavigationKeys[i]))
-					{
-						m_NavigationEmulatedPressCount[i] = 1;
-						m_NavigationLastPress[i] = 0.0;
-						continue;
-					}
-
-					if (m_NavigationLastPress[i] > m_CurrentTime) {
-						continue;
-					}
-
-					if (m_NavigationEmulatedPressMaxCount > m_NavigationEmulatedPressCount[i]) {
-						++m_NavigationEmulatedPressCount[i];
-					}
-
-					m_NavigationLastPress[i] = (m_CurrentTime + (m_NavigationRepeatDelta / (static_cast<double>(m_NavigationEmulatedPressCount[i]) * 0.5)));
-
-					switch (i)
-					{
-						// Keyboard
-						case 0: // Keypad8
-						case 4: // GamepadDpadUp
-							SelectUp(); break;
-
-						case 1: // Keypad2
-						case 5: // GamepadDpadDown
-							SelectDown(); break;
-
-						case 2: // Keypad4
-						case 6: // GamepadDpadLeft
-							SelectLeft(); break;
-
-						case 3: // Keypad6
-						case 7: // GamepadDpadRight
-							SelectRight(); break;
-					}
-
-				}
-
-				if (ImGui::IsKeyPressed(m_InteractionKeyKeyboard, false) || ImGui::IsKeyPressed(m_InteractionKeyGamepad, false))
+				if (EnterKey.IsPressed())
 					SelectInteraction();
+				if (BackKey.IsPressed())
+					Submenus::Back();
+
+				if (LeftKey.IsPressed())
+					SelectLeft();
+				if (RightKey.IsPressed())
+					SelectRight();
+
+				if (UpKey.IsPressed())
+					SelectUp();
+				if (DownKey.IsPressed())
+					SelectDown();
 			}
 
 			ImGuiKey GetAnyPressed()
@@ -1589,9 +1561,7 @@ namespace cheat
 				else {
 					Item.m_Interacted = -1;
 				}
-				if (ImGui::IsKeyPressed(ImGuiKey_Keypad0, false) || ImGui::IsKeyPressed(ImGuiKey_GamepadFaceRight, false)) {
-					Submenus::Back();
-				}
+
 			}
 
 			Item.CleanUp();

@@ -3,6 +3,7 @@
 #include "../Features/features.h"
 #include "../discord/discord.h"
 #include "notification/notification.h"
+#include "Menu/InputHandler/InputHandler.hpp"
 namespace cheat
 {
 
@@ -58,18 +59,16 @@ namespace cheat
 		if (!g_Running)
 			return;
 
-		if (ImGui::IsKeyDown(ImGuiKey_Insert, false) || ImGui::IsKeyDown(ImGuiKey_GamepadDpadLeft,false) && ImGui::IsKeyDown(ImGuiKey_GamepadR3, false)) {
-			auto now = std::chrono::steady_clock::now();
-			if (now - m_LastToggleTime > 200ms) {
-				m_Open ^= 1; 
-				m_LastToggleTime = now;
-			}
+		
+		if (MainMenuKeyboard.IsPressed() or MainMenuController.IsPressed()) 
+		{
+			m_Open ^= 1; 
 		}
 
 
         // Render Loops
 
-		g_Interface.RenderInterface();
+	//g_Interface.RenderInterface();
 
         if (m_Open && g_Running)
         { 
