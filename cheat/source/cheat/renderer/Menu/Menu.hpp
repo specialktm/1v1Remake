@@ -828,7 +828,7 @@ namespace cheat
 				}
 
 
-				float fTitleHeight = ImFloor(Font.Primary->FontSize * 2.f);
+				float fTitleHeight = ImFloor(16.f * 2.f);
 				if (Item.m_SubtitleImage.empty())
 				{
 					m_DrawList->AddRectFilled(

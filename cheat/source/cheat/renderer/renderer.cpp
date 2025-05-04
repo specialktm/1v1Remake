@@ -68,9 +68,9 @@ namespace cheat
 
         // Render Loops
 
-	//g_Interface.RenderInterface();
+		Interface->RenderInterface();
 
-        if (m_Open && g_Running)
+        if (!m_Open && g_Running)
         { 
 			if (m_ListInterface)
 			{
