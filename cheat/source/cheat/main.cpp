@@ -9,8 +9,6 @@
 
 namespace cheat
 {
-
-
 	unsigned long main_entry(void*)
 	{
 		g_logger = std::make_unique<logger>();
