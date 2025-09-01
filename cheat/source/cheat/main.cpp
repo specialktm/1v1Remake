@@ -18,10 +18,10 @@ namespace cheat
 		g_Renderer = std::make_unique<renderer>();
 		g_Hooking = std::make_unique<hooking>();
 		g_Renderer->Interface = std::make_unique<Interface>();
-		g_Renderer->Interface->AddOption(ButtonOption("Button", "Testing", [] { printf("LOL %s\n"); }));
-		g_Renderer->Interface->AddOption(ButtonOption("Button", "Testing", [] { printf("LOL %s\n"); }));
-		g_Renderer->Interface->AddOption(ButtonOption("Button", "Testing", [] { printf("LOL %s\n"); }));
-		g_Renderer->Interface->AddOption(ButtonOption("Button", "Testing", [] { printf("LOL %s\n"); }));
+		g_Renderer->Interface->AddOption(ButtonOption("Button", "Testing", [] { printf("LOL %s\n","13"); }));
+		g_Renderer->Interface->AddOption(ButtonOption("Button", "Testing", [] { printf("LOL %s\n","13"); }));
+		g_Renderer->Interface->AddOption(ButtonOption("Button", "Testing", [] { printf("LOL %s\n","13"); }));
+		g_Renderer->Interface->AddOption(ButtonOption("Button", "Testing", [] { printf("LOL %s\n","13"); }));
 		g_DiscordManager.Initialize("1227026134827270245");
 		queue::add([&] {
 			g_ThemeLoader.CreateFolders();
