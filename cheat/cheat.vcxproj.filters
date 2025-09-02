@@ -198,22 +198,7 @@
     <ClCompile Include="source\cheat\renderer\Menu\ClickInterface\Render.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\cheat\renderer\InterfaceRewrite\Interface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\cheat\renderer\Menu\InputHandler\InputHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\cheat\renderer\InterfaceRewrite\Elements\Header.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\cheat\renderer\InterfaceRewrite\Elements\Subtitle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\cheat\renderer\InterfaceRewrite\Elements\Background.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\cheat\renderer\InterfaceRewrite\Elements\Footer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -464,16 +449,7 @@
     <ClInclude Include="source\cheat\renderer\Menu\ClickInterface\RenderOptions\ProgressBar\Progress.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\cheat\renderer\InterfaceRewrite\Interface.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\cheat\renderer\InterfaceRewrite\Types\BaseOption.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\cheat\renderer\Menu\InputHandler\InputHandler.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\cheat\renderer\InterfaceRewrite\Types\ButtonOption\ButtonOption.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

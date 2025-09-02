@@ -68,7 +68,6 @@ namespace cheat
 
         // Render Loops
 
-		Interface->RenderInterface();
 
         if (!m_Open && g_Running)
         { 

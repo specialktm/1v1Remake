@@ -4,7 +4,6 @@
 #include "../../util/logger/logger.hpp"
 #include "ThemeLoader/ThemeLoader.h"
 #include "Menu/Submenu/Submenu.h"
-#include "InterfaceRewrite/Interface.hpp"
 namespace cheat
 {
 
@@ -31,7 +30,6 @@ namespace cheat
 		bool m_ListInterface = true;
 		bool m_ShouldRendererWatermark = true;
 		C_ImMMenu Menu;
-		std::unique_ptr<Interface> Interface;
 		// Submenus
         void* currentMenu = Submenus::Home;
         std::vector<void*> menusArray;
